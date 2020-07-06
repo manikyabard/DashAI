@@ -153,68 +153,12 @@ response = {
 
 }
 
-def create_tabular_databunch(response):
-  try:
-    #Step 1: Provide inputs
-    df = pd.read_csv(path/f'{response["csv_name"]}')
-
-    procs = list()
-    if response['FillMissing']:
-      procs.append(partial(FillMissing, fill_strategy=response['FillMissing']['fill_strategy'],
-                            fill_val=response['FillMissing']['fill_val'],
-                            add_col = response['FillMissing']['add_col']))
-    if response['Categorify']:
-      procs.append(Categorify)
-    if response['Normalize']:
-      procs.append(Normalize)
-    procs = listify(procs)
-
-    cat_names = response['cat_names']
-    cont_names = response['cont_names']
-    src = TabularList.from_df(df, path=path, cat_names=cat_names, cont_names=cont_names, procs=procs)
-
-    # Step 2: Split data into train and valid
-    if response['validation']['method'] == 'none':
-      src = src.split_none()
-    if response['validation']['method'] == 'rand_pct':
-      src = src.split_by_rand_pct(valid_pct = response['validation']['rand_pct']['valid_pct'], seed=response['validation']['rand_pct']['seed'])
-    if response['validation']['method'] == 'subsets':
-      src = src.split_subsets(train_size = response['validation']['subsets']['train_size'], valid_size = response['validation']['subsets']['valid_size'], seed=response['validation']['subsets']['seed'])
-    #if response['validation']['method'] == 'files':       #TODO: test it out
-    #  src = src.split_by_files(valid_name = response['validation']['files']['valid_names'])
-    #if response['validation']['method'] == 'fname_file':
-    #  src = src.split_by_fname_file(fname = response['validation']['fname_files']['fname'], path=response['validation']['fname_files']['path'])
-    #if response['validation']['method'] == 'folder':
-    #  src = src.split_by_folder(train=response['validation']['folder']['train'], valid=response['validation']['folder']['valid'])
-    if response['validation']['method'] == 'idx':
-      valid_idx = range(len(df)-response['validation']['idx']['valid_idx'], len(df))
-      src = src.split_by_idx(valid_idx)
-    #if response['validation']['method'] == 'idxs':
-    #  src = src.split_by_idxs(train_idx = response['validation']['idxs']['train_idx'], valid_idx = response['validation']['idxs']['valid_idx'])
-    #if response['validation']['method'] == 'list':
-    #  src = src.split_by_list(train = response['validation']['list']['train'], valid = response['validation']['list']['valid'])
-    if response['validation']['method'] == 'from_df':
-      src = src.split_from_df(col = response['validation']['from_df']['col'])
-    
-
-    # Step 3: Label the inputs
-    if response['label']['method'] == 'from_df':      #TODO test it out
-      src = src.label_from_df(cols=response['dep_var']) if response['label']['from_df']['classes'] is None else src.label_from_df(cols=response['label']['from_df']['cols'], label_cls=response['label']['from_df']['label_cls'], one_hot = response['label']['from_df']['one_hot'], classes = response['label']['from_df']['classes'])
-    if response['label']['method'] == 'empty':
-      src = src.label_empty()
-    if response['label']['method'] == 'const':
-      src = src.label_const(const = response['label']['const']['const'], label_cls = response['label']['const']['label_cls'])
-
-    # Optional: add test
-    if response['test_df'] is not None: src.add_test(TabularList.from_df(response['test_df'], cat_names=cat_names, cont_names=cont_names,
-                                                                    processor = src.train.x.processor))
-    # Step 4: Convert to databunch
-    return src.databunch(path=path, bs=response['bs'], val_bs=response['val_bs'], num_workers=response['num_workers'], device=response['device'], 
-                              no_check=response['no_check'])
-  except Exception as e:
-    print('Exception:', e)
-
-
+''' Options for metric: 
+      [accuracy, accuracy_thresh, top_k_accuracy, dice, error_rate, mean_squared_error, mean_absolute_error,
+        mean_squared_logarithmic_error, exp_rmspe, root_mean_squared_error, fbeta, explained_variance, r2_score,
+        Precision, Recall, FBeta, ExplainedVariance, MatthewsCorreff, KappaScore,
+        MultiLabelFbeta, auc_roc_score, roc_curve, AUROC]
+'''
 def create_tabular_metric(response):
   try:
     if response['metric']['methods'] == None:
@@ -226,45 +170,45 @@ def create_tabular_metric(response):
         kinds.append(accuracy)
 
       if kind == 'accuracy_thresh':
-        kind.append(partial(
+        kinds.append(partial(
             accuracy_thresh,
             thresh = response['metric']['accuracy_thresh']['thresh'], 
             sigmoid = response['metric']['accuracy_thresh']['sigmoid']
         ))
 
       if kind == 'top_k_accuracy':
-        kind.append(partial(
+        kinds.append(partial(
             top_k_accuracy,
             k = response['metric']['top_k_accuracy']['k']
         ))
 
       if kind == 'dice':
-        kind.append(partial(
+        kinds.append(partial(
             dice,
             iou = response['metric']['dice']['iou'],
             eps = response['metric']['dice']['eps']
         ))
 
       if kind == 'error_rate':
-        kind.append(error_rate)
+        kinds.append(error_rate)
 
       if kind == 'mean_squared_error':
-        kind.append(mean_squared_error)
+        kinds.append(mean_squared_error)
 
       if kind == 'mean_absolute_error':
-        kind.append(mean_absolute_error)
+        kinds.append(mean_absolute_error)
 
       if kind == 'mean_squared_logarithmic_error':
-        kind.append(mean_squared_logarithmic_error)
+        kinds.append(mean_squared_logarithmic_error)
 
       if kind == 'exp_rmspe':
-        kind.append(exp_rmspe)
+        kinds.append(exp_rmspe)
 
       if kind == 'root_mean_squared_error':
-        kind.append(root_mean_squared_error)
+        kinds.append(root_mean_squared_error)
       
       if kind == 'fbeta':
-        kind.append(partial(
+        kinds.append(partial(
             fbeta,
             thresh = response['metric']['fbeta']['thresh'], 
             beta = response['metric']['fbeta']['beta'], 
@@ -273,10 +217,10 @@ def create_tabular_metric(response):
         ))
       
       if kind == 'explained_variance':
-        kind.append(explained_variance)
+        kinds.append(explained_variance)
 
       if kind == 'r2_score':
-        kind.append(r2_score)
+        kinds.append(r2_score)
 
       if kind == 'Precision':
         precision = Precision(
@@ -284,7 +228,7 @@ def create_tabular_metric(response):
             pos_label = response['metric']['Precision']['pos_label'],
             eps = response['metric']['Precision']['eps']
         )
-        kind.append(precision)
+        kinds.append(precision)
 
       if kind == 'Recall':
         recall = Recall(
@@ -292,7 +236,7 @@ def create_tabular_metric(response):
             pos_label = response['metric']['Recall']['pos_label'],
             eps = response['metric']['Recall']['eps']
         )
-        kind.append(recall)
+        kinds.append(recall)
 
       if kind == 'FBeta':
         fbetavar = FBeta(
@@ -301,21 +245,21 @@ def create_tabular_metric(response):
             eps = response['metric']['FBeta']['eps'],
             beta = response['metric']['FBeta']['beta']
         )
-        kind.append(fbetavar)
+        kinds.append(fbetavar)
       
       if kind == 'ExplainedVariance':
         expvar = ExplainedVariance()
-        kind.append(expvar)
+        kinds.append(expvar)
       
       if kind == 'MatthewsCorreff':
         matcoeff = MatthewsCorreff()
-        kind.append(matcoeff)
+        kinds.append(matcoeff)
       
       if kind == 'KappaScore':
         kap = KappaScore(
             weights = response['metric']['KappaScore']['weights'],
         )
-        kind.append(kap)
+        kinds.append(kap)
 
       if kind == 'MultiLabelFbeta':
         multilabelfbeta = MultiLabelFbeta(
@@ -325,21 +269,23 @@ def create_tabular_metric(response):
             sigmoid = response['metric']['MultiLabelFbeta']['sigmoid'],
             average = response['metric']['MultiLabelFbeta']['average']
         )
-        kind.append(multilabelfbeta)
+        kinds.append(multilabelfbeta)
       
       if kind == 'auc_roc_score':
-        kind.append(auc_roc_score)
+        kinds.append(auc_roc_score)
 
       if kind == 'roc_curve':
-        kind.append(roc_curve)
+        kinds.append(roc_curve)
       
       if kind == 'AUROC':
         auroc = AUROC()
-        kind.append(auroc)
+        kinds.append(auroc)
+    return kinds
+
   except Exception as e:
     print(e)
 
 
 databunch = create_tabular_databunch(response)
-
-learn = tabular_learner(databunch, layers=[200,100], emb_szs={'native-country': 10}, metrics=auc_roc_score)
+metrics = create_tabular_metric(response)
+learn = tabular_learner(databunch, layers=[200,100], emb_szs={'native-country': 10}, metrics=metrics)
