@@ -20,6 +20,7 @@ def create_tabular_loss(response):
 
 	else:
 		import response['custom']['fname'] as fname
-		loss_func = fname.response['custom']['func']
+		func = fname.response['custom']['func']
+		loss_func = FlattenedLoss(func)
 
 	return loss_func
