@@ -98,7 +98,6 @@ class DashOptimizer:
 				arg = response['arguments']['ASGD']
 				opt_func = partial(optim.ASGD,
 					lr=arg['lr'],
-					momentum=arg['momentum'],
 					alpha=arg['alpha'],
 					lambd=arg['lambd'],
 					t0=arg['t0'],
