@@ -10,6 +10,8 @@ from .model import DashTabularModel
 from .loss import DashTabularLoss
 from .optimizer import DashTabularOptimizer
 
+import fastai
+
 class DashTabularLearner:
 
 	@staticmethod
@@ -22,13 +24,15 @@ class DashTabularLearner:
 		metrics = DashTabularMetric.create_tabular_metric(response)
 		# model = DashTabularModel.create_tabular_model(databunch, response['model'])
 		loss = DashTabularLoss.create_tabular_loss(response['loss'])
-		opt = DashTabularOptimizer.create_optimize(response['optimizer'])
+		opt = DashTabularOptimizer.create_tabular_optimizer(response['optimizer'])
 
 		learn = tabular_learner(
 			databunch,
 			layers=[200,100],
 			metrics=metrics,
 			opt_func=opt
+#			,
+#			loss_func = loss #Passing loss gives errors
 		)
 
 		return learn
