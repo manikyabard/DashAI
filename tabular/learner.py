@@ -3,6 +3,7 @@ import json
 import torch.optim
 
 from fastai.tabular import *
+
 from .databunch import DashTabularDatabunch
 from .metric import DashTabularMetric
 from .model import DashTabularModel
@@ -16,6 +17,7 @@ class DashTabularLearner:
 		with open('./data/response.json') as f:
 			response = json.load(f)
 		
+		path = Path('./')
 		databunch = DashTabularDatabunch.create_tabular_databunch(response)
 		metrics = DashTabularMetric.create_tabular_metric(response)
 		# model = DashTabularModel.create_tabular_model(databunch, response['model'])
