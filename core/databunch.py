@@ -1,5 +1,6 @@
 import fastai
 from pathlib import Path
+import sys, os
 
 class DashDatabunch:
 
@@ -72,7 +73,7 @@ class DashDatabunch:
 	def label_databunch(response, src):
 		try:
 			if response['label']['method'] == 'from_df':      #TODO test it out
-				if not response['label']['from_df']['classes']:
+				if response['label']['from_df']['classes']:
 					src = src.label_from_df(cols=response['dep_var'])
 				else:
 					src.label_from_df(
@@ -102,11 +103,15 @@ class DashDatabunch:
 					pat=response['label']['re']['pat'],
 					full_path=response['label']['re']['full_path']
 				)
+			if response['label']['method'] == 'from_folder':
+				src = src.label_from_folder()
 
 			return src
 
 		except Exception as e:
-			print(e)
+			exc_type, exc_obj, exc_tb = sys.exc_info()
+			fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+			print(exc_type, fname, exc_tb.tb_lineno)
 
 	@staticmethod
 	def create_databunch(response, src):
