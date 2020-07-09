@@ -3,7 +3,7 @@ from core.databunch import DashDatabunch
 from fastai.data_block import *
 from path import Path
 
-#Haven't tested it out yet
+# Only tested with Mnist
 class DashVisionDatabunch:
 
 	@staticmethod
