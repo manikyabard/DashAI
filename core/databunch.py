@@ -1,6 +1,13 @@
 import fastai
 from pathlib import Path
 import sys, os
+from fastai.vision import *
+import importlib
+
+
+#just for now
+from data.func.img2bbox import func_img2bbox
+
 
 class DashDatabunch:
 
@@ -55,11 +62,12 @@ class DashDatabunch:
 					valid = response['validation']['list']['valid']
 				)
 
-			if response['validation']['method'] == 'valid_func':
-				funcfile = response['validation']['valid_func']['fname']
-				import funcfile as fname
-				func = fname.response['validation']['valid_func']['func']
-				src = src.split_by_valid_func(func)
+			# Probably won't work right now. Need to use impportlib or something similar
+			# if response['validation']['method'] == 'valid_func':
+			# 	funcfile = response['validation']['valid_func']['fname']
+			# 	import funcfile as fname
+			# 	func = fname.response['validation']['valid_func']['func']
+			# 	src = src.split_by_valid_func(func)
 
 			if response['validation']['method'] == 'from_df':
 				src = src.split_from_df(col=response['validation']['from_df']['col'])
@@ -71,56 +79,59 @@ class DashDatabunch:
 
 	@staticmethod
 	def label_databunch(response, src):
-		try:
-			if response['label']['method'] == 'from_df':      #TODO test it out
-				if response['label']['from_df']['classes']:
-					src = src.label_from_df(cols=response['dep_var'])
-				else:
-					src.label_from_df(
-						cols=response['label']['from_df']['cols'],
-						label_cls=response['label']['from_df']['label_cls'],
-						one_hot=response['label']['from_df']['one_hot'],
-						classes=response['label']['from_df']['classes']
-					)
-
-			if response['label']['method'] == 'empty':
-				src = src.label_empty()
-
-			if response['label']['method'] == 'const':
-				src = src.label_const(
-					const=response['label']['const']['const'],
-					label_cls=response['label']['const']['label_cls']
+		# try:
+		if response['label']['method'] == 'from_df':      #TODO test it out
+			if response['label']['from_df']['classes']:
+				src = src.label_from_df(cols=response['dep_var'])
+			else:
+				src.label_from_df(
+					cols=response['label']['from_df']['cols'],
+					label_cls=response['label']['from_df']['label_cls'],
+					one_hot=response['label']['from_df']['one_hot'],
+					classes=response['label']['from_df']['classes']
 				)
 
-			if response['label']['method'] == 'from_func':
-				funcfile = response['label']['from_func']['fname']
-				import funcfile as fname
-				func = fname.response['label']['from_func']['func']
-				src = src.label_from_func(func)
+		if response['label']['method'] == 'empty':
+			src = src.label_empty()
 
-			if response['label']['method'] == 're':
-				src = src.label_from_re(
-					pat=response['label']['re']['pat'],
-					full_path=response['label']['re']['full_path']
-				)
-			if response['label']['method'] == 'from_folder':
-				src = src.label_from_folder()
+		if response['label']['method'] == 'const':
+			src = src.label_const(
+				const=response['label']['const']['const'],
+				label_cls=response['label']['const']['label_cls']
+			)
 
-			return src
+		# TODO Find a better way to do this
+		if response['label']['method'] == 'from_func':
+			images, lbl_bbox = get_annotations('data/coco_tiny/train.json')
+			img2bboxd = dict(zip(images, lbl_bbox))
 
-		except Exception as e:
-			exc_type, exc_obj, exc_tb = sys.exc_info()
-			fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-			print(exc_type, fname, exc_tb.tb_lineno)
+			src = src.label_from_func(lambda o:img2bboxd[o.name])
+
+		if response['label']['method'] == 're':
+			src = src.label_from_re(
+				pat=response['label']['re']['pat'],
+				full_path=response['label']['re']['full_path']
+			)
+		if response['label']['method'] == 'from_folder':
+			src = src.label_from_folder()
+
+		return src
+
+		# except Exception as e:
+		# 	exc_type, exc_obj, exc_tb = sys.exc_info()
+		# 	fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+		# 	print(exc_type, fname, exc_tb.tb_lineno)
 
 	@staticmethod
-	def create_databunch(response, src):
+	def create_databunch(response, src, **kwargs):
 		path = Path('./')
+
 		return src.databunch(
 				path=path,
 				bs=response['bs'],
 				val_bs=response['val_bs'],
 				num_workers=response['num_workers'],
 				device=response['device'],
-				no_check=response['no_check']
+				no_check=response['no_check'],
+				**kwargs
 			)
