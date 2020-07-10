@@ -22,7 +22,7 @@ class DashVisionDatabunch:
 		src = src.transform(get_transforms(), tfm_y=True)
 
 		# manually putting extra args like collate_fn, if we pass stuff from dictionary, it will be taken as a string
-		return DashDatabunch.create_databunch(response, src, collate_fn = bb_pad_collate)
+		return DashDatabunch.create_databunch(response, src, collate_fn=bb_pad_collate)
 
 	@staticmethod
 	def get_itemlist(response):
@@ -32,6 +32,10 @@ class DashVisionDatabunch:
 		# might be a better way to do this
 		if response["subtask"] == "object-detection":
 			return ObjectItemList.from_folder(path = response["input"]["from_folder"]["path"])
+		if response['subtask'] == 'gan':
+			return GANItemList.from_folder(
+				path=response['input']['from_folder']['path'],
+				noise_sz=response['subtask']['gan']['noise_sz'])
 
 		if response["input"]["method"] == "from_folder":
 			return ImageList.from_folder(response["input"]["from_folder"])
