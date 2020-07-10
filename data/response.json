@@ -269,7 +269,9 @@
         "classification-multi-label": {},
         "regression": {},
         "segmentation": {},
-        "gan": {},
+        "gan": {
+            "noise_sz": 100
+        },
         "object-detection": {},
         "points": {}
     }
