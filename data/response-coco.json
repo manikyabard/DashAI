@@ -271,7 +271,9 @@
         "regression": {},
         "segmentation": {},
         "gan": {},
-        "object-detection": {},
+        "object-detection": {
+            "collate_fn": "bb_pad_collate"
+        },
         "points": {}
     }
 }
