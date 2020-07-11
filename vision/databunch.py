@@ -8,8 +8,42 @@ from path import Path
 # Only tested with Mnist and coco
 class DashVisionDatabunch:
 
+	def create_vision_databunch(response):
+		path = Path('./')
+
+		src = DashVisionDatabunch.get_itemlist(response["vision"])
+		src = DashDatabunch.split_databunch(response, src)
+		src = DashDatabunch.label_databunch(response, src)
+
+		# Add test
+
+
+		tra = DashVisionDatabunch.create_transform(response['vision']['transform'])
+		src = src.transform([tra,tra], tfm_y=True)
+
+		# manually putting extra args like collate_fn, if we pass stuff from dictionary, it will be taken as a string
+		return DashDatabunch.create_databunch(response, src, collate_fn=bb_pad_collate)
+
 	@staticmethod
-	def create_tranform(response):
+	def get_itemlist(response):
+		# path = Path('data/mnist_tiny')
+		# if response["subtask"] == "classification-single-label":
+
+		# might be a better way to do this
+		if response["subtask"] == "object-detection":
+			return ObjectItemList.from_folder(path = response["input"]["from_folder"]["path"])
+		if response['subtask'] == 'gan':
+			return GANItemList.from_folder(
+				path=response['input']['from_folder']['path'],
+				noise_sz=response['subtask']['gan']['noise_sz'])
+
+		if response["input"]["method"] == "from_folder":
+			return ImageList.from_folder(response["input"]["from_folder"])
+		if response["input"]["method"] == "from_csv":
+			return ImageList.from_csv(response["input"]["from_csv"])
+
+	@staticmethod
+	def create_transform(response):
 		if(response['chosen_data_aug']=='basic_transforms'):
 			if(response['basic_transforms']['do_flip']):
 				do_flip=bool(response['basic_transforms']['do_flip'])
@@ -74,40 +108,5 @@ class DashVisionDatabunch:
 
 			tfms= tras
 		return tfms
-
-
-	def create_vision_databunch(response):
-		path = Path('./')
-
-		src = DashVisionDatabunch.get_itemlist(response["vision"])
-		src = DashDatabunch.split_databunch(response, src)
-		src = DashDatabunch.label_databunch(response, src)
-
-		# Add test
-
-		#for now
-		tra=create_tranform(response['vision']['transform'])
-		src = src.transform(tra, tfm_y=True)
-
-		# manually putting extra args like collate_fn, if we pass stuff from dictionary, it will be taken as a string
-		return DashDatabunch.create_databunch(response, src, collate_fn=bb_pad_collate)
-
-	@staticmethod
-	def get_itemlist(response):
-		# path = Path('data/mnist_tiny')
-		# if response["subtask"] == "classification-single-label":
-
-		# might be a better way to do this
-		if response["subtask"] == "object-detection":
-			return ObjectItemList.from_folder(path = response["input"]["from_folder"]["path"])
-		if response['subtask'] == 'gan':
-			return GANItemList.from_folder(
-				path=response['input']['from_folder']['path'],
-				noise_sz=response['subtask']['gan']['noise_sz'])
-
-		if response["input"]["method"] == "from_folder":
-			return ImageList.from_folder(response["input"]["from_folder"])
-		if response["input"]["method"] == "from_csv":
-			return ImageList.from_csv(response["input"]["from_csv"])
 			
 	
