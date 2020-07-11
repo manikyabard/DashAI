@@ -9,6 +9,71 @@ from path import Path
 class DashVisionDatabunch:
 
 	@staticmethod
+	def create_tranform(response):
+		if(response['chosen_data_aug']=='basic_transforms'):
+			if(response['basic_transforms']['do_flip']):
+				do_flip=bool(response['basic_transforms']['do_flip'])
+			#if(response['transforms']['flip_vert']):
+			flip_vert=bool(response['basic_transforms']['flip_vert'])
+			if(response['basic_transforms']['max_rotate']):
+				max_rotate=response['basic_transforms']['max_rotate']
+			if(response['basic_transforms']['max_zoom']):
+				max_zoom=response['basic_transforms']['max_zoom']
+			if(response['basic_transforms']['max_lighting']):
+				max_lighting=response['basic_transforms']['max_lighting']
+			if(response['basic_transforms']['max_warp']):
+				max_warp=response['basic_transforms']['max_warp']
+			if(response['basic_transforms']['p_affine']):
+				p_affine=response['basic_transforms']['p_affine']
+			if(response['basic_transforms']['p_lighting']):
+				p_lighting=response['basic_transforms']['p_lighting']
+			tfms = get_transforms(do_flip,flip_vert,max_rotate,max_zoom,max_lighting,max_warp,p_affine,p_lighting)
+		if(response['chosen_data_aug']=='zoom_crop'):
+			tfms = zoom_crop(scale=response['zoom_crop']['scale'], do_rand=response['zoom_crop']['do_rand'],p=response['zoom_crop']['p'])   
+		if(response['chosen_data_aug']=='manual'):
+			tras=list()
+			p=response['manual']
+			if(p['brightness']):
+				tras.append(brightness(change=p['brightness']['change']))
+			if(p['contrast']):
+				tras.append(contrast(scale=p['contrast']['scale']))
+			if(p['crop']):
+				tras.append(crop(size=p['crop']['size'],row_pct=p['crop']['row_pct'],col_pct=p['crop']['col_pct']))
+			if(p['crop_pad']):
+				tras.append(crop_pad(size=p['crop_pad']['size'],padding_mode=p['crop_pad']['padding_mode'],row_pct=p['crop']['row_pct'],col_pct=p['crop']['col_pct']))
+			if(p['dihedral']):
+				tras.append(dihedral(k=p['dihedral']['k']))
+			if(p['dihedral_affine']):
+				tras.append(dihedral_affine(k=p['dihedral']['k']))
+			if(p['flip_lr']):
+				tras.append(flip_lr())
+			if(p['flip_affine']):
+				tras.append(flip_affine())
+			if(p['jitter']):
+				tras.append(jitter(magnitude=p['jitter']['magnitude']))
+			if(p['pad']):
+				tras.append(pad(padding=p['pad']['padding'],mode=p['pad']['mode']))
+			if(p['rotate']):
+				tras.append(rotate(degrees=p['rotate']['degrees']))
+			if(p['rgb_randomize']):
+				tras.append(rgb_randomize(channel=p['rgb_randomize']['chosen_channels'],thresh=p['rgb_randomize']['chosen_thresh']))
+			if(p['skew']):
+				tras.append(skew(direction=p['skew']['direction'],invert=p['skew']['invert'],magnitude=p['skew']['magnitude']))
+			if(p['squish']):
+				tras.append(squish(scale=p['squish']['scale'],row_pct=p['squish']['row_pct'],col_pct=p['squish']['col_pct']))
+			if(p['symmetric_wrap']):
+				tras.append(symmetric_warp(magnitude=p['symmetric_wrap']['magnitude']))
+			if(p['tilt']):
+				tras.append(tilt(magnitude=p['tilt']['magnitude'],direction=p['tilt']['direction']))
+			if(p['zoom']):
+				tras.append(zoom(scale=p['zoom']['scale'],row_pct=p['zoom']['row_pct'],col_pct=p['zoom']['col_pct']))
+			#if(p['cutout']):
+			#  tras.append(cutout(length=p['cutout']['length'],n_holes=['cutout']['n_holes']))
+
+			tfms= tras
+		return tfms
+
+
 	def create_vision_databunch(response):
 		path = Path('./')
 
@@ -19,7 +84,8 @@ class DashVisionDatabunch:
 		# Add test
 
 		#for now
-		src = src.transform(get_transforms(), tfm_y=True)
+		tra=create_tranform(response)
+		src = src.transform(tra, tfm_y=True)
 
 		# manually putting extra args like collate_fn, if we pass stuff from dictionary, it will be taken as a string
 		return DashDatabunch.create_databunch(response, src, collate_fn=bb_pad_collate)
