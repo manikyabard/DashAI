@@ -29,7 +29,8 @@ class DashVisionDatabunch:
 				p_lighting=response['basic_transforms']['p_lighting']
 			tfms = get_transforms(do_flip,flip_vert,max_rotate,max_zoom,max_lighting,max_warp,p_affine,p_lighting)
 		if(response['chosen_data_aug']=='zoom_crop'):
-			tfms = zoom_crop(scale=response['zoom_crop']['scale'], do_rand=response['zoom_crop']['do_rand'],p=response['zoom_crop']['p'])   
+			sc=tuple(response['zoom_crop']['scale'])
+			tfms = zoom_crop(scale=sc, do_rand=response['zoom_crop']['do_rand'],p=response['zoom_crop']['p'])   
 		if(response['chosen_data_aug']=='manual'):
 			tras=list()
 			p=response['manual']
@@ -62,7 +63,8 @@ class DashVisionDatabunch:
 			if(p['squish']):
 				tras.append(squish(scale=p['squish']['scale'],row_pct=p['squish']['row_pct'],col_pct=p['squish']['col_pct']))
 			if(p['symmetric_wrap']):
-				tras.append(symmetric_warp(magnitude=p['symmetric_wrap']['magnitude']))
+				mag=tuple(p['symmetric_wrap']['magnitude'])
+				tras.append(symmetric_warp(magnitude=mag))
 			if(p['tilt']):
 				tras.append(tilt(magnitude=p['tilt']['magnitude'],direction=p['tilt']['direction']))
 			if(p['zoom']):
@@ -84,7 +86,7 @@ class DashVisionDatabunch:
 		# Add test
 
 		#for now
-		tra=create_tranform(response)
+		tra=create_tranform(response['vision']['transform'])
 		src = src.transform(tra, tfm_y=True)
 
 		# manually putting extra args like collate_fn, if we pass stuff from dictionary, it will be taken as a string
