@@ -65,7 +65,7 @@
         }
     },
     "label": {
-        "method": "from_folder",
+        "method": "from_df",
         "from_df": {
             "cols": 1,
             "label_cls": null,
@@ -245,10 +245,11 @@
     },
     "task": "vision",
     "vision": {
-        "subtask": "classification-single-label",
+        "subtask": "object-detection",
         "input": {
             "method": "from_folder",
             "from_folder": {
+                "path": "data/coco_tiny",
                 "extensions": null,
                 "recurse": true,
                 "exclude": null,

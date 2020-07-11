@@ -47,6 +47,7 @@ class DashDatabunch:
 				)
 
 			if response['validation']['method'] == 'idx':
+				df = pd.open_csv(response['csv_name'])
 				valid_idx = range(len(df)-response['validation']['idx']['valid_idx'], len(df))
 				src = src.split_by_idx(valid_idx)
 
@@ -81,7 +82,7 @@ class DashDatabunch:
 	def label_databunch(response, src):
 		# try:
 		if response['label']['method'] == 'from_df':      #TODO test it out
-			if response['label']['from_df']['classes']:
+			if not response['label']['from_df']['classes']:
 				src = src.label_from_df(cols=response['dep_var'])
 			else:
 				src.label_from_df(
