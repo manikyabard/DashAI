@@ -32,9 +32,9 @@ class DashTabularModel:
 	@staticmethod
 	def create_custom_tabular_model(data, layers, **kwargs):
 		emb_szs = data.get_emb_szs()
-		input_sz = 1 + len(data.cont_names)
+		input_sz = len(data.cont_names)
 		for x, y in emb_szs:
-			input_sz += x - y
+			input_sz += y
 		out_sz = data.c
 		assert layers[0].in_features == input_sz, f"Input size should be {input_sz} in {layers[0]} ie. the first layer"
 		assert layers[-1].out_features == out_sz, f"Output size should be {out_sz} in {layers[-1]} ie. the last layer"
@@ -42,7 +42,7 @@ class DashTabularModel:
 		return model
 	
 
-class DashCustomTabularModel(Module):
+class DashCustomTabularModel(nn.Module):
 	"Basic model for tabular data."
 	def __init__(self, emb_szs:ListSizes, n_cont:int, out_sz:int, layers, ps:Collection[float]=None,
 				 emb_drop:float=0., y_range:OptRange=None, bn_begin:bool=False):
