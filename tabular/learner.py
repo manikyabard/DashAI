@@ -22,9 +22,21 @@ class DashTabularLearner:
 		path = Path('./')
 		databunch = DashTabularDatabunch.create_tabular_databunch(response)
 		metrics = DashTabularMetric.create_tabular_metric(response)
-		# model = DashTabularModel.create_tabular_model(databunch, response['model'])
+		# if response["model"]["type"] == "default":
+		# 	model = DashTabularModel.create_tabular_model(databunch, response['model'])
+
 		loss = DashTabularLoss.create_tabular_loss(response['loss'])
 		opt = DashTabularOptimizer.create_tabular_optimizer(response['optimizer'])
+
+		# Test it out
+		if response["model"]["type"] == "custom":
+			layers = []
+			for l in response["model"]["custom"]["layers"]:
+				layers.append(eval(l))
+			model = DashTabularModel.create_custom_tabular_model(databunch, layers, **response["model"]["custom"]["extra_args"])
+			learn = Learner(databunch, model, metrics=metrics, loss_func=loss, opt_func=opt)
+			return learn
+
 
 		learn = tabular_learner(
 			databunch,

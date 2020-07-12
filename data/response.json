@@ -162,6 +162,12 @@
             "y_range": null,
             "use_bn": true,
             "bn_final": false
+        },
+        "custom": {
+            "layers": [],
+            "extra_args": {
+                "bn_begin": false
+            }
         }
     },
     "optimizer": {
