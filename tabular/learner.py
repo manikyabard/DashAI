@@ -15,9 +15,9 @@ import fastai
 class DashTabularLearner:
 
 	@staticmethod
-	def create_tabular_learner():
-		with open('./data/response.json') as f:
-			response = json.load(f)
+	def create_tabular_learner(response):
+		# with open('./data/response.json') as f:
+		# 	response = json.load(f)
 		
 		path = Path('./')
 		databunch = DashTabularDatabunch.create_tabular_databunch(response)
