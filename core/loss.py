@@ -1,6 +1,7 @@
-from fastai.layers import *
-from pathlib import Path
-import sys, os
+import os
+import sys
+
+from fastai import layers
 
 class DashLoss:
 
@@ -8,18 +9,8 @@ class DashLoss:
 	def create_loss(response):
 		try:
 			if response['type'] == 'pre-defined':
-				if response['pre-defined']['func'] == 'CrossEntropyFlat':
-					loss_func = CrossEntropyFlat
-
-				if response['pre-defined']['func'] == 'MSELossFlat':
-
-					loss_func = MSELossFlat
-
-				if response['pre-defined']['func'] == 'BCEFlat':
-					loss_func = BCEFlat
-
-				if response['pre-defined']['func'] == 'BCEWithLogitsFlat':
-					loss_func = BCEWithLogitsFlat
+				if hasattr(layers, '%s'%response['pre-defined']['func']):
+					loss_func = getattr(layers, '%s()'%response['pre-defined']['func'])
 			else:
 				#import response['custom']['fname']
 				func = fname.response['custom']['func']
