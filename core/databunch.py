@@ -82,14 +82,14 @@ class DashDatabunch:
 	def label_databunch(response, src):
 		# try:
 		if response['label']['method'] == 'from_df':      #TODO test it out
-			if not response['label']['from_df']['classes']:
+			if response['label']['from_df']['default']:
 				src = src.label_from_df(cols=response['dep_var'])
 			else:
-				src.label_from_df(
-					cols=response['label']['from_df']['cols'],
-					label_cls=response['label']['from_df']['label_cls'],
-					one_hot=response['label']['from_df']['one_hot'],
-					classes=response['label']['from_df']['classes']
+				src.label_from_df(**response['label']['from_df']
+					# cols=response['label']['from_df']['cols'],
+					# label_cls=eval(response['label']['from_df']['label_cls']),
+					# one_hot=response['label']['from_df']['one_hot'],
+					# classes=response['label']['from_df']['classes']
 				)
 
 		if response['label']['method'] == 'empty':
