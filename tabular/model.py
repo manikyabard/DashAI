@@ -34,7 +34,7 @@ class DashTabularModel:
 		emb_szs = data.get_emb_szs()
 		input_sz = 1 + len(data.cont_names)
 		for x, y in emb_szs:
-			input_sz += x - y + 1
+			input_sz += x - y
 		out_sz = data.c
 		assert layers[0].in_features == input_sz, f"Input size should be {input_sz} in {layers[0]} ie. the first layer"
 		assert layers[-1].out_features == out_sz, f"Output size should be {out_sz} in {layers[-1]} ie. the last layer"
