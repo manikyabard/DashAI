@@ -251,7 +251,7 @@
             "type": "default",
             "default": {
                 "out_sz": null,
-                "layers": null,
+                "layers": [64,64],
                 "emb_drop": 0,
                 "ps": null,
                 "y_range": null,
