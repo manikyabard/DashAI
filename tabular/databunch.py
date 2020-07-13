@@ -11,13 +11,8 @@ class DashTabularDatabunch:
 
 		procs = list()
 		if response['FillMissing']:
-
-			if response['FillMissing']['fill_strategy'] == 'MEDIAN':
-				fill_strategy = FillStrategy.MEDIAN
-			if response['FillMissing']['fill_strategy'] == 'COMMON':
-				fill_strategy = FillStrategy.COMMON
-			if response['FillMissing']['fill_strategy'] == 'CONSTANT':
-				fill_strategy = FillStrategy.CONSTANT
+			if hasattr(FillStrategy, f"{response['FillMissing']['fill_strategy']}"):
+				fill_strategy = getattr(FillStrategy, f"{response['FillMissing']['fill_strategy']}")
 
 			procs.append(partial(FillMissing, fill_strategy=fill_strategy,
 								fill_val=response['FillMissing']['fill_val'],
@@ -36,6 +31,7 @@ class DashTabularDatabunch:
 		src = TabularList.from_df(df, path=path, cat_names=cat_names, cont_names=cont_names, procs=procs)
 
 		src = DashDatabunch.split_databunch(response, src)
+		print(src)
 		src = DashDatabunch.label_databunch(response, src)
 
 		# Optional: add test
