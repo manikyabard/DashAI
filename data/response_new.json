@@ -1,6 +1,7 @@
 
 {
     "task": "vision",
+
     "core": {
         "data": {
             "bs": 3,
@@ -219,6 +220,7 @@
             }
         }
     },
+
     "tabular": {
         "input": {
             "csv_name": "./data/hello.csv",
@@ -266,9 +268,6 @@
             }
         }
     },
-    
-    "test_df": null,
-    
 
     "vision": {
         "subtask": "object-detection",
