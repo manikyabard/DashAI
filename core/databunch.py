@@ -100,13 +100,20 @@ class DashDatabunch:
 					'const': response_lab['label']['const']['const'],
 					'label_cls': response_lab['label']['const']['label_cls']
 				}
-
+			'''
 			# TODO Find a better way to do this
 			if response_lab['label']['method'] == 'from_func':
 				images, lbl_bbox = get_annotations('data/coco_tiny/train.json')
 				img2bboxd = dict(zip(images, lbl_bbox))
 
 				src = src.label_from_func(lambda o:img2bboxd[o.name])
+				return src
+			'''
+			if response_lab['label']['method'] == 'from_func':
+				#print(lambda x: PosixPath(response["vision"]["segmentation"]["path_lbl"])/f'{x.stem}_P{x.suffix}')
+				get_y_fn = lambda x: Path(response["vision"]["segmentation"]['path_lbl'])/f'{x.stem}_P{x.suffix}'
+				codes = np.loadtxt(Path(response["vision"]["segmentation"]["codes"]), dtype=str)
+				src=src.label_from_func(get_y_fn,classes=codes)
 				return src
 
 			if response_lab['label']['method'] == 're':
