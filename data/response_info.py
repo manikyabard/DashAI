@@ -1,19 +1,18 @@
 
 {
-    "task": "vision",
-
+    "task": "tabular",
     "core": {
         "data": {
-            "bs": 3,
-            "val_bs": null,
-            "device": null,
-            "no_check": false,
+            "bs": 64,       #Default
+            "val_bs": null, #Default
+            "device": null, #Default
+            "no_check": false, #Default
             "num_workers": 16,
             "validation": {
-                "method": "none",
+                "method": "none",  # [split_none, split_by_rand_pct, split_subsets, split_by_files, split_by_fname_file, split_by_folder, split_by_idx, split_by_idxs, split_by_list, split_by_valid_func, split_from_df]
                 "rand_pct": {
-                    "valid_pct": 0.2,
-                    "seed": null
+                    "valid_pct": 0.2,  #Default
+                    "seed": null   #Default
                 },
                 "idx": {
                     "csv_name": null,
@@ -48,24 +47,24 @@
                     "func": null
                 },
                 "from_df": {
-                    "col": null
+                    "col": null  #Default is 2
                 }
             },
     
             "label": {
-                "method": "from_df",
+                "method": "from_df",  # [label_empty, label_from_df, label_const, label_from_folder, label_from_func, label_from_re]
                 "from_df": {
                     "default":true,
-                    "cols": 1,
-                    "label_cls": null,
+                    "cols": 1,  #Default
+                    "label_cls": null,   #Default   options: null, FloatList, CategoryList, MultiCategoryList, EmptyLabelList
                     "items": null,
                     "label_delim": null,
                     "one_hot": false,
                     "classes": null
                 },
                 "const": {
-                    "const": 0,
-                    "label_cls": null
+                    "const": 0,  #Default
+                    "label_cls": null  #Default
                 },
                 "from_func": {
                     "fname": null,
@@ -81,59 +80,64 @@
             }
         },
         "metric": {
-            "methods": [
+            
+            #  Available options: [accuracy, accuracy_thresh, top_k_accuracy, dice, error_rate, mean_squared_error, mean_absolute_error,
+            #   mean_squared_logarithmic_error, exp_rmspe, root_mean_squared_error, fbeta, explained_variance, r2_score, Precision, Recall,
+            #   FBeta, ExplainedVariance, MatthewsCorreff, KappaScore, MultiLabelFbeta, auc_roc_score, roc_curve, AUROC]
+            
+            "methods": [            
                 "accuracy",
                 "error_rate",
                 "Precision"
             ],
             "accuracy_thresh": {
-                "thresh": 0.5,
-                "sigmoid": true
+                "thresh": 0.5,      #Default
+                "sigmoid": true      #Default
             },
             "top_k_accuracy": {
-                "k": 5
+                "k": 5      #Default
             },
             "dice": {
-                "iou": false,
-                "eps": 1e-8
+                "iou": false,      #Default
+                "eps": 1e-8      #Default
             },
             "fbeta": {
-                "thresh": 0.2,
-                "beta": 2,
-                "eps": 1e-9,
-                "sigmoid": true
+                "thresh": 0.2,      #Default
+                "beta": 2,      #Default
+                "eps": 1e-9,      #Default
+                "sigmoid": true      #Default
             },
             "Precision": {
-                "average": "binary",
-                "pos_label": 1,
-                "eps": 1e-9
+                "average": "binary",      #Default
+                "pos_label": 1,      #Default
+                "eps": 1e-9      #Default
             },
             "Recall": {
-                "average": "binary",
-                "pos_label": 1,
-                "eps": 1e-9
+                "average": "binary",      #Default
+                "pos_label": 1,      #Default
+                "eps": 1e-9      #Default
             },
             "FBeta": {
-                "average": "binary",
-                "pos_label": 1,
-                "eps": 1e-9,
-                "beta": 2
+                "average": "binary",      #Default
+                "pos_label": 1,      #Default
+                "eps": 1e-9,      #Default
+                "beta": 2      #Default
             },
             "KappaScore": {
                 "weights": null
             },
             "MultiLabelFbeta": {
-                "beta": 2,
-                "eps": 1e-15,
-                "thresh": 0.3,
-                "sigmoid": true,
-                "average": "micro"
+                "beta": 2,      #Default
+                "eps": 1e-15,      #Default
+                "thresh": 0.3,      #Default
+                "sigmoid": true,      #Default
+                "average": "micro"      #Default
             }
         },
         "loss": {
             "type": "pre-defined",
             "pre-defined": {
-                "func": "MSELossFlat"
+                "func": "MSELossFlat" # BCEFlat, BCEWithLogitsFlat, CrossEntropyFlat, MSELossFlat, NoopLoss, WassersteinLoss
             },
             "custom": {
                 "fname": null,
@@ -141,17 +145,17 @@
             }
         },
         "optimizer": {
-            "available_opts": [
-                "SGD",
-                "RMSProp",
-                "Adam",
-                "AdamW",
-                "Adadelta",
-                "Adagrad",
-                "SparseAdam",
-                "Adamax",
-                "ASGD"
-            ],
+            # "available_opts": [
+            #     "SGD",
+            #     "RMSProp",
+            #     "Adam",
+            #     "AdamW",
+            #     "Adadelta",
+            #     "Adagrad",
+            #     "SparseAdam",
+            #     "Adamax",
+            #     "ASGD"
+            # ],
             "chosen_opt": "ASGD",
             "arguments": {
                 "SGD": {
@@ -220,7 +224,6 @@
             }
         }
     },
-
     "tabular": {
         "input": {
             "csv_name": "./data/hello.csv",
@@ -238,22 +241,22 @@
         },
         "transform": {
             "FillMissing": {
-                "fill_strategy": "MEDIAN",
+                "fill_strategy": "MEDIAN",  # MEDIAN, COMMON, CONSTANT
                 "add_col": true,
-                "fill_val": 0
+                "fill_val": 0 #Filled with this if CONSTANT
             },
             "Categorify": true,
             "Normalize": true,
             "Datetime": {
                 "cols": [],
-                "cyclic": false
+                "cyclic": false #Bool
             }
         },
         "model": {
-            "type": "default",
+            "type": "default",  #Default, Custom
             "default": {
                 "out_sz": null,
-                "layers": [64,64],
+                "layers": null,
                 "emb_drop": 0,
                 "ps": null,
                 "y_range": null,
@@ -268,6 +271,9 @@
             }
         }
     },
+    
+    "test_df": null,
+    
 
     "vision": {
         "subtask": "object-detection",
