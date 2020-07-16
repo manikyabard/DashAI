@@ -10,7 +10,7 @@
             "num_workers": 16,
             "validation": {
                 "method": "by_rand_pct",
-                "by_rand_pct": {
+                "rand_pct": {
                     "valid_pct": 0.2,
                     "seed": null
                 },
