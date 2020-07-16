@@ -18,11 +18,11 @@ class DashVisionDatabunch:
 		# Add test
 
 
-		tra = DashVisionDatabunch.create_transform(response['vision']['transform'])
-		src = src.transform([tra,tra], tfm_y=True)
+		# tra = DashVisionDatabunch.create_transform(response['vision']['transform'])
+		# src = src.transform([tra,tra], tfm_y=True)
 
 		# manually putting extra args like collate_fn, if we pass stuff from dictionary, it will be taken as a string
-		return DashDatabunch.create_databunch(response, src, collate_fn=bb_pad_collate)
+		return DashDatabunch.create_databunch(response, src)
 
 	@staticmethod
 	def get_itemlist(response):
@@ -38,7 +38,7 @@ class DashVisionDatabunch:
 				noise_sz=response['subtask']['gan']['noise_sz'])
 
 		if response["input"]["method"] == "from_folder":
-			return ImageList.from_folder(response["input"]["from_folder"])
+			return ImageList.from_folder(**response["input"]["from_folder"])
 		if response["input"]["method"] == "from_csv":
 			return ImageList.from_csv(response["input"]["from_csv"])
 
