@@ -53,14 +53,12 @@
             },
     
             "label": {
-                "method": "from_folder",
+                "method": "from_df",
                 "from_df": {
-                    "default":false,
-                    "cols": 1,
+                    "cols": 0,
                     "label_cls": null,
-                    "items": null,
+
                     "label_delim": null,
-                    "one_hot": false,
                     "classes": null
                 },
                 "const": {
@@ -461,5 +459,20 @@
               }
             }
         }
+    },
+    "text": {
+        "input": {
+            "method": "from_csv",
+            "from_csv": {
+                "path": "data/imdb_sample",
+                "csv_name": "texts.csv",
+                "cols": 1
+
+            },
+            "from_folder": {
+                "path": null
+            }
+        },
+        "transforms": {}
     }
 }

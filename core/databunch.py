@@ -87,10 +87,7 @@ class DashDatabunch:
 		if hasattr(src, f"label_{response_lab['label']['method']}"):
 			# A bit specific to tabular, safe to remove the defaults
 			if response_lab['label']['method'] == 'from_df':      #TODO test it out
-				if response_lab['label']['from_df']['default']:
-					args = {'cols': response["tabular"]["input"]['dep_var']}
-				else:
-					args = response_lab['label']['from_df']
+				args = response_lab['label']['from_df']
 
 			if response_lab['label']['method'] == 'empty':
 				args = {}

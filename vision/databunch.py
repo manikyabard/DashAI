@@ -5,7 +5,6 @@ from path import Path
 
 
 
-# Only tested with Mnist and coco
 class DashVisionDatabunch:
 
 	def create_vision_databunch(response):
