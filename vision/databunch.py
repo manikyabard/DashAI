@@ -17,8 +17,6 @@ class DashVisionDatabunch:
 		src = DashDatabunch.label_databunch(response, src)
 
 		# Add test
-
-
 		tra = DashVisionDatabunch.create_transform(response['vision']['transform'])
 		src = src.transform(tra, tfm_y=True,size=response['vision']['transform']['size'])
 		#src = src.transform(tra)

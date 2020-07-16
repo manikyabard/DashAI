@@ -19,11 +19,12 @@ class DashDatabunch:
 			if hasattr(src, f"split_{response_split['validation']['method']}"):
 				if response_split['validation']['method'] == 'none':
 					args = {}
-
+				
 				if response_split['validation']['method'] == 'by_rand_pct':
 					args = {
-						'valid_pct': response_split['validation']['rand_pct']['valid_pct'],
-						'seed': response_split['validation']['rand_pct']['seed']
+						'valid_pct': response_split['validation']['by_rand_pct']['valid_pct'],
+						'seed': response_split['validation']['by_rand_pct']['seed']
+						
 					}
 
 				if response_split['validation']['method'] == 'subsets':
