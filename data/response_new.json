@@ -53,9 +53,9 @@
             },
     
             "label": {
-                "method": "for_lm",
+                "method": "from_df",
                 "from_df": {
-                    "cols": 0,
+                    "cols": "label",
                     "label_cls": null,
 
                     "label_delim": null,
@@ -473,6 +473,36 @@
                 "path": null
             }
         },
-        "transforms": {}
+        "transforms": {},
+        "model": {
+            "type": "classifier",
+            "classifier": {
+                "method": "default",
+                "default": {
+                    "arch": "AWD_LSTM",
+                    "extra": {
+                        "bptt":70,
+                        "max_len": 140,
+                        "config": null,
+                        "pretrained": true,
+                        "drop_mult": 1.0,
+                        "lin_ftrs": null,
+                        "ps": null
+                    }
+                }
+            },
+            "language_model": {
+                "method": "default",
+                "default": {
+                    "arch": "AWD_LSTM",
+                    "extra": {
+                        "config": null,
+                        "pretrained": true,
+                        "drop_mult": 1.0,
+                        "pretrained_fnames": null
+                    }
+                }
+            }
+        }
     }
 }
