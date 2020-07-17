@@ -268,6 +268,51 @@
     },
     
     "test_df": null,
+
+    "collab":{
+        "input": {
+            "csv_name": "./data/movie_lens_sample/ratings.csv",
+            "user_name": "userId",
+            "item_name": "movieId",
+            "rating": ["rating"],
+            "test_df": {
+                "has_test": false,
+                "csv_name": null
+            }
+        },
+        "transform": {
+            "FillMissing": {
+                "fill_strategy": "MEDIAN",
+                "add_col": true,
+                "fill_val": 0
+            },
+            "Categorify": true,
+            "Normalize": true,
+            "Datetime": {
+                "cols": [],
+                "cyclic": false
+            }
+        },
+        "model": {
+            "type": "default",
+            "default": {
+                "n_factor": 50,
+                "use_nn":true,
+                "layers": [],
+                "emb_drop": 0,
+                "ps": null,
+                "y_range": [0.0,5.0],
+                "use_bn": true,
+                "bn_final": false
+            },
+            "custom": {
+                "layers": [],
+                "extra_args": {
+                    "bn_begin": false
+                }
+            }
+        }
+    },
     
 
     "vision": {
