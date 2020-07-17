@@ -111,8 +111,12 @@ class DashDatabunch:
 					'pat': response_lab['label']['re']['pat'],
 					'full_path': response_lab['label']['re']['full_path']
 				}
+				
 			if response_lab['label']['method'] == 'from_folder':
 				args = {}
+
+			if response_lab['label']['method'] == 'for_lm':
+				args={}
 
 			return getattr(src, f"label_{response_lab['label']['method']}")(**args)
 
