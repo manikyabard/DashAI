@@ -53,7 +53,7 @@
             },
     
             "label": {
-                "method": "from_df",
+                "method": "for_lm",
                 "from_df": {
                     "cols": 0,
                     "label_cls": null,
