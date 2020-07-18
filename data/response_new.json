@@ -4,7 +4,7 @@
 
     "core": {
         "data": {
-            "bs": 3,
+            "bs": 8,
             "val_bs": null,
             "device": null,
             "no_check": false,
@@ -53,7 +53,7 @@
             },
     
             "label": {
-                "method": "from_df",
+                "method": "from_",
                 "from_df": {
                     "cols": "label",
                     "label_cls": null,
@@ -66,8 +66,8 @@
                     "label_cls": null
                 },
                 "from_func": {
-                    "fname": null,
-                    "func": null
+                    "fname": "data/func/img2bbox.py",
+                    "func": "func_img2bbox"
                 },
                 "from_re": {
                     "pat": null,
@@ -248,9 +248,9 @@
             }
         },
         "model": {
-            "type": "default",
+            "type": "custom",
             "default": {
-                "out_sz": null,
+                "out_sz": 3,
                 "layers": [64,64],
                 "emb_drop": 0,
                 "ps": null,
@@ -259,7 +259,7 @@
                 "bn_final": false
             },
             "custom": {
-                "layers": [],
+                "layers": ["nn.Linear(4, 5)", "nn.ReLU()", "nn.Linear(5, 3)"],
                 "extra_args": {
                     "bn_begin": false
                 }
@@ -394,7 +394,7 @@
               },
               "dihedral":
               {
-                  "k":0
+                  "k": null
               },
               "dihedral_affine":
               {

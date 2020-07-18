@@ -1,8 +1,9 @@
 from fastai.vision import *
+from fastai.vision.gan import GANItemList
+
 from core.databunch import DashDatabunch
 from fastai.data_block import *
 from path import Path
-
 
 
 class DashVisionDatabunch:
@@ -34,7 +35,8 @@ class DashVisionDatabunch:
 		if response['subtask'] == 'gan':
 			return GANItemList.from_folder(
 				path=response['input']['from_folder']['path'],
-				noise_sz=response['subtask']['gan']['noise_sz'])
+				noise_sz=response['subtask']['gan']['noise_sz']
+			)
 
 		if response["input"]["method"] == "from_folder":
 			return ImageList.from_folder(**response["input"]["from_folder"])
@@ -75,10 +77,10 @@ class DashVisionDatabunch:
 				tras.append(crop(size=p['crop']['size'],row_pct=p['crop']['row_pct'],col_pct=p['crop']['col_pct']))
 			if(p['crop_pad']):
 				tras.append(crop_pad(size=p['crop_pad']['size'],padding_mode=p['crop_pad']['padding_mode'],row_pct=p['crop']['row_pct'],col_pct=p['crop']['col_pct']))
-			if(p['dihedral']):
-				tras.append(dihedral(k=p['dihedral']['k']))
-			if(p['dihedral_affine']):
-				tras.append(dihedral_affine(k=p['dihedral']['k']))
+			# if(p['dihedral']):
+			# 	tras.append(dihedral(k=p['dihedral']['k']))
+			# if(p['dihedral_affine']):
+			# 	tras.append(dihedral_affine(k=p['dihedral']['k']))
 			if(p['flip_lr']):
 				tras.append(flip_lr())
 			if(p['flip_affine']):
@@ -105,7 +107,5 @@ class DashVisionDatabunch:
 			#if(p['cutout']):
 			#  tras.append(cutout(length=p['cutout']['length'],n_holes=['cutout']['n_holes']))
 
-			tfms= tras
+			tfms = (tras, tras)
 		return tfms
-			
-	
