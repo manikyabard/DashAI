@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="{{ url_for('static',filename='styles/style.css') }}" type="text/css" rel="stylesheet"/>
+  <title>Helper</title>
+</head>
+
+<body >
+  <section>
+      <h1 style="text-align: center;">DashAI API Helper</h1>
+      <hr>
+      <div id="route">
+        <h2>/generate</h2>
+        <h3 id="tag">POST</h3>
+        <p>This route will generate the model using the json </p>
+      </div>
+      <div id="route">
+        <h2>/train</h2>
+        <h3 id="tag">GET</h3>
+        <p>This route will start training and display logs in realtime </p>
+      </div>
+  </section>
+</body>
+
+</html>
