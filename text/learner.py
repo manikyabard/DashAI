@@ -7,6 +7,7 @@ from .databunch import DashTextDatabunch
 
 import fastai
 import torch.optim
+from fastai.text.models.transformer import init_transformer
 
 
 class DashTextLearner:
@@ -27,12 +28,40 @@ class DashTextLearner:
     
     @staticmethod
     def create_text_lm_learner_default(data, response):
+
+        if response["arch"] == 'AWD_LSTM':
+            config = response['configs']['AWD_LSTM']
+
+        if response["arch"] == 'Transformer':
+            config = response['configs']['Transformer']
+            config['act'] = eval(config['act'])
+            config['init'] = eval(config['init'])
+
+        if response["arch"] == 'TransformerXL':
+            config = response['configs']['TransformerXL']
+            config['act'] = eval(config['act'])
+            config['init'] = eval(config['init'])
+        
         arch = eval(response['arch'])
-        return language_model_learner(data, arch, **response['extra'])
+        return language_model_learner(data, arch, config = config, **response['extra'])
 
 
     @staticmethod
     def create_text_classifier_learner_default(data, response):
+
+        if response["arch"] == 'AWD_LSTM':
+            config = response['configs']['AWD_LSTM']
+
+        if response["arch"] == 'Transformer':
+            config = response['configs']['Transformer']
+            config['act'] = eval(config['act'])
+            config['init'] = eval(config['init'])
+
+        if response["arch"] == 'TransformerXL':
+            config = response['configs']['TransformerXL']
+            config['act'] = eval(config['act'])
+            config['init'] = eval(config['init'])
+
         arch = eval(response['arch'])
-        return text_classifier_learner(data, arch, **response['extra'])
+        return text_classifier_learner(data, arch, config = config, **response['extra'])
 
