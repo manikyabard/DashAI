@@ -55,12 +55,10 @@
             "label": {
                 "method": "from_",
                 "from_df": {
-                    "default":true,
-                    "cols": 1,
+                    "cols": "label",
                     "label_cls": null,
-                    "items": null,
+
                     "label_delim": null,
-                    "one_hot": false,
                     "classes": null
                 },
                 "const": {
@@ -270,7 +268,7 @@
     },
 
     "vision": {
-        "subtask": "object-detection",
+        "subtask": "classification-single-label",
         "input": {
             "method": "from_folder",
             "from_folder": {
@@ -300,6 +298,55 @@
         },
         "object-detection": {},
         "points": {},
+        "model": {
+            "type": "custom",
+            "cnn": {
+                "method": "default",
+                "default": {
+                    "arch": "resnet18",
+                    "extra":{
+                        "cut": null,
+                        "pretrained": true,
+                        "lin_ftrs": [512],
+                        "ps": 0.5,
+                        "custom_head": null,
+                        "split_on": null,
+                        "bn_final": false,
+                        "concat_pool": true,
+                        "init": "nn.init.kaiming_normal_"
+                    }
+                }
+            },
+            "unet": {
+                "method": "default",
+                "default": {
+                    "arch": "resnet18",
+                    "extra":{
+                        "cut": null,
+                        "pretrained": true,
+                        "split_on": null,
+                        "blur_final": true,
+                        "norm_type": null,
+                        "blur": false,
+                        "self_attention": false,
+                        "y_range": null,
+                        "last_cross": true,
+                        "bottle": false
+                    }
+                }
+            },
+            "custom": {
+                "layers": ["nn.Conv2d(3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)",
+                  "nn.ReLU(inplace=True)",
+                  "nn.Conv2d(64, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)",
+                  "nn.Flatten()",
+                  "nn.Linear(in_features=100352, out_features=2, bias=True)"
+                  ],
+                "extra": {
+        
+                }
+            }
+        },
         "transform":
         {
             "size":24,
@@ -410,6 +457,164 @@
                   "n_holes":1,
                   "length":40
               }
+            }
+        }
+    },
+    "text": {
+        "input": {
+            "method": "from_csv",
+            "from_csv": {
+                "path": "data/imdb_sample",
+                "csv_name": "texts.csv",
+                "cols": 1
+
+            },
+            "from_folder": {
+                "path": null
+            }
+        },
+        "transforms": {},
+        "model": {
+            "type": "classifier",
+            "classifier": {
+                "method": "default",
+                "default": {
+                    "arch": "AWD_LSTM",
+                    "extra": {
+                        "bptt":70,
+                        "max_len": 140,
+                        "pretrained": true,
+                        "drop_mult": 1.0,
+                        "lin_ftrs": null,
+                        "ps": null
+                    },
+                    "configs": {
+                        "AWD_LSTM": {
+                            "bidir": false,
+                            "emb_sz": 400,
+                            "embed_p": 0.02,
+                            "hidden_p": 0.15,
+                            "input_p": 0.25,
+                            "n_hid": 1152,
+                            "n_layers": 3,
+                            "output_p": 0.1,
+                            "pad_token": 1,
+                            "qrnn": false,
+                            "weight_p": 0.2
+                        },
+                        "Transformer": {
+                            "ctx_len":512,
+                            "n_layers":12,
+                            "n_heads":12, 
+                            "d_model":768, 
+                            "d_head":64, 
+                            "d_inner":3072, 
+                            "resid_p":0.1, 
+                            "attn_p":0.1,
+                            "ff_p":0.1, 
+                            "embed_p":0.1, 
+                            "output_p":0.0, 
+                            "bias":true, 
+                            "scale":true, 
+                            "act":"Activation.GeLU", 
+                            "double_drop":false,
+                            "init":"init_transformer", 
+                            "mask":false
+                        },
+                        "TransformerXL": {
+                            "ctx_len":150, 
+                            "n_layers":12, 
+                            "n_heads":10, 
+                            "d_model":410, 
+                            "d_head": 41, 
+                            "d_inner":2100, 
+                            "resid_p":0.1, 
+                            "attn_p":0.1,
+                            "ff_p":0.1, 
+                            "embed_p":0.1, 
+                            "output_p":0.1, 
+                            "bias":false, 
+                            "scale":true, 
+                            "act":"Activation.ReLU", 
+                            "double_drop":true,
+                            "init":"init_transformer", 
+                            "mem_len":150, 
+                            "mask":true
+                        }
+                    }
+                }
+            },
+            "language_model": {
+                "method": "default",
+                "default": {
+                    "arch": "TransformerXL",
+                    "extra": {
+                        "pretrained": false,
+                        "drop_mult": 1.0,
+                        "pretrained_fnames": null
+                    },
+                    "configs": {
+                        "AWD_LSTM": {
+                            "bidir": false,
+                            "emb_sz": 400,
+                            "embed_p": 0.02,
+                            "hidden_p": 0.15,
+                            "input_p": 0.25,
+                            "n_hid": 1152,
+                            "n_layers": 3,
+                            "out_bias": true,
+                            "output_p": 0.1,
+                            "pad_token": 1,
+                            "qrnn": false,
+                            "tie_weights": true,
+                            "weight_p": 0.2
+                        },
+                        "Transformer": {
+                            "ctx_len":512,
+                            "n_layers":12,
+                            "n_heads":12, 
+                            "d_model":768, 
+                            "d_head":64, 
+                            "d_inner":3072, 
+                            "resid_p":0.1, 
+                            "attn_p":0.1,
+                            "ff_p":0.1, 
+                            "embed_p":0.1, 
+                            "output_p":0.0, 
+                            "bias":true, 
+                            "scale":true, 
+                            "act":"Activation.GeLU", 
+                            "double_drop":false,
+                            "tie_weights":true, 
+                            "out_bias":false,
+                            "init":"init_transformer", 
+                            "mask":false
+                        },
+                        "TransformerXL": {
+                            "ctx_len":150, 
+                            "n_layers":12, 
+                            "n_heads":10, 
+                            "d_model":410, 
+                            "d_head": 41, 
+                            "d_inner":2100, 
+                            "resid_p":0.1, 
+                            "attn_p":0.1,
+                            "ff_p":0.1, 
+                            "embed_p":0.1, 
+                            "output_p":0.1, 
+                            "bias":false, 
+                            "scale":true, 
+                            "act":"Activation.ReLU", 
+                            "double_drop":true,
+                            "tie_weights":true, 
+                            "out_bias":true, 
+                            "init":"init_transformer", 
+                            "mem_len":150, 
+                            "mask":true
+                        }
+                    }
+
+                }
             }
         }
     }
