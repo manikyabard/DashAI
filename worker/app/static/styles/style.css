@@ -1,0 +1,28 @@
+body {
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+section {
+    width: 90%; 
+    padding: 10px;
+    background-color: gainsboro;
+    border-radius: 10px;
+}
+
+#route {
+    margin-bottom: 5px;
+    padding: 0px 15px 5px 15px;
+    border-radius: 5px;
+    background-color: rgb(211, 211, 211);
+}
+
+#tag {
+    background-color: deepskyblue;
+    border-radius: 5px; 
+    padding: 5px; 
+    width: 50px;
+    text-align: center;
+}
