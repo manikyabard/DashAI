@@ -9,8 +9,8 @@
 - [ ] Competition End 25th August
 
 ### FrontEnd timeline
-- [ ] API for Tabular 17th July
-- [ ] Flask Server 17th July
+- [X] API for Tabular 17th July
+- [X] Flask Server 17th July
 - [ ] FrontEnd Tabular 19th July
 - [ ] Tabular System Integration 20th July
 - [ ] Tabular Testing 21st July
