@@ -1,11 +1,11 @@
 from fastai.vision import *
+from fastai.vision.gan import GANItemList
+
 from core.databunch import DashDatabunch
 from fastai.data_block import *
 from path import Path
 
 
-
-# Only tested with Mnist and coco
 class DashVisionDatabunch:
 
 	def create_vision_databunch(response):
@@ -23,7 +23,7 @@ class DashVisionDatabunch:
 		#print(tra[0])
 		#print(tra[1])
 		# manually putting extra args like collate_fn, if we pass stuff from dictionary, it will be taken as a string
-		return DashDatabunch.create_databunch(response, src, collate_fn=bb_pad_collate)
+		return DashDatabunch.create_databunch(response, src)
 
 	@staticmethod
 	def get_itemlist(response):
@@ -223,7 +223,3 @@ class DashVisionDatabunch:
 					tras.append(cutout(length=(p['cutout']['l_length'],p['cutout']['h_length']),n_holes=(p['cutout']['l_n_holes'],p['cutout']['h_n_holes'])))
 				tfms_2= tras
 		return (tfms_1,tfms_2)
-
-
-			
-	

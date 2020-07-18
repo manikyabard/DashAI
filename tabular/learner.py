@@ -29,6 +29,16 @@ class DashTabularLearner:
 		
 		loss = DashTabularLoss.create_tabular_loss(response["core"]['loss'])
 		opt = DashTabularOptimizer.create_tabular_optimizer(response["core"]['optimizer'])
+
+		# learn = Learner(
+		# 	databunch,
+		# 	model,
+		# 	metrics=metrics,
+		# 	opt_func=opt,
+		# 	loss_func=loss
+		# )
+
+		# return learn
 		
 		# Test it out
 		if response["tabular"]["model"]["type"] == "custom":
@@ -40,7 +50,7 @@ class DashTabularLearner:
 		
 		learn = tabular_learner(
 			databunch,
-			layers=[200, 100],
+			layers=response['tabular']['model']['default']['layers'],
 			metrics=metrics,
 			opt_func=opt,
 			loss_func=loss  # Passing loss gives errors
