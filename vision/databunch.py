@@ -40,9 +40,9 @@ class DashVisionDatabunch:
 		if response["vision"]["subtask"] == "segmentation":
 			return SegmentationItemList.from_folder(path=response["vision"]["input"]["from_folder"]["path"])
 		if response["vision"]["input"]["method"] == "from_folder":
-			return ImageList.from_folder(response["vision"]["input"]["from_folder"])
+			return ImageList.from_folder(**response["vision"]["input"]["from_folder"])
 		if response["vision"]["input"]["method"] == "from_csv":
-			return ImageList.from_csv(response["vision"]["input"]["from_csv"])
+			return ImageList.from_csv(**response["vision"]["input"]["from_csv"])
 
 	@staticmethod
 	def create_transform(response):
