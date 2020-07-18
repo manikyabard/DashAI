@@ -10,7 +10,7 @@
             "num_workers": 16,
             "validation": {
                 "method": "none",
-                "rand_pct": {
+                "by_rand_pct": {
                     "valid_pct": 0.2,
                     "seed": null
                 },
@@ -52,7 +52,7 @@
             },
     
             "label": {
-                "method": "from_",
+                "method": "for_lm",
                 "from_df": {
                     "cols": "label",
                     "label_cls": null,
@@ -265,6 +265,51 @@
             }
         }
     },
+    
+    "collab":{
+        "input": {
+            "csv_name": "./data/movie_lens_sample/ratings.csv",
+            "user_name": "userId",
+            "item_name": "movieId",
+            "rating": ["rating"],
+            "test_df": {
+                "has_test": false,
+                "csv_name": null
+            }
+        },
+        "transform": {
+            "FillMissing": {
+                "fill_strategy": "MEDIAN",
+                "add_col": true,
+                "fill_val": 0
+            },
+            "Categorify": true,
+            "Normalize": true,
+            "Datetime": {
+                "cols": [],
+                "cyclic": false
+            }
+        },
+        "model": {
+            "type": "default",
+            "default": {
+                "n_factor": 50,
+                "use_nn":true,
+                "layers": [],
+                "emb_drop": 0,
+                "ps": null,
+                "y_range": [0.0,5.0],
+                "use_bn": true,
+                "bn_final": false
+            },
+            "custom": {
+                "layers": [],
+                "extra_args": {
+                    "bn_begin": false
+                }
+            }
+        }
+    },
 
     "vision": {
         "subtask": "classification-single-label",
@@ -298,7 +343,7 @@
         "object-detection": {},
         "points": {},
         "model": {
-            "type": "custom",
+            "type": "cnn",
             "cnn": {
                 "method": "default",
                 "default": {
@@ -474,7 +519,7 @@
         },
         "transforms": {},
         "model": {
-            "type": "classifier",
+            "type": "language_model",
             "classifier": {
                 "method": "default",
                 "default": {

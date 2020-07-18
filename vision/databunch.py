@@ -12,13 +12,13 @@ class DashVisionDatabunch:
 		path = Path('./')
 
 		src = DashVisionDatabunch.get_itemlist(response)
-		#src = DashDatabunch.split_databunch(response, src)
-		src=src.split_by_rand_pct()
+		src = DashDatabunch.split_databunch(response, src)
+		# src=src.split_by_rand_pct()
 		src = DashDatabunch.label_databunch(response, src)
 
 		# Add test
 		tra = DashVisionDatabunch.create_transform(response['vision']['transform'])
-		src = src.transform(tra, tfm_y=True,size=response['vision']['transform']['size'])
+		src = src.transform(tra, tfm_y=False,size=response['vision']['transform']['size'])
 		#src = src.transform(tra)
 		#print(tra[0])
 		#print(tra[1])
