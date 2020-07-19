@@ -32,9 +32,9 @@ class DashCollabDatabunch:
 		rating = response_col['input']['rating']
 		cat_names = [user_name,item_name]
 		src = CollabList.from_df(df, cat_names=cat_names, procs=procs)
-		#src = DashDatabunch.split_databunch(response, src)
+		src = DashDatabunch.split_databunch(response, src)
 		#src = DashDatabunch.label_databunch(response, src)
-		src=src.split_by_rand_pct(valid_pct=0.2,seed=None)
+		#src=src.split_by_rand_pct(valid_pct=0.2,seed=None)
 		src=src.label_from_df(cols=rating)
 		#if test is not None: src.add_test(CollabList.from_df(test, cat_names=cat_names))
 
