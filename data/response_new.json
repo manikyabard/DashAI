@@ -1,5 +1,5 @@
 {
-    "task": "vision",
+    "task": "text",
 
     "core": {
         "data": {
@@ -50,13 +50,12 @@
                     "col": null
                 }
             },
-    
+
             "label": {
-                "method": "for_lm",
+                "method": "from_df",
                 "from_df": {
                     "cols": "label",
                     "label_cls": null,
-
                     "label_delim": null,
                     "classes": null
                 },
@@ -519,7 +518,7 @@
         },
         "transforms": {},
         "model": {
-            "type": "language_model",
+            "type": "classifier",
             "classifier": {
                 "method": "default",
                 "default": {
@@ -591,7 +590,7 @@
             "language_model": {
                 "method": "default",
                 "default": {
-                    "arch": "TransformerXL",
+                    "arch": "AWD_LSTM",
                     "extra": {
                         "pretrained": false,
                         "drop_mult": 1.0,
