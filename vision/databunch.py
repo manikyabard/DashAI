@@ -12,8 +12,8 @@ class DashVisionDatabunch:
 		path = Path('./')
 
 		src = DashVisionDatabunch.get_itemlist(response)
-		#src = DashDatabunch.split_databunch(response, src)
-		src=src.split_by_rand_pct()
+		src = DashDatabunch.split_databunch(response, src)
+		# src=src.split_by_rand_pct()
 		src = DashDatabunch.label_databunch(response, src)
 
 		# Add test
