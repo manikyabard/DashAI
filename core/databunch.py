@@ -13,72 +13,74 @@ class DashDatabunch:
 
 	@staticmethod
 	def split_databunch(response, src):
-		try:
-			path = Path('./')
-			response_split = response["core"]["data"]
-			if hasattr(src, f"split_{response_split['validation']['method']}"):
-				if response_split['validation']['method'] == 'none':
-					args = {}
+		# try:
+		path = Path('./')
+		response_split = response["core"]["data"]
+		if hasattr(src, f"split_{response_split['validation']['method']}"):
+			if response_split['validation']['method'] == 'none':
+				args = {}
+			
+			if response_split['validation']['method'] == 'by_rand_pct':
+				args = {
+					'valid_pct': response_split['validation']['by_rand_pct']['valid_pct'],
+					'seed': response_split['validation']['by_rand_pct']['seed']
+					
+				}
 
-				if response_split['validation']['method'] == 'by_rand_pct':
-					args = {
-						'valid_pct': response_split['validation']['rand_pct']['valid_pct'],
-						'seed': response_split['validation']['rand_pct']['seed']
-					}
+			if response_split['validation']['method'] == 'subsets':
+				args = {
+					'train_size': response_split['validation']['subsets']['train_size'],
+					'valid_size': response_split['validation']['subsets']['valid_size'],
+					'seed': response_split['validation']['subsets']['seed']
+				}
 
-				if response_split['validation']['method'] == 'subsets':
-					args = {
-						'train_size': response_split['validation']['subsets']['train_size'],
-						'valid_size': response_split['validation']['subsets']['valid_size'],
-						'seed': response_split['validation']['subsets']['seed']
-					}
+			if response_split['validation']['method'] == 'by_files':       #TODO: test it out
+				args = {'valid_name': response_split['validation']['files']['valid_names']}
 
-				if response_split['validation']['method'] == 'by_files':       #TODO: test it out
-					args = {'valid_name': response_split['validation']['files']['valid_names']}
+			if response_split['validation']['method'] == 'by_fname_file':
+				args = {
+					'fname': response_split['validation']['fname_files']['fname'],
+					'path': response_split['validation']['fname_files']['path']
+				}
 
-				if response_split['validation']['method'] == 'by_fname_file':
-					args = {
-						'fname': response_split['validation']['fname_files']['fname'],
-						'path': response_split['validation']['fname_files']['path']
-					}
+			if response_split['validation']['method'] == 'by_folder':
+				args = {
+					'train': response_split['validation']['folder']['train'],
+					'valid': response_split['validation']['folder']['valid']
+				}
+			# For tabular, same csv; for vision, csv with labels
+			if response_split['validation']['method'] == 'by_idx':
+				df = pd.open_csv(response_split['validation']['csv_name'])
+				valid_idx = range(len(df)-response_split['validation']['idx']['valid_idx'], len(df))
+				args = {'valid_idx': valid_idx}
 
-				if response_split['validation']['method'] == 'by_folder':
-					args = {
-						'train': response_split['validation']['folder']['train'],
-						'valid': response_split['validation']['folder']['valid']
-					}
-				# For tabular, same csv; for vision, csv with labels
-				if response_split['validation']['method'] == 'by_idx':
-					df = pd.open_csv(response_split['validation']['csv_name'])
-					valid_idx = range(len(df)-response_split['validation']['idx']['valid_idx'], len(df))
-					args = {'valid_idx': valid_idx}
+			if response_split['validation']['method'] == 'by_idxs':
+				args = {
+					'train_idx': response_split['validation']['idxs']['train_idx'],
+					'valid_idx': response_split['validation']['idxs']['valid_idx']
+				}
 
-				if response_split['validation']['method'] == 'by_idxs':
-					args = {
-						'train_idx': response_split['validation']['idxs']['train_idx'],
-						'valid_idx': response_split['validation']['idxs']['valid_idx']
-					}
+			if response_split['validation']['method'] == 'by_list':
+				args = {
+					'train': response_split['validation']['list']['train'],
+					'valid': response_split['validation']['list']['valid']
+				}
 
-				if response_split['validation']['method'] == 'by_list':
-					args = {
-						'train': response_split['validation']['list']['train'],
-						'valid': response_split['validation']['list']['valid']
-					}
+			# Probably won't work right now. Need to use impportlib or something similar
+			# if response_split['validation']['method'] == 'valid_func':
+			# 	funcfile = response_split['validation']['valid_func']['fname']
+			# 	import funcfile as fname
+			# 	func = fname.response_split['validation']['valid_func']['func']
+			# 	src = src.split_by_valid_func(func)
 
-				# Probably won't work right now. Need to use impportlib or something similar
-				# if response_split['validation']['method'] == 'valid_func':
-				# 	funcfile = response_split['validation']['valid_func']['fname']
-				# 	import funcfile as fname
-				# 	func = fname.response_split['validation']['valid_func']['func']
-				# 	src = src.split_by_valid_func(func)
+			if response_split['validation']['method'] == 'from_df':
+				args = {'col': response_split['validation']['from_df']['col']}
 
-				if response_split['validation']['method'] == 'from_df':
-					args = {'col': response_split['validation']['from_df']['col']}
+			# print(getattr(src, f"split_{response_split['validation']['method']}")(**args))
+			return getattr(src, f"split_{response_split['validation']['method']}")(**args)
 
-				return getattr(src, f"split_{response_split['validation']['method']}")(**args)
-
-		except Exception as e:
-			print(e)
+		# except Exception as e:
+		# 	print(e)
 
 	@staticmethod
 	def label_databunch(response, src):
@@ -87,10 +89,7 @@ class DashDatabunch:
 		if hasattr(src, f"label_{response_lab['label']['method']}"):
 			# A bit specific to tabular, safe to remove the defaults
 			if response_lab['label']['method'] == 'from_df':      #TODO test it out
-				if response_lab['label']['from_df']['default']:
-					args = {'cols': response["tabular"]["input"]['dep_var']}
-				else:
-					args = response_lab['label']['from_df']
+				args = response_lab['label']['from_df']
 
 			if response_lab['label']['method'] == 'empty':
 				args = {}
@@ -100,7 +99,7 @@ class DashDatabunch:
 					'const': response_lab['label']['const']['const'],
 					'label_cls': response_lab['label']['const']['label_cls']
 				}
-
+			'''
 			# TODO Find a better way to do this
 			if response_lab['label']['method'] == 'from_func':
 				images, lbl_bbox = get_annotations('data/coco_tiny/train.json')
@@ -108,14 +107,25 @@ class DashDatabunch:
 
 				src = src.label_from_func(lambda o:img2bboxd[o.name])
 				return src
+			'''
+			if response_lab['label']['method'] == 'from_func':
+				#print(lambda x: PosixPath(response["vision"]["segmentation"]["path_lbl"])/f'{x.stem}_P{x.suffix}')
+				get_y_fn = lambda x: Path(response["vision"]["segmentation"]['path_lbl'])/f'{x.stem}_P{x.suffix}'
+				codes = np.loadtxt(Path(response["vision"]["segmentation"]["codes"]), dtype=str)
+				src=src.label_from_func(get_y_fn,classes=codes)
+				return src
 
 			if response_lab['label']['method'] == 're':
 				args = {
 					'pat': response_lab['label']['re']['pat'],
 					'full_path': response_lab['label']['re']['full_path']
 				}
+				
 			if response_lab['label']['method'] == 'from_folder':
 				args = {}
+
+			if response_lab['label']['method'] == 'for_lm':
+				args={}
 
 			return getattr(src, f"label_{response_lab['label']['method']}")(**args)
 
