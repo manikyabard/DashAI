@@ -11,18 +11,19 @@ class DashTabularDatabunch:
 		df = pd.read_csv(path/f'{response_tab["input"]["csv_name"]}')
 
 		procs = list()
+		#print(f"{response_tab['transform']['FillMissing']['fill_strategy']}")
 		if response_tab["transform"]['FillMissing']:
-			if hasattr(FillStrategy, f"{response_tab["transform"]['FillMissing']['fill_strategy']}"):
-				fill_strategy = getattr(FillStrategy, f"{response_tab["transform"]['FillMissing']['fill_strategy']}")
+			if hasattr(FillStrategy, f"{response_tab['transform']['FillMissing']['fill_strategy']}"):
+				fill_strategy = getattr(FillStrategy, f"{response_tab['transform']['FillMissing']['fill_strategy']}")
 
 			procs.append(partial(FillMissing, fill_strategy=fill_strategy,
-								fill_val=response_tab["transform"]['FillMissing']['fill_val'],
-								add_col = response_tab["transform"]['FillMissing']['add_col']))
+								fill_val=response_tab['transform']['FillMissing']['fill_val'],
+								add_col = response_tab['transform']['FillMissing']['add_col']))
 
-		if response_tab["transform"]['Categorify']:
+		if response_tab['transform']['Categorify']:
 			procs.append(Categorify)
 
-		if response_tab["transform"]['Normalize']:
+		if response_tab['transform']['Normalize']:
 			procs.append(Normalize)
 
 		procs = listify(procs)
@@ -35,9 +36,9 @@ class DashTabularDatabunch:
 		print(src)
 		src = DashDatabunch.label_databunch(response, src)
 
-		# Optional: add test
+		# Optional: add test  #TODO Test it out
 		if response["tabular"]["input"]['test_df']["has_test"]:
-			test_df = pd.read_csv(path/f'{response["tabular"]["input"]['test_df']['csv_name']}')
+			test_df = pd.read_csv(path/f"{response['tabular']['input']['test_df']['csv_name']}")
 			src.add_test(TabularList.from_df(test_df,
 						 cat_names=cat_names,
 						 cont_names=cont_names,

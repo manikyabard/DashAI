@@ -1,13 +1,13 @@
-from vision.databunch import DashVisionDatabunch
+from vision.learner import DashVisionLearner
 import json
-import torch.optim
 import path
 
 path = path.Path('./')
-with open('./data/response.json') as f:
-			response = json.load(f)
-databunch = DashVisionDatabunch.create_vision_databunch(response)
-print('created databunch')
-print(databunch)
-# databunch.show_batch(rows=2, figsize=(6,6))
-print('done')
+with open('./data/response_joe.json') as f:
+	response = json.load(f)
+learn = DashVisionLearner.create_vision_learner(response)
+
+print('Created learner!')
+print('Now training...')
+learn.fit_one_cycle(1)
+print('Done!')

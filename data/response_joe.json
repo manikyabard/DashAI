@@ -1,0 +1,640 @@
+
+{
+    "task": "vision",
+    "core": {
+        "data": {
+            "bs": 3,
+            "val_bs": null,
+            "device": null,
+            "no_check": false,
+            "num_workers": 16,
+            "validation": {
+                "method": "by_rand_pct",
+                "by_rand_pct": {
+                    "valid_pct": 0.2,
+                    "seed": null
+                },
+                "idx": {
+                    "csv_name": null,
+                    "valid_idx": 20
+                },
+                "subsets": {
+                    "train_size": 0.08,
+                    "valid_size": 0.2,
+                    "seed": null
+                },
+                "files": {
+                    "valid_names": null
+                },
+                "fname_file": {
+                    "fname": null,
+                    "path": null
+                },
+                "folder": {
+                    "train": "train",
+                    "valid": "train"
+                },
+                "idxs": {
+                    "train_idx": null,
+                    "valid_idx": null
+                },
+                "list": {
+                    "train": null,
+                    "valid": null
+                },
+                "valid_func": {
+                    "fname": null,
+                    "func": null
+                },
+                "from_df": {
+                    "col": null
+                }
+            },
+    
+            "label": {
+                "method": "from_folder",
+                "from_df": {
+                    "default":true,
+                    "cols": 1,
+                    "label_cls": null,
+                    "items": null,
+                    "label_delim": null,
+                    "one_hot": false,
+                    "classes": null
+                },
+                "const": {
+                    "const": 0,
+                    "label_cls": null
+                },
+                "from_func": {
+                    "fname": null,
+                    "func": null
+                },
+                "from_re": {
+                    "pat": null,
+                    "full_path": false
+                },
+                "from_folder": {
+                    "label_cls": null
+                }
+            }
+        },
+        "metric": {
+            "methods": [
+
+                "Precision"
+            ],
+            "accuracy_thresh": {
+                "thresh": 0.5,
+                "sigmoid": true
+            },
+            "top_k_accuracy": {
+                "k": 5
+            },
+            "dice": {
+                "iou": false,
+                "eps": 1e-8
+            },
+            "fbeta": {
+                "thresh": 0.2,
+                "beta": 2,
+                "eps": 1e-9,
+                "sigmoid": true
+            },
+            "Precision": {
+                "average": "binary",
+                "pos_label": 1,
+                "eps": 1e-9
+            },
+            "Recall": {
+                "average": "binary",
+                "pos_label": 1,
+                "eps": 1e-9
+            },
+            "FBeta": {
+                "average": "binary",
+                "pos_label": 1,
+                "eps": 1e-9,
+                "beta": 2
+            },
+            "KappaScore": {
+                "weights": null
+            },
+            "MultiLabelFbeta": {
+                "beta": 2,
+                "eps": 1e-15,
+                "thresh": 0.3,
+                "sigmoid": true,
+                "average": "micro"
+            }
+        },
+        "loss": {
+            "type": "pre-defined",
+            "pre-defined": {
+                "func": "MSELossFlat"
+            },
+            "custom": {
+                "fname": null,
+                "func": null
+            }
+        },
+        "optimizer": {
+            "available_opts": [
+                "SGD",
+                "RMSProp",
+                "Adam",
+                "AdamW",
+                "Adadelta",
+                "Adagrad",
+                "SparseAdam",
+                "Adamax",
+                "ASGD"
+            ],
+            "chosen_opt": "ASGD",
+            "arguments": {
+                "SGD": {
+                    "lr": 0,
+                    "momentum": 0,
+                    "weight_decay": 0,
+                    "dampening": 0,
+                    "nesterov": false
+                },
+                "RMSProp": {
+                    "lr": 0.01,
+                    "momentum": 0,
+                    "alpha": 0.99,
+                    "eps": 1e-8,
+                    "centered": false,
+                    "weight_decay": 0
+                },
+                "Adam": {
+                    "lr": 0.001,
+                    "momentum": 0.9,
+                    "alpha": 0.999,
+                    "eps": 1e-8,
+                    "weight_decay": 0,
+                    "amsgrad": false
+                },
+                "AdamW": {
+                    "lr": 0.001,
+                    "momentum": 0.9,
+                    "alpha": 0.999,
+                    "eps": 1e-8,
+                    "weight_decay": 0.01,
+                    "amsgrad": false
+                },
+                "Adadelta": {
+                    "lr": 1,
+                    "rho": 0.9,
+                    "eps": 0.000001,
+                    "weight_decay": 0
+                },
+                "Adagrad": {
+                    "lr": 0.01,
+                    "lr_decay": 0,
+                    "eps": 1e-10,
+                    "weight_decay": 0
+                },
+                "SparseAdam": {
+                    "lr": 0.001,
+                    "momentum": 0.9,
+                    "alpha": 0.999,
+                    "eps": 1e-8
+                },
+                "Adamax": {
+                    "lr": 0.002,
+                    "momentum": 0.9,
+                    "alpha": 0.999,
+                    "eps": 1e-8,
+                    "weight_decay": 0.01
+                },
+                "ASGD": {
+                    "lr": 0.01,
+                    "lambd": 0.0001,
+                    "alpha": 0.75,
+                    "t0": 1000000,
+                    "weight_decay": 0
+                }
+            }
+        }
+    },
+    "tabular": {
+        "input": {
+            "csv_name": "./data/hello.csv",
+            "dep_var": "columnt",
+            "cat_names": [
+                "column1"
+            ],
+            "cont_names": [
+                "column2"
+            ],
+            "test_df": {
+                "has_test": false,
+                "csv_name": null
+            }
+        },
+        "transform": {
+            "FillMissing": {
+                "fill_strategy": "MEDIAN",
+                "add_col": true,
+                "fill_val": 0
+            },
+            "Categorify": true,
+            "Normalize": true,
+            "Datetime": {
+                "cols": [],
+                "cyclic": false
+            }
+        },
+        "model": {
+            "type": "default",
+            "default": {
+                "out_sz": null,
+                "layers": [64,64],
+                "emb_drop": 0,
+                "ps": null,
+                "y_range": null,
+                "use_bn": true,
+                "bn_final": false
+            },
+            "custom": {
+                "layers": [],
+                "extra_args": {
+                    "bn_begin": false
+                }
+            }
+        }
+    },
+    
+    "test_df": null,
+
+    "collab":{
+        "input": {
+            "csv_name": "./data/movie_lens_sample/ratings.csv",
+            "user_name": "userId",
+            "item_name": "movieId",
+            "rating": ["rating"],
+            "test_df": {
+                "has_test": false,
+                "csv_name": null
+            }
+        },
+        "transform": {
+            "FillMissing": {
+                "fill_strategy": "MEDIAN",
+                "add_col": true,
+                "fill_val": 0
+            },
+            "Categorify": true,
+            "Normalize": true,
+            "Datetime": {
+                "cols": [],
+                "cyclic": false
+            }
+        },
+        "model": {
+            "type": "default",
+            "default": {
+                "n_factor": 50,
+                "use_nn":true,
+                "layers": [],
+                "emb_drop": 0,
+                "ps": null,
+                "y_range": [0.0,5.0],
+                "use_bn": true,
+                "bn_final": false
+            },
+            "custom": {
+                "layers": [],
+                "extra_args": {
+                    "bn_begin": false
+                }
+            }
+        }
+    },
+    
+
+    "vision": {
+        "subtask": "classification-single-label",
+        "input": {
+            "method": "from_folder",
+            "from_folder": {
+                "path": "data/mnist_tiny",
+                "extensions": null,
+                "recurse": true,
+                "exclude": null,
+                "include": null,
+                "processor": null,
+                "presort": false
+            },
+            "from_csv": {
+                "csv_name": null,
+                "path":null,
+                "cols": 0,
+                "delimiter": null,
+                "header": "infer",
+                "processor": null
+            }
+        },
+        "classification-single-label": {},
+        "classification-multi-label": {},
+        "regression": {},
+        "segmentation": {
+            "path_lbl":"data/camvid_tiny/labels",
+            "codes":"data/camvid_tiny/codes.txt"
+        },
+        "gan": {
+            "noise_sz": 100
+        },
+        "object-detection": {},
+        "points": {},
+        "model": {
+            "type": "cnn",
+            "cnn": {
+                "method": "default",
+                "default": {
+                    "arch": "resnet18",
+                    "extra":{
+                        "cut": null,
+                        "pretrained": true,
+                        "lin_ftrs": [512],
+                        "ps": 0.5,
+                        "custom_head": null,
+                        "split_on": null,
+                        "bn_final": false,
+                        "concat_pool": true,
+                        "init": "nn.init.kaiming_normal_"
+                    }
+                }
+            },
+            "unet": {
+                "method": "default",
+                "default": {
+                    "arch": "resnet18",
+                    "extra":{
+                        "cut": null,
+                        "pretrained": true,
+                        "split_on": null,
+                        "blur_final": true,
+                        "norm_type": null,
+                        "blur": false,
+                        "self_attention": false,
+                        "y_range": null,
+                        "last_cross": true,
+                        "bottle": false
+                    }
+                }
+            },
+            "custom": {
+                "layers": ["nn.Conv2d(3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)",
+                  "nn.ReLU(inplace=True)",
+                  "nn.Conv2d(64, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)",
+                  "nn.Flatten()",
+                  "nn.Linear(in_features=100352, out_features=2, bias=True)"
+                  ],
+                "extra": {
+
+                }
+            }
+        },
+        "transform":
+        {
+            "size":128,
+            "data_augs":["basic_transforms","zoom_crop","manual"],
+            "manual_augs":["brightness","contrast","crop","crop_pad","dihedral","dihedral_affine","flip_lr","flip_affine","jitter","pad","rotate","rgb_randomize","skew","squish","symmetric_wrap","tilt","zoom","cutout"],
+            "chosen_aug_train":"manual",
+            "chosen_aug_valid":"manual",
+            "manual_train":["brightness","contrast"],
+            "manual_valid":["crop","cutout"],
+            "train":
+            {
+                "basic_transforms":
+                 {
+                    "do_flip":true,
+                    "flip_vert":false,
+                    "max_rotate":10.0,
+                    "max_zoom":1,
+                    "max_lighting":0.8,
+                    "max_warp":0.2,
+                    "p_affine":0.75,
+                    "p_lighting":0.75
+                },
+                "zoom_crop":
+                {
+                    "scale":[0.75,2],
+                    "do_rand":true,
+                    "p":1.0
+                },
+                "manual":
+                {
+                  "brightness":
+                  {
+                      "change":0.5
+                  },
+                  "contrast":
+                  {
+                      "l_scale":1.0,
+                      "h_scale":1.0
+                  },
+                  "crop":
+                  {
+                      "size":300,
+                      "row_pct":0.5,
+                      "col_pct":0.5
+                  },
+                  "crop_pad":
+                  {
+                      "size":300,
+                      "padding_mode":"reflection",
+                      "row_pct":0.5,
+                      "col_pct":0.5
+                  },
+                  "dihedral":
+                  {
+                      "k":0
+                  },
+                  "dihedral_affine":
+                  {
+                      "k":0
+                  },
+                  "flip_lr":
+                  {},
+                  "flip_affine":
+                  {},
+                  "jitter":
+                  {
+                      "magnitude":0.0
+                  },
+                  "pad":
+                  {
+                      "padding":1,
+                      "available_modes":["zeros", "border", "reflection"],
+                      "mode":"reflection"
+                  },
+                  "rotate":
+                  {
+                      "degrees":0.0
+                  },
+                  "rgb_randomize":
+                  {
+                      "channels":["Red", "Green", "Blue"],
+                      "chosen_channels":"Red",
+                      "thresh":[0.2,0.99,3],
+                      "chosen_thresh":3
+                  },
+                  "skew":
+                  {
+                      "l_direction":0,
+                        "h_direction":0,
+                        "magnitude":0,
+                        "invert":false
+                  },
+                  "squish":
+                  {
+                      "scale":1.0,
+                      "row_pct":0.5,
+                      "col_pct":0.5
+                  },
+                  "symmetric_wrap":
+                  {
+                      "magnitude":[-0.2,0.2]
+                  },
+                  "tilt":
+                  {
+                      "l_direction":0,
+                        "h_direction":0,
+                        "magnitude":0
+                  },
+                  "zoom":
+                  {
+                      "scale":1.0,
+                      "row_pct":0.5,
+                      "col_pct":0.5
+                  },
+                  "cutout":
+                  {
+                      "l_n_holes":1,
+                        "h_n_holes":1,
+                        "l_length":20,
+                        "h_length":20
+                  }
+            }
+            },
+             "valid":
+             {
+                  "basic_transforms":
+                  {
+                      "do_flip":true, 
+                      "flip_vert":false, 
+                      "max_rotate":10.0, 
+                      "max_zoom":1, 
+                      "max_lighting":0.8, 
+                      "max_warp":0.2, 
+                      "p_affine":0.75, 
+                      "p_lighting":0.75
+                  },
+                  "zoom_crop":
+                  {
+                      "scale":[0.75,2],
+                      "do_rand":true,
+                      "p":1.0
+                  },
+                  "manual":
+                  {
+                    "brightness":
+                    {
+                        "change":0.5
+                    },
+                    "contrast":
+                    {
+                        "l_scale":1.0,
+                      "h_scale":1.0
+                    },
+                    "crop":
+                    {
+                        "size":300,
+                        "row_pct":0.5,
+                        "col_pct":0.5
+                    },
+                    "crop_pad":
+                    {
+                        "size":300,
+                        "padding_mode":"reflection",
+                        "row_pct":0.5,
+                        "col_pct":0.5
+                    },
+                    "dihedral":
+                    {
+                        "k":0
+                    },
+                    "dihedral_affine":
+                    {
+                        "k":0
+                    },
+                    "flip_lr":
+                    {},
+                    "flip_affine":
+                    {},
+                    "jitter":
+                    {
+                        "magnitude":0.0
+                    },
+                    "pad":
+                    {
+                        "padding":1,
+                        "available_modes":["zeros", "border", "reflection"],
+                        "mode":"reflection"
+                    },
+                    "rotate":
+                    {
+                        "degrees":0.0
+                    },
+                    "rgb_randomize":
+                    {
+                        "channels":["Red", "Green", "Blue"],
+                        "chosen_channels":"Red",
+                        "thresh":[0.2,0.99,3],
+                        "chosen_thresh":3
+                    },
+                    "skew":
+                    {
+                        "l_direction":0,
+                        "h_direction":0,
+                        "magnitude":0,
+                        "invert":false
+                    },
+                    "squish":
+                    {
+                        "scale":1.0,
+                        "row_pct":0.5,
+                        "col_pct":0.5
+                    },
+                    "symmetric_wrap":
+                    {
+                        "magnitude":[-0.2,0.2]
+                    },
+                    "tilt":
+                    {
+                        "l_direction":0,
+                        "h_direction":0,
+                        "magnitude":0
+                    },
+                    "zoom":
+                    {
+                        "scale":1.0,
+                        "row_pct":0.5,
+                        "col_pct":0.5
+                    },
+                    "cutout":
+                    {
+                        "l_n_holes":1,
+                        "h_n_holes":1,
+                        "l_length":20,
+                        "h_length":20
+                    }
+                } 
+                
+            }
+        }
+    }
+}
