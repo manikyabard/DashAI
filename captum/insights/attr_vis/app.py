@@ -217,8 +217,8 @@ class AttributionVisualizer(object):
         label: Optional[Union[Tensor]],
     ) -> Tuple[Tensor, ...]:
         attribution_cls = ATTRIBUTION_NAMES_TO_METHODS[self._config.attribution_method]
-        print('attribution_cls',attribution_cls)
-        print('attribution_cls type is ',type(attribution_cls))
+        # print('attribution_cls',attribution_cls)
+        # print('attribution_cls type is ',type(attribution_cls))
         try: embed_layer = net[0]._modules['module']._modules['encoder_dp']
         except: pass
         attribution_method = attribution_cls(net) if not 'layer' in inspect.getfullargspec(attribution_cls)[0] else attribution_cls(net, embed_layer)

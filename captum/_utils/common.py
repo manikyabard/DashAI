@@ -374,7 +374,8 @@ def _run_forward(
         if additional_forward_args is not None
         else inputs
     )
-    return _select_targets(output, target)
+    # print('output common', type(output[0]), type(output[1]), type(output[2]))
+    return _select_targets(output[0], target) # chnged to output[0] from output
 
 
 def _select_targets(output: Tensor, target: TargetType) -> Tensor:
