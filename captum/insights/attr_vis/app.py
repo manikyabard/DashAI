@@ -221,7 +221,7 @@ class AttributionVisualizer(object):
         print('attribution_cls type is ',type(attribution_cls))
         try: embed_layer = net[0]._modules['module']._modules['encoder_dp']
         except: pass
-        attribution_method =  attribution_cls(net) if not 'layer' in inspect.getfullargspec(IntegratedGradients)[0] else attribution_cls(net, embed_layer)
+        attribution_method = attribution_cls(net) if not 'layer' in inspect.getfullargspec(attribution_cls)[0] else attribution_cls(net, embed_layer)
         args = self._config.attribution_arguments
         param_config = ATTRIBUTION_METHOD_CONFIG[self._config.attribution_method]
         if param_config.post_process:
@@ -421,6 +421,7 @@ class AttributionVisualizer(object):
     def _calculate_vis_output(
         self, inputs, additional_forward_args, label, target=None
     ) -> Optional[VisualizationOutput]:
+        print(inputs, type(inputs), sep='\n-----------\n')
         net = self.models[0]  # TODO process multiple models
 
         # initialize baselines
