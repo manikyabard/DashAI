@@ -10,6 +10,7 @@ from captum.attr import (
     IntegratedGradients,
     Occlusion,
     Saliency,
+    LayerIntegratedGradients
 )
 from captum.attr._utils.approximation_methods import SUPPORTED_METHODS
 
@@ -42,6 +43,7 @@ SUPPORTED_ATTRIBUTION_METHODS = [
     Saliency,
     FeatureAblation,
     Occlusion,
+    LayerIntegratedGradients
 ]
 
 
@@ -86,5 +88,12 @@ ATTRIBUTION_METHOD_CONFIG: Dict[str, ConfigParameters] = {
             "strides": _str_to_tuple,
             "perturbations_per_eval": int,
         },
+    ),
+    LayerIntegratedGradients.get_name(): ConfigParameters(
+        params={
+            "n_steps": NumberConfig(value=25, limit=(2, None)),
+            "method": StrEnumConfig(limit=SUPPORTED_METHODS, value="gausslegendre"),
+        },
+        post_process={"n_steps": int},
     ),
 }

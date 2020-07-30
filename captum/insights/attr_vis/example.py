@@ -52,10 +52,10 @@ def get_pretrained_model():
             return x
 
     net = Net()
-    pt_path = os.path.abspath(
-        os.path.join(os.path.dirname(__file__), "models/cifar_torchvision.pt")
-    )
-    net.load_state_dict(torch.load(pt_path))
+    # pt_path = os.path.abspath(
+    #     os.path.join(os.path.dirname(__file__), "models/cifar_torchvision.pt")
+    # )
+    # net.load_state_dict(torch.load(pt_path))
     return net
 
 

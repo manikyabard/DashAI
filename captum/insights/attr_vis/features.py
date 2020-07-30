@@ -10,7 +10,7 @@ import numpy as np
 from captum._utils.common import safe_div
 from captum.attr._utils import visualization as viz
 
-from ._utils.transforms import format_transforms
+from captum.insights._utils.transforms import format_transforms
 
 FeatureOutput = namedtuple("FeatureOutput", "name base modified type contribution")
 
