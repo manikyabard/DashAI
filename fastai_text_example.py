@@ -10,19 +10,47 @@ from captum.insights import AttributionVisualizer, Batch
 from captum.insights.features import ImageFeature, TextFeature
 
 from fastai.text import *
+from fastai.text.transform import Tokenizer, Vocab
+from fastai.text.data import TokenizeProcessor, NumericalizeProcessor
 import fastai.train
 
 path = untar_data(URLs.IMDB_SAMPLE)
-bs = 48
-data_lm = (TextList.from_csv(path, 'texts.csv', cols='text')
+bs = 16
+
+
+def get_processors_for_lm():
+	tokenizer = Tokenizer(post_rules=[replace_all_caps, deal_caps, limit_tokens])
+	vocab = None
+	return [
+		TokenizeProcessor(tokenizer),
+		NumericalizeProcessor(vocab)
+	]
+
+
+def get_processors_for_clas(vocab):
+	tokenizer = Tokenizer(post_rules=[replace_all_caps, deal_caps, limit_tokens])
+	return [
+		TokenizeProcessor(tokenizer=tokenizer),
+		NumericalizeProcessor(vocab=vocab)
+	]
+
+
+def limit_tokens(x: list) -> list:
+	limit = 70
+	if len(x) > limit:
+		x = x[:limit]
+	return x
+
+
+data_lm = (TextList.from_csv(path, 'texts.csv', cols='text', processor=get_processors_for_lm())
 		   .split_by_rand_pct()
 		   .label_for_lm()
 		   .databunch(bs=bs)
 		   )
-df = pd.read_csv(path / 'texts.csv')
-data_clas = (TextList.from_csv(path, 'texts.csv', cols='text', vocab=data_lm.vocab)
+data_clas = (TextList.from_csv(path, 'texts.csv', cols='text', vocab=data_lm.vocab, processor=get_processors_for_clas(data_lm.vocab))
 			 .split_by_rand_pct()
 			 .label_from_df(cols='label')
+			 .transform()
 			 .databunch(bs=bs)
 			 )
 
@@ -60,16 +88,17 @@ def get_classes():
 
 def get_pretrained_model():
 	path = untar_data(URLs.IMDB_SAMPLE)
-	bs = 48
-	data_lm = (TextList.from_csv(path, 'texts.csv', cols='text')
+	bs = 16
+	data_lm = (TextList.from_csv(path, 'texts.csv', cols='text', processor=get_processors_for_lm())
 			   .split_by_rand_pct()
 			   .label_for_lm()
 			   .databunch(bs=bs)
 			   )
-	df = pd.read_csv(path / 'texts.csv')
-	data_clas = (TextList.from_csv(path, 'texts.csv', cols='text', vocab=data_lm.vocab)
+	data_clas = (TextList.from_csv(path, 'texts.csv', cols='text', vocab=data_lm.vocab,
+								   processor=get_processors_for_clas(data_lm.vocab))
 				 .split_by_rand_pct()
 				 .label_from_df(cols='label')
+				 .transform()
 				 .databunch(bs=bs)
 				 )
 	
@@ -166,11 +195,11 @@ def baseline_func_str(sentence):
 
 def formatted_data_iter():
 	dataloader = awd.data
-	dataloader.batch_size = 1
+	dataloader.batch_size = 64
 	while True:
-		sentence, label = dataloader.one_batch()
-		# print(sentence, type(sentence), sep='\n------------\n')
-		yield Batch(inputs=sentence, labels=label)
+		sentences, labels = dataloader.one_batch()
+		for sentence, label in zip(sentences, labels):
+			yield Batch(inputs=sentence.unsqueeze(0), labels=label.unsqueeze(0))
 
 
 def main():
