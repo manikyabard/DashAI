@@ -1,0 +1,49 @@
+{
+    "layers": [
+        {
+            "neurons": 20,
+            "visual": {
+                "position": [
+                    200,
+                    315
+                ],
+                "color": "red"
+            },
+            "dropout": false,
+            "filter": 5,
+            "kernal": 1,
+            "input_size": 6,
+            "output_size": 12
+        },
+        {
+            "neurons": 10,
+            "visual": {
+                "position": [
+                    300,
+                    415
+                ],
+                "color": "red"
+            },
+            "dropout": true,
+            "filter": 5,
+            "kernal": 1,
+            "input_size": 12,
+            "output_size": 6
+        },
+        {
+            "neurons": 10,
+            "visual": {
+                "position": [
+                    300,
+                    415
+                ],
+                "color": "red"
+            },
+            "dropout": true,
+            "filter": 5,
+            "kernal": 1,
+            "input_size": 12,
+            "output_size": 6
+        }
+    ]
+}

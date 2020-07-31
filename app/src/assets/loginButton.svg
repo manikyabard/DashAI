@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="284" height="50" viewBox="0 0 284 50">
+    <g id="prefix__Group_108" data-name="Group 108" transform="translate(-258 -329)">
+        <rect id="prefix__Rectangle_90" width="284" height="50" data-name="Rectangle 90" rx="25" transform="translate(258 329)" style="fill:rgba(46,122,251,.9)"/>
+        <text id="prefix__LOGIN" transform="translate(356 361)" style="font-size:20px;font-family:Nunito-ExtraBold,Nunito;font-weight:800;letter-spacing:.02em;fill:#fff">
+            <tspan x="0" y="0">LOGIN</tspan>
+        </text>
+        <path id="prefix__Icon_awesome-arrow-left" d="M7.342 18.358l.856.856a.922.922 0 0 0 1.307 0L17 11.722a.922.922 0 0 0 0-1.307l-7.5-7.5a.922.922 0 0 0-1.307 0l-.856.856a.926.926 0 0 0 .02 1.329L12 9.524H.922a.923.923 0 0 0-.922.925v1.234a.923.923 0 0 0 .925.925H12l-4.643 4.427a.92.92 0 0 0-.015 1.323z" data-name="Icon awesome-arrow-left" transform="translate(426.964 343.212)" style="fill:#fff"/>
+    </g>
+</svg>

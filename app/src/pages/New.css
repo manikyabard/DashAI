@@ -1,0 +1,155 @@
+body {
+    background-color: black;
+}
+
+.new-main {
+    background-color: rgb(31, 31, 31);
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.col-1 {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.col-1 #r {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    width: 100%;
+}
+
+.col-2 {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.getting-started {
+    border-radius: 10px;
+    background-color: rgb(231, 231, 231);
+    width: 95%;
+    height: 90%;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+}
+
+div.jsoneditor{
+    background-color:#b4b4b4;
+    border: none;
+}
+
+div.jsoneditor * {
+    font-size: medium;
+}
+div.jsoneditor-field textarea {
+    font-size: medium;
+}
+
+div.jsoneditor-menu {
+    background-color:#b4b4b4;
+    display: none;
+}
+
+
+.gs-container {
+    width: 94%;
+    height: 100%;
+    /* border: 1px solid white; */
+    position: relative;
+}
+
+.gs-container h3 {
+    margin: 5px;
+    color: rgb(102, 102, 102);
+}
+
+.option {
+    /* margin: 15px 15px 5px 15px; */
+    margin-top: 10px;
+    /* position: absolute; */
+    /* left: 50%; */
+    /* transform: translateX(-50%); */
+    width: 100%;
+    height: 35px;
+    border-radius: 5px;
+    background-color: rgb(138, 138, 138);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .option .o-col1 {
+    width: 85%;
+    height: 100%;
+  }
+  
+  .option .o-col1 input {
+    width: 95%;
+    margin-left: 5%;
+    height: 95%;
+    outline: none;
+    border: none;
+    background-color: transparent;
+    color: #ececec;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  }
+  
+  .option .o-col1 input::placeholder {
+    color: #ececec;
+  }
+  
+  .option .o-col2 {
+    width: 15%;
+    height: 100%;
+    /* border: 1px solid white; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(218, 218, 218);
+    background-color: rgb(126, 126, 126);
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+  
+  .option .o-col2:hover {
+    background-color: rgb(156, 156, 156);
+  }
+
+.btn-main {
+    width: 200px;
+    height: 60px;
+    margin: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(18, 170, 51);
+    border-radius: 10px;
+    box-shadow: none;
+    transition: all ease-in-out .2s;
+}
+
+.btn-main:hover {
+    background-color: rgb(23, 187, 59);
+    -webkit-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
+}
+
+.btn-main h3 {
+    color: white;
+}
