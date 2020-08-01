@@ -4,7 +4,14 @@ from core.databunch import DashDatabunch
 class DashTabularDatabunch:
 
 	@staticmethod
-	def create_tabular_databunch(response):
+	def create_tabular_databunch(response) -> 'DataBunch':
+		'''
+		Creates a tabular databunch using the values specified in response/DashUI.
+		Uses the csv name name given in response>tabular>input to create the input dataframe.
+		Applies the required transformations, and creates a tabular list using the specified cat and cont column names.
+		The tabular list is splitted into training and validation sets using the specified method and then labelled.
+		Finally it is converted to a databunch object and returned.
+		'''
 		path = Path('./')
 		#Step 1: Provide inputs
 		response_tab = response["tabular"]
