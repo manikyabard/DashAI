@@ -41,7 +41,7 @@ def main():
 	# fastai.torch_core.defaults.device = 'cpu'
 	
 	path = untar_data(URLs.MNIST_SAMPLE)
-	bs = 1
+	bs = 2
 	data = ImageDataBunch.from_folder(path, valid_pct=0.2, size=28)
 	learn = cnn_learner(data, models.resnet18, metrics=error_rate)
 	
