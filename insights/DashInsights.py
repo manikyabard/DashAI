@@ -15,17 +15,17 @@ class DashInsights:
 		self.path = path if path else None
 		self.bs = bs if bs else 8
 		self.data = learn.data
-		self.vocab = learn.data.x.vocab
 		self.model = learn.model.eval()
 		self.application = application
 		self.baseline_func_default = baseline_func_default
+		if self.application == 'text':
+			self.vocab = learn.data.x.vocab
 		self.baseline_token = (
 			baseline_token if baseline_token
 			else '.' if self.application == 'text'
 			else 0
 		)
-		if baseline_fn:
-			self.baseline_fn = baseline_fn
+		self.baseline_fn = baseline_fn
 		self.features = (
 			[
 				TextFeature(
@@ -80,6 +80,7 @@ class DashInsights:
 	def score_func(o):
 		if isinstance(o, tuple):
 			o = o[0]
+		print('score_func():', o.size())
 		return F.softmax(o, dim=1)
 	
 	def stoi(self, token):
@@ -117,10 +118,10 @@ class DashInsights:
 	def formatted_data_iter(self):
 		dataloader = self.data
 		dataloader.batch_size = self.bs
+		print('formatted_data_iter(), data:', dataloader)
 		while True:
 			inputs, labels = dataloader.one_batch()
 			for input, label in zip(inputs, labels):
-				if self.application == 'text':
-					yield Batch(inputs=input.unsqueeze(0), labels=label.unsqueeze(0))
-				elif self.application == 'vision':
-					yield Batch(inputs=input, labels=label)
+				print('formatted_data_iter(), input.size(), label.size():', input.size(), label.size())
+				print('formatted_data_iter(), label:', label, label.unsqueeze(0))
+				yield Batch(inputs=input.unsqueeze(0), labels=label.unsqueeze(0))
