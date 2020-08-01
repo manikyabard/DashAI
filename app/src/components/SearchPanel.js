@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Icon } from 'react-icons-kit';
 import {iosSearchStrong} from 'react-icons-kit/ionicons/iosSearchStrong'
 import {androidAddCircle} from 'react-icons-kit/ionicons/androidAddCircle'
+
+
 function SearchPanel({showSearch, setShowSearch}) {
   const [search, setSearch] = useState('');
   const inputRef = useRef();
@@ -36,7 +38,7 @@ function SearchPanel({showSearch, setShowSearch}) {
         </div>
         <div className={'search-input'}>
           <input ref={inputRef} value={search} 
-          onChange={e => handleChange(e)} placeholder={'Ex: Conv2D'} />
+          onChange={e => handleChange(e)} placeholder={'Any PyTorch Supported layer'} />
         </div>
         <div className={'cancel'}>
           <Icon icon={androidAddCircle} 

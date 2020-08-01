@@ -1,12 +1,9 @@
 import React from 'react';
-const Button = ({history}) => {
-    const handleClick = () => {
-        history.push("/modelbuilder");
-    }
+const Button = ({label, onClick}) => {
     return(
-        <div onClick={handleClick} className={"btn-main"}>
+        <div onClick={onClick} className={"btn-main"}>
             <h3>
-                Create
+                {label}
             </h3>
         </div>
     )

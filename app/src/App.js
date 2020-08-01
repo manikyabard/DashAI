@@ -10,23 +10,24 @@ import ModelMenu from './components/ModelMenu';
 import ModelBuilder from './components/ModelBuilder';
 import Footer from './components/Footer'
 import New from './pages/New';
+import FloatingBtn from './components/FloatingBtn';
 function App() {
   return (
     <Provider store={store}>
       <Router>
         {/*<Footer />*/}
         <Switch>
-          <Route path="/modelbuilder">
+          <Route path="/">
           <div className={"app-main"}>
               <ModelMenu />
-
+              <ModelBuilder />
             </div>
           </Route>
-          <Route path="/">
+          {/*<Route path="/">
             <div className={"app-main"}>
               <New />
             </div>
-          </Route>
+  </Route>*/}
         </Switch>
       </Router>
     </Provider>

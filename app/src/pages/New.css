@@ -125,31 +125,45 @@ div.jsoneditor-menu {
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
   }
+
+  .o-col2-json {
+    width: 150px;
+    height: 100%;
+    /* border: 1px solid white; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(218, 218, 218);
+    background-color: rgb(126, 126, 126);
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+  }
   
   .option .o-col2:hover {
     background-color: rgb(156, 156, 156);
   }
 
 .btn-main {
-    width: 200px;
-    height: 60px;
-    margin: 50px;
+    width: 150px;
+    height: 40px;
+    margin: 10px 5px 10px 5px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgb(18, 170, 51);
-    border-radius: 10px;
+    background-color: #adadad;
+    border-radius: 5px;
     box-shadow: none;
     transition: all ease-in-out .2s;
 }
 
 .btn-main:hover {
-    background-color: rgb(23, 187, 59);
+    background-color: rgb(189, 189, 189);
     -webkit-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
     box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
 }
 
 .btn-main h3 {
-    color: white;
+    color: black;
+    font-weight: 200;
 }

@@ -2,14 +2,14 @@ import React from 'react';
 import { Icon } from 'react-icons-kit';
 import {androidAdd} from 'react-icons-kit/ionicons/androidAdd'
 import {database} from 'react-icons-kit/fa/database'
-function DataBlock({setShowSearch}) {
+function DataBlock({setShowSearch, setAddlayer}) {
 
     const handleSearch = () => {
-        setShowSearch(true);
+        setAddlayer(true)
     }
 
     return(
-        <div className={'data-block'}>
+        <div onDoubleClick={() => setShowSearch(true)} className={'data-block'}>
             <div onClick={handleSearch} className={'connector'}>
                 <Icon icon={androidAdd} size={30} />
             </div>
