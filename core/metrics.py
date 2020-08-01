@@ -3,9 +3,15 @@ from pathlib import Path
 import sys, os
 
 class DashMetrics:
+	'''
+	Contains methods for specifying metrics to be shown during training
+	'''
 
 	@staticmethod
 	def create_metric(response):
+		'''
+		Specifies the metrics to be shown using training using the values given in the response/DashUI.
+		'''
 		try:
 			if response['metric']['methods'] == "None":
 				return None
