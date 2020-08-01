@@ -2,9 +2,15 @@ from fastai.tabular import *
 import torch.optim
 
 class DashOptimizer:
+	'''
+	Contains methods for specifying the optimizer
+	'''
 	
 	@staticmethod
 	def create_optimize(response):
+		'''
+		Creates the optimizer using the values given in response/DashUI
+		'''
 		try:
 			if response['chosen_opt'] == 'SGD':
 				arg = response['arguments']['SGD']

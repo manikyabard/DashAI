@@ -10,9 +10,15 @@ from data.func.img2bbox import func_img2bbox
 
 
 class DashDatabunch:
+	''' 
+	Provides helper functions for splitting, labelling, and creating databunch for your itemlists
+	'''
 
 	@staticmethod
 	def split_databunch(response, src):
+		'''
+		Splits databunch according to the method specified in the response/DashUI.
+		'''
 		# try:
 		path = Path('./')
 		response_split = response["core"]["data"]
@@ -84,6 +90,9 @@ class DashDatabunch:
 
 	@staticmethod
 	def label_databunch(response, src):
+		'''
+		Labels itemlist according to the method specified in the response/DashUI.
+		'''
 		# try:
 		response_lab = response["core"]["data"]
 		if hasattr(src, f"label_{response_lab['label']['method']}"):
@@ -136,6 +145,9 @@ class DashDatabunch:
 
 	@staticmethod
 	def create_databunch(response, src, **kwargs):
+		'''
+		Create a databunch using the itemlist and the parameters specified in response/DashUI
+		'''
 		path = Path('./')
 		response_data = response["core"]["data"]
 		return src.databunch(

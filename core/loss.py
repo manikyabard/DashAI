@@ -4,9 +4,15 @@ import sys
 from fastai import layers
 
 class DashLoss:
+	'''
+	Contains methods for specifying loss function
+	'''
 
 	@staticmethod
 	def create_loss(response):
+		'''
+		Specifies the loss function using the values given in response/DashUI
+		'''
 		try:
 			if response['type'] == 'pre-defined':
 				if hasattr(layers, f"{response['pre-defined']['func']}"):
