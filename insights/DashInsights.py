@@ -4,7 +4,7 @@ from fastai.text.data import TokenizeProcessor, NumericalizeProcessor
 from fastai.text.transform import Tokenizer
 
 from captum.insights import Batch
-from captum.insights.attr_vis.features import TextFeature, ImageFeature
+from captum.insights.attr_vis.features import TextFeature, ImageFeature, TabularFeature
 
 
 class DashInsights:
@@ -49,6 +49,16 @@ class DashInsights:
 					),
 					input_transforms=[]
 				)
+			] if self.application == 'vision'
+			else [
+				TabularFeature(
+					'Table',
+					baseline_transforms=(
+						[self.baseline_fn] if self.baseline_fn
+						else None if self.baseline_func_default
+						else [self.baseline_func]
+					)
+				)
 			]
 		)
 
@@ -80,7 +90,6 @@ class DashInsights:
 	def score_func(o):
 		if isinstance(o, tuple):
 			o = o[0]
-		print('score_func():', o.size())
 		return F.softmax(o, dim=1)
 	
 	def stoi(self, token):
@@ -108,20 +117,27 @@ class DashInsights:
 		return vec, torch.tensor(len(text_arr), device=torch.device('cpu'))
 
 	def baseline_func(self, input):
+		print('insights.DashInsights.baseline_func: input, input.size()', input, input.size())
 		if self.application == 'text':
 			baseline = torch.ones_like(input) * self.vocab.stoi[self.baseline_token]
 			baseline[0] = self.vocab.stoi['xxbos']
 		elif self.application == 'vision':
 			baseline = input * self.baseline_token
+		elif self.application == 'tabular':
+			baseline = (torch.zeros(len(self.data.x.cat_names)), torch.zeros(len(self.data.x.cont_names)))
+			print('insights.DashInsights.baseline_func: baseline', baseline)
 		return baseline
 
 	def formatted_data_iter(self):
 		dataloader = self.data
-		dataloader.batch_size = self.bs
-		print('formatted_data_iter(), data:', dataloader)
-		while True:
-			inputs, labels = dataloader.one_batch()
-			for input, label in zip(inputs, labels):
-				print('formatted_data_iter(), input.size(), label.size():', input.size(), label.size())
-				print('formatted_data_iter(), label:', label, label.unsqueeze(0))
-				yield Batch(inputs=input.unsqueeze(0), labels=label.unsqueeze(0))
+		if self.application == 'tabular':
+			dataloader.batch_size = 1
+			while True:
+				inputs, labels = dataloader.one_batch()
+				yield Batch(inputs=tuple(inputs), labels=labels)
+		else:
+			dataloader.batch_size = self.bs
+			while True:
+				inputs, labels = dataloader.one_batch()
+				for input, label in zip(inputs, labels):
+					yield Batch(inputs=input.unsqueeze(0), labels=label.unsqueeze(0))
