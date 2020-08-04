@@ -2,9 +2,19 @@ from fastai.collab import *
 from core.databunch import DashDatabunch
 
 class DashCollabDatabunch:
-	
+	'''
+	Base DataBunch for collaborative filtering.
+	'''
 	@staticmethod
 	def create_collab_databunch(response):
+		'''
+		Creates a databunch for collaborative filtering using the values specified in response/DashUI.
+		Uses the csv name given in response>collab>input to create the input dataframe.
+		Creates a cat list using the user name and item name provided in the data.
+		Applies the required transformations and creates a collab list using the specified cat list.
+		The collab list is splitted into training and validation sets using the specified method and then labelled.
+		Finally it is converted to a databunch object and returned.
+		'''
 		path = Path('./')
 		#Step 1: Provide inputs
 		response_col = response['collab']
