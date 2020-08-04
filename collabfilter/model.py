@@ -1,7 +1,9 @@
 from fastai.collab import *
 #Not working!!
 class DashCollabModel:
-
+	'''
+	Model for collaborative filtering
+	'''
 	@staticmethod
 	def create_collab_model(databunch, response):
 

@@ -2,6 +2,9 @@ from fastai.collab import *
 from core.loss import DashLoss
 
 class DashCollabLoss:
+	'''
+	Loss function for collaborative filtering
+	'''
 
 	@staticmethod
 	def create_collab_loss(response):

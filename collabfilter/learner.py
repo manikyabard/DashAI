@@ -14,9 +14,14 @@ import fastai
 
 
 class DashCollabLearner:
-	
+	'''
+	`Learner` suitable for collaborative filtering.
+	'''
 	@staticmethod
 	def create_collab_learner(response):
+		'''
+		Create a Learner for collaborative filtering on `data`.
+		'''
 		# with open('./data/response.json') as f:
 		# 	response = json.load(f)
 	
