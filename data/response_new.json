@@ -1,9 +1,9 @@
 {
-    "task": "text",
+    "task": "tabular",
 
     "core": {
         "data": {
-            "bs": 8,
+            "bs": 3,
             "val_bs": null,
             "device": null,
             "no_check": false,
@@ -54,7 +54,7 @@
             "label": {
                 "method": "from_df",
                 "from_df": {
-                    "cols": "label",
+                    "cols": "columnt",
                     "label_cls": null,
                     "label_delim": null,
                     "classes": null
@@ -148,7 +148,7 @@
                 "Adamax",
                 "ASGD"
             ],
-            "chosen_opt": "ASGD",
+            "chosen_opt": "AdamW",
             "arguments": {
                 "SGD": {
                     "lr": 0,
@@ -246,9 +246,9 @@
             }
         },
         "model": {
-            "type": "custom",
+            "type": "default",
             "default": {
-                "out_sz": 3,
+                "out_sz": 9,
                 "layers": [64,64],
                 "emb_drop": 0,
                 "ps": null,
@@ -257,7 +257,7 @@
                 "bn_final": false
             },
             "custom": {
-                "layers": ["nn.Linear(4, 5)", "nn.ReLU()", "nn.Linear(5, 3)"],
+                "layers": ["nn.Linear(4, 5)", "nn.ReLU()", "nn.Linear(5, 9)"],
                 "extra_args": {
                     "bn_begin": false
                 }
@@ -518,7 +518,7 @@
         },
         "transforms": {},
         "model": {
-            "type": "classifier",
+            "type": "language_model",
             "classifier": {
                 "method": "default",
                 "default": {

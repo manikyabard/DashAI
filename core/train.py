@@ -8,10 +8,13 @@ class DashTrain():
     '''
     @staticmethod
     def fit(response, learn: Learner):
+        response["training"]["fit"]["lr"] = eval(response["training"]["fit"]["lr"])
         learn.fit(**response["training"]["fit"])
 
     @staticmethod
     def fit_one_cycle(response, learn: Learner):
+        response["training"]["fit_one_cycle"]["max_lr"] = eval(response["training"]["fit_one_cycle"]["max_lr"])
+        response["training"]["fit_one_cycle"]["moms"] = eval(response["training"]["fit_one_cycle"]["moms"])
         learn.fit_one_cycle(**response["training"]["fit_one_cycle"])
 
     @staticmethod

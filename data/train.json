@@ -6,7 +6,7 @@
             "wd": null
         },
         "fit_one_cycle": {
-            "cyc_len":0, 
+            "cyc_len":1, 
             "max_lr":"slice(None, 0.003, None)", 
             "moms":"(0.95, 0.85)", 
             "div_factor":25.0, 
