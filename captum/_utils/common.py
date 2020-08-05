@@ -375,7 +375,11 @@ def _run_forward(
         else inputs
     )
     # print('output common', type(output[0]), type(output[1]), type(output[2]))
-    return _select_targets(output, target)  # Should be `output[0]` for text; `output` for others.
+    try:
+        ret = _select_targets(output, target)
+    except:
+        ret = _select_targets(output[0], target)
+    return ret  # Should be `output[0]` for text; `output` for others.
 
 
 def _select_targets(output: Tensor, target: TargetType) -> Tensor:
