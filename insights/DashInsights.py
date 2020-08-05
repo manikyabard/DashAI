@@ -124,7 +124,8 @@ class DashInsights:
 		elif self.application == 'vision':
 			baseline = input * self.baseline_token
 		elif self.application == 'tabular':
-			baseline = (torch.zeros(len(self.data.x.cat_names)), torch.zeros(len(self.data.x.cont_names)))
+			# baseline = (torch.zeros(len(self.data.x.cat_names)), torch.zeros(len(self.data.x.cont_names)))
+			baseline = torch.zeros_like(input)
 			print('insights.DashInsights.baseline_func: baseline', baseline)
 		return baseline
 

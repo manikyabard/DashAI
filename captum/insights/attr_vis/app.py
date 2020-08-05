@@ -230,7 +230,10 @@ class AttributionVisualizer(object):
         # TODO support multiple baselines
         print('captum.insights.attr_vis.app._calculate_attribution(): data', data)
         print('captum.insights.attr_vis.app._calculate_attribution(): baselines', baselines)
-        baseline = baselines[0] if baselines and len(baselines) > 0 else None
+        # baseline = baselines[0] if baselines and len(baselines) > 0 else None #commented for tabular testing
+        # baseline = [(torch.tensor([[0, 0, 0, 0, 0, 0, 0, 0, 0]]),), (torch.tensor([[0, 0, 0, 0, 0, 0]]),)] # won't work because baseline needs to be a tensor or number; can't be a list
+        baseline = None # testing for tabular
+
         label = (
             None
             if not self._use_label_for_attr or label is None or label.nelement() == 0
@@ -424,7 +427,8 @@ class AttributionVisualizer(object):
         net = self.models[0]  # TODO process multiple models
 
         # initialize baselines
-        baseline_transforms_len = 1  # todo support multiple baselines
+        # baseline_transforms_len = 1  # todo support multiple baselines
+        baseline_transforms_len = len(inputs) # made this change while testing for tabular
         baselines: List[List[Optional[Tensor]]] = [
             [None] * len(self.features) for _ in range(baseline_transforms_len)
         ]
