@@ -93,8 +93,8 @@ def start_server(
             log.disabled = True
             app.logger.disabled = True
 
-        port = _port or get_free_tcp_port()
-        # port = 5000
+        # port = _port or get_free_tcp_port()
+        port = 5000
         # Start in a new thread to not block notebook execution
         t = threading.Thread(target=run_app, kwargs={"debug": debug})
         t.start()
