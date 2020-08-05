@@ -358,6 +358,7 @@ def _run_forward(
     inputs: Union[Tensor, Tuple[Tensor, ...]],
     target: TargetType = None,
     additional_forward_args: Any = None,
+    application = None
 ) -> Tensor:
     forward_func_args = signature(forward_func).parameters
     if len(forward_func_args) == 0:
@@ -375,10 +376,14 @@ def _run_forward(
         else inputs
     )
     # print('output common', type(output[0]), type(output[1]), type(output[2]))
+
     try:
         ret = _select_targets(output, target)
     except:
         ret = _select_targets(output[0], target)
+
+    #Below line won't work currently as this is being called in multiple places
+    # ret = _select_targets(output[0], target) if application == "text" else _select_targets(output, target)
     return ret  # Should be `output[0]` for text; `output` for others.
 
 
