@@ -219,8 +219,11 @@ class AttributionVisualizer(object):
         label: Optional[Union[Tensor]],
     ) -> Tuple[Tensor, ...]:
         attribution_cls = ATTRIBUTION_NAMES_TO_METHODS[self._config.attribution_method]
+        embed_layer = None
         try: embed_layer = net[0]._modules['module']._modules['encoder_dp']
-        except: pass
+        except:
+            try: embed_layer = net._modules['embeds'][0]
+            except: pass
         attribution_method = attribution_cls(net) if not 'layer' in inspect.getfullargspec(attribution_cls)[0] else attribution_cls(net, embed_layer)
         args = self._config.attribution_arguments
         param_config = ATTRIBUTION_METHOD_CONFIG[self._config.attribution_method]
@@ -230,8 +233,8 @@ class AttributionVisualizer(object):
                     args[k] = param_config.post_process[k](v)
 
         # TODO support multiple baselines
-        print('captum.insights.attr_vis.app._calculate_attribution(): data', data)
-        print('captum.insights.attr_vis.app._calculate_attribution(): baselines', baselines)
+        # print('captum.insights.attr_vis.app._calculate_attribution(): data', data)
+        # print('captum.insights.attr_vis.app._calculate_attribution(): baselines', baselines)
         baseline = baselines[0] if baselines and len(baselines) > 0 else None #commented for tabular testing
         # baseline = [(torch.tensor([[0, 0, 0, 0, 0, 0, 0, 0, 0]]),), (torch.tensor([[0, 0, 0, 0, 0, 0]]),)] # won't work because baseline needs to be a tensor or number; can't be a list
         
