@@ -143,6 +143,7 @@ class AttributionVisualizer(object):
         dataset: Iterable[Batch],
         score_func: Optional[Callable] = None,
         use_label_for_attr: bool = True,
+        application: str = None
     ):
         r"""
         Args:
@@ -199,6 +200,7 @@ class AttributionVisualizer(object):
         self._config = FilterConfig(prediction="all", classes=[], num_examples=4)
         self._use_label_for_attr = use_label_for_attr
         self._dataset_iter = iter(dataset)
+        self.application = application
 
     def _calculate_attribution_from_cache(
         self, index: int, target: Optional[Tensor]
@@ -230,9 +232,11 @@ class AttributionVisualizer(object):
         # TODO support multiple baselines
         print('captum.insights.attr_vis.app._calculate_attribution(): data', data)
         print('captum.insights.attr_vis.app._calculate_attribution(): baselines', baselines)
-        # baseline = baselines[0] if baselines and len(baselines) > 0 else None #commented for tabular testing
+        baseline = baselines[0] if baselines and len(baselines) > 0 else None #commented for tabular testing
         # baseline = [(torch.tensor([[0, 0, 0, 0, 0, 0, 0, 0, 0]]),), (torch.tensor([[0, 0, 0, 0, 0, 0]]),)] # won't work because baseline needs to be a tensor or number; can't be a list
-        baseline = None # testing for tabular
+        
+        if self.application == "tabular": # testing for tabular
+            baseline = None 
 
         label = (
             None
@@ -455,6 +459,7 @@ class AttributionVisualizer(object):
             net,
             tuple(transformed_inputs),
             additional_forward_args=additional_forward_args,
+            application = self.application
         )
 
         if self.score_func is not None:
