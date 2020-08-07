@@ -1,7 +1,7 @@
 from tabular.learner import DashTabularLearner
 import json
 
-with open('./data/response_new.json') as f:
+with open('data/response.json') as f:
 	response = json.load(f)
 learn = DashTabularLearner.create_tabular_learner(response)
 

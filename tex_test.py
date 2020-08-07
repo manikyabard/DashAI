@@ -3,7 +3,7 @@ import json
 import path
 
 path = path.Path('./')
-with open('./data/response_new.json') as f:
+with open('data/response.json') as f:
 	response = json.load(f)
 learn = DashTextLearner.create_text_learner(response)
 print('created learner')

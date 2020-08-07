@@ -3,7 +3,7 @@ import json
 import path
 
 path = path.Path('./')
-with open('./data/response_joe.json') as f:
+with open('data/response.json') as f:
 	response = json.load(f)
 learn = DashVisionLearner.create_vision_learner(response)
 

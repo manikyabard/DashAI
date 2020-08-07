@@ -22,8 +22,6 @@ class DashCollabLearner:
 		'''
 		Create a Learner for collaborative filtering on `data`.
 		'''
-		# with open('./data/response.json') as f:
-		# 	response = json.load(f)
 	
 		path = Path('./')
 		databunch = DashCollabDatabunch.create_collab_databunch(response)
