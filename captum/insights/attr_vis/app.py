@@ -220,9 +220,9 @@ class AttributionVisualizer(object):
     ) -> Tuple[Tensor, ...]:
         attribution_cls = ATTRIBUTION_NAMES_TO_METHODS[self._config.attribution_method]
         embed_layer = None
-        try: embed_layer = net[0]._modules['module']._modules['encoder_dp']
+        try: embed_layer = net[0]._modules['module']._modules['encoder_dp']  # text
         except:
-            try: embed_layer = net._modules['embeds'][0]
+            try: embed_layer = net._modules['embeds'][0]  # tabular
             except: pass
         attribution_method = attribution_cls(net) if not 'layer' in inspect.getfullargspec(attribution_cls)[0] else attribution_cls(net, embed_layer)
         args = self._config.attribution_arguments
