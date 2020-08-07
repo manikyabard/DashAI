@@ -5,6 +5,7 @@ from fastai.text.transform import Tokenizer
 
 from captum.insights import Batch
 from captum.insights.attr_vis.features import TextFeature, ImageFeature, TabularFeature
+from captum.attr import configure_interpretable_embedding_layer, remove_interpretable_embedding_layer
 
 
 class DashInsights:
@@ -142,3 +143,10 @@ class DashInsights:
 				inputs, labels = dataloader.one_batch()
 				for input, label in zip(inputs, labels):
 					yield Batch(inputs=input.unsqueeze(0), labels=label.unsqueeze(0))
+
+	def configure_embedding_layer(self):
+		interp_embs = []
+		for layer in self.model:
+			if isinstance(layer, nn.Embedding):
+				interp_embs.append(configure_interpretable_embedding_layer(self.model, layer))
+				break
