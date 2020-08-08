@@ -1,13 +1,14 @@
 {
+	"return": true,
 	"metric": {
 		"name": "error",
 		"minimize": true,
 		"num_trials": null
 	},
-	"learning rate": {
+	"learning_rate": {
 		"flag": true,
 		"param": {
-			"name": "learning rate",
+			"name": "learning_rate",
 			"type": "range",
 			"bounds": [1e-5, 0.5],
 			"log_scale": true

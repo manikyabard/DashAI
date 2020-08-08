@@ -27,7 +27,7 @@ class DashVerum:
 		return self.response[param]['default']
 
 	def evaluation_fn(self):
-		lr = self.get_param_value('learning rate')
+		lr = self.get_param_value('learning_rate')
 		num_epochs = self.get_param_value('num_epochs')
 		moms = (self.get_param_value('momentum0'), self.get_param_value('momentum1'))
 		ps = self.get_param_value('dropout_ps')
@@ -61,4 +61,16 @@ class DashVerum:
 			minimize=self.response['metric']['minimize'],
 			total_trials=total_trials
 		)
-		# TODO finish.
+		if self.response['return']:
+			self.learn.model.ps = best_parameters['dropout_ps']
+			self.learn.model.wd = best_parameters['weight_decay']
+			self.learn.model.use_bn = best_parameters['use_bn']
+
+			return (
+				self.learn, best_parameters['metric'],
+				best_parameters['learning_rate'], best_parameters['num_epochs'],
+				(best_parameters['momentum0'], best_parameters['momentum1'])
+			)
+
+		else:
+			pass  # TODO show this on console.
