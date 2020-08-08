@@ -1,0 +1,19 @@
+.main {
+    background-color: rgb(114, 113, 113);
+    border-radius: 10px;
+    width: 250px;
+    margin: 5px;
+    height: 60px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    transition: all ease-in-out .2s;
+}
+
+.main h3 {
+    color: white;
+}
+
+.main:hover {
+    background-color: rgb(94, 93, 93);
+}

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24.5" height="20" viewBox="0 0 24.5 20">
+    <defs>
+        <style>
+            .prefix__cls-1{fill:none;stroke:rgba(255,255,255,.8);stroke-width:2px}
+        </style>
+    </defs>
+    <g id="prefix__Icon_feather-mail" data-name="Icon feather-mail" transform="translate(-2 -5)">
+        <path id="prefix__Path_83" d="M5.25 6h18a2.257 2.257 0 0 1 2.25 2.25v13.5A2.257 2.257 0 0 1 23.25 24h-18A2.257 2.257 0 0 1 3 21.75V8.25A2.257 2.257 0 0 1 5.25 6z" class="prefix__cls-1" data-name="Path 83"/>
+        <path id="prefix__Path_84" d="M25.5 9l-11.25 7.875L3 9" class="prefix__cls-1" data-name="Path 84" transform="translate(0 -.75)"/>
+    </g>
+</svg>
