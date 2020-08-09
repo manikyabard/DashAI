@@ -8,6 +8,9 @@
 - [ ] Done with Everything 18th August
 - [ ] Competition End 25th August
 
+#### Testing
+Testing not complete. Made quite a few required changes. A few more changes may be required; would like to do it on call.
+
 ### FrontEnd timeline
 - [X] API for Tabular 17th July
 - [X] Flask Server 17th July
