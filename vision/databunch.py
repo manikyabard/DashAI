@@ -3,7 +3,7 @@ from fastai.vision.gan import GANItemList
 
 from core.databunch import DashDatabunch
 from fastai.data_block import *
-from path import Path
+from pathlib import Path
 
 
 class DashVisionDatabunch:
