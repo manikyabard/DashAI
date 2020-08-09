@@ -30,7 +30,7 @@
 		"param": {
 			"name": "momentum",
 			"type": "range",
-			"bounds": [0.9, 0.99],
+			"bounds": [0.9, 0.99]
 		},
 		"default": 0.95
 	},
@@ -39,7 +39,7 @@
 		"param": {
 			"name": "momentum",
 			"type": "range",
-			"bounds": [0.8, 0.89],
+			"bounds": [0.8, 0.89]
 		},
 		"default": 0.85
 	},

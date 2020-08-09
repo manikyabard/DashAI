@@ -1,11 +1,11 @@
-import fastai
 from fastai.basic_train import *
-from fastai.callbacks import *
 
-class DashTrain():
-    ''' Contains methods related to pre-training options, training,
-     and post-training.
-    '''
+
+class DashTrain:
+    """Contains methods related to pre-training options, training,
+    and post-training.
+    """
+
     @staticmethod
     def fit(response, learn: Learner):
         response["training"]["fit"]["lr"] = eval(response["training"]["fit"]["lr"])
@@ -36,12 +36,3 @@ class DashTrain():
     @staticmethod
     def plot_losses(learn):
         learn.recorder.plot_losses()
-
-    
-    
-
-
-    
-
-    
-
