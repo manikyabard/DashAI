@@ -118,7 +118,6 @@ class DashInsights:
 		return vec, torch.tensor(len(text_arr), device=torch.device('cpu'))
 
 	def baseline_func(self, input):
-		print('insights.DashInsights.baseline_func: input, input.size()', input, input.size())
 		if self.application == 'text':
 			baseline = torch.ones_like(input) * self.vocab.stoi[self.baseline_token]
 			baseline[0] = self.vocab.stoi['xxbos']
@@ -127,7 +126,6 @@ class DashInsights:
 		elif self.application == 'tabular':
 			# baseline = (torch.zeros(len(self.data.x.cat_names)), torch.zeros(len(self.data.x.cont_names)))
 			baseline = torch.zeros_like(input)
-			print('insights.DashInsights.baseline_func: baseline', baseline)
 		return baseline
 
 	def formatted_data_iter(self):

@@ -40,7 +40,6 @@ class DashTabularDatabunch:
 		src = TabularList.from_df(df, path=path, cat_names=cat_names, cont_names=cont_names, procs=procs)
 
 		src = DashDatabunch.split_databunch(response, src)
-		print(src)
 		src = DashDatabunch.label_databunch(response, src)
 
 		# Optional: add test  #TODO Test it out

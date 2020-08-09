@@ -16,10 +16,8 @@ class DashCollabModel:
 			y_range = tuple(response['default']['y_range'])
 			use_bn = response['default']['use_bn']
 			bn_final = response['default']['bn_final']
-		print(y_range)
 		emb_szs = databunch.get_emb_szs()
 		u,m = databunch.train_ds.x.classes.values()
-		print(u,m)
 		if use_nn:
 			model = EmbeddingNN(emb_szs=emb_szs,layers=layers,ps=ps,emb_drop=emb_drop,y_range=y_range,use_bn=use_bn,bn_final=bn_final)
 			return model

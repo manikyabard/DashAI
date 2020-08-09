@@ -18,16 +18,13 @@ class DashTextDatabunch:
 			# prevent errors.
 			state = np.random.get_state()
 			np.random.set_state(state)
-			print('Before', np.random.get_state())
 			src_lm = DashTextDatabunch.get_itemlist(response_lm["text"]["input"])
 			src_lm = DashDatabunch.split_databunch(response_lm, src_lm)
 			src_lm = DashDatabunch.label_databunch(response_lm, src_lm)
 			src = DashTextDatabunch.get_itemlist(response["text"]["input"])
 			src = DashDatabunch.split_databunch(response, src)
 			src = DashDatabunch.label_databunch(response, src)
-			print('During', np.random.get_state())
 			np.random.seed(seed=None)
-			print('After', np.random.get_state())
 			
 			return (DashDatabunch.create_databunch(response, src),
 					DashDatabunch.create_databunch(response_lm, src_lm))

@@ -82,7 +82,6 @@ class DashDatabunch:
 			if response_split['validation']['method'] == 'from_df':
 				args = {'col': response_split['validation']['from_df']['col']}
 
-			# print(getattr(src, f"split_{response_split['validation']['method']}")(**args))
 			return getattr(src, f"split_{response_split['validation']['method']}")(**args)
 
 		# except Exception as e:
@@ -118,7 +117,6 @@ class DashDatabunch:
 				return src
 			'''
 			if response_lab['label']['method'] == 'from_func':
-				#print(lambda x: PosixPath(response["vision"]["segmentation"]["path_lbl"])/f'{x.stem}_P{x.suffix}')
 				get_y_fn = lambda x: Path(response["vision"]["segmentation"]['path_lbl'])/f'{x.stem}_P{x.suffix}'
 				codes = np.loadtxt(Path(response["vision"]["segmentation"]["codes"]), dtype=str)
 				src=src.label_from_func(get_y_fn,classes=codes)
