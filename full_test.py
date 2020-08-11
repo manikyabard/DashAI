@@ -28,31 +28,31 @@ def main():
 	learn = getattr(learner_class, f'create_{application}_learner')(response)
 	print('Created learner; completed step 1.')
 
-	# print('STEP 2 (optional): Optimizing the hyper-parameters.')
-	# step_2 = False
-	# try:
-	# 	import ax
-	# 	from verum.DashVerum import DashVerum
-	# 	step_2 = True
-	# 	with open('./data/verum.json') as f:
-	# 		response = json.load(f)
-	# 	verum = DashVerum(response, learn)
-	# 	learn, metric, lr, num_epochs, moms = verum.veritize()
-	# 	print('Hyper-parameters optimized; completed step 2.')
-	# except ImportError:
-	# 	print('Skipping step 2 as module `ax` is not installed.')
-	#
-	# print('STEP 3: Training the model.')
-	# with open('./data/train.json') as f:
-	# 	response = json.load(f)
-	# if step_2:
-	# 	response['fit']['epochs'] = num_epochs
-	# 	response['fit']['lr'] = lr
-	# 	response['fit_one_cycle']['max_lr'] = lr
-	# 	response['fit_one_cycle']['moms'] = str(moms)
-	#
-	# getattr(DashTrain, response['type'])(response, learn)
-	# print('Trained model; completed step 3.')
+	print('STEP 2 (optional): Optimizing the hyper-parameters.')
+	step_2 = False
+	try:
+		import ax
+		from verum.DashVerum import DashVerum
+		step_2 = True
+		with open('./data/verum.json') as f:
+			response = json.load(f)
+		verum = DashVerum(response, learn)
+		learn, metric, lr, num_epochs, moms = verum.veritize()
+		print('Hyper-parameters optimized; completed step 2.')
+	except ImportError:
+		print('Skipping step 2 as module `ax` is not installed.')
+	
+	print('STEP 3: Training the model.')
+	with open('./data/train.json') as f:
+		response_train = json.load(f)
+	if step_2:
+		response_train['fit']['epochs'] = num_epochs
+		response_train['fit']['lr'] = lr
+		response_train['fit_one_cycle']['max_lr'] = lr
+		response_train['fit_one_cycle']['moms'] = str(moms)
+	
+	getattr(DashTrain, response_train['training']['type'])(response_train, learn)
+	print('Trained model; completed step 3.')
 
 	print('STEP 4: Visualizing the attributions.')
 	insights = DashInsights(path, learn.data.batch_size, learn, application)
