@@ -9,7 +9,7 @@
             "no_check": false,
             "num_workers": 16,
             "validation": {
-                "method": "none",
+                "method": "by_rand_pct",
                 "by_rand_pct": {
                     "valid_pct": 0.2,
                     "seed": null
@@ -148,7 +148,7 @@
                 "Adamax",
                 "ASGD"
             ],
-            "chosen_opt": "ASGD",
+            "chosen_opt": "AdamW",
             "arguments": {
                 "SGD": {
                     "lr": 0,
@@ -639,7 +639,8 @@
             "from_csv": {
                 "path": "data/imdb_sample",
                 "csv_name": "texts.csv",
-                "cols": 1
+                "cols": 1,
+                "vocab": null
 
             },
             "from_folder": {
