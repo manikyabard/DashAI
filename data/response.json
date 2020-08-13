@@ -9,7 +9,7 @@
             "no_check": false,
             "num_workers": 16,
             "validation": {
-                "method": "by_rand_pct",
+                "method": "by_valid_func",
                 "by_rand_pct": {
                     "valid_pct": 0.2,
                     "seed": null
@@ -42,9 +42,8 @@
                     "train": null,
                     "valid": null
                 },
-                "valid_func": {
-                    "fname": null,
-                    "func": null
+                "by_valid_func": {
+                    "location": ""
                 },
                 "from_df": {
                     "col": null
@@ -64,8 +63,7 @@
                     "label_cls": null
                 },
                 "from_func": {
-                    "fname": "data/func/img2bbox.py",
-                    "func": "func_img2bbox"
+                    "location": ""
                 },
                 "from_re": {
                     "pat": null,

@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 import json
+import torch
+
 from pathlib import Path
 
 from text.learner import DashTextLearner
@@ -29,7 +31,6 @@ def main():
 	print('Created learner; completed step 1.')
 
 	print('STEP 2 (optional): Optimizing the hyper-parameters.')
-<<<<<<< HEAD
 	step_2 = False  # If step 2 done, then later use returned hyper-parameters.
 	# Else, use default or mentioned hyper-parameters.
 	try:
@@ -45,16 +46,19 @@ def main():
 		print('Skipping step 2 as module `ax` is not installed.')
 
 	print('STEP 3: Training the model.')
-	with open('./data/train.json') as f:
-		response = json.load(f)
-	if step_2:
-		response['fit']['epochs'] = num_epochs
-		response['fit']['lr'] = lr
-		response['fit_one_cycle']['max_lr'] = lr
-		response['fit_one_cycle']['moms'] = str(moms)
+	if torch.cuda.is_available():
+		with open('./data/train.json') as f:
+			response = json.load(f)
+		if step_2:
+			response['fit']['epochs'] = num_epochs
+			response['fit']['lr'] = lr
+			response['fit_one_cycle']['max_lr'] = lr
+			response['fit_one_cycle']['moms'] = str(moms)
 
-	getattr(DashTrain, response['training']['type'])(response, learn)
-	print('Trained model; completed step 3.')
+		getattr(DashTrain, response['training']['type'])(response, learn)
+		print('Trained model; completed step 3.')
+	else:
+		print('Skipping step 3 because there is no GPU.')
 
 	print('STEP 4 (optional): Visualizing the attributions.')
 	insights = DashInsights(path, learn.data.batch_size, learn, application)
