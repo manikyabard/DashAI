@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import json
 import torch
+import fastai
 
 from pathlib import Path
 
@@ -26,6 +27,8 @@ def main():
 	with open('./data/response.json') as f:
 		response = json.load(f)
 	application = response['task']
+	save_dir = Path(response['save']['save_dir'])
+	save_name = Path(response['save']['save_name'])
 	learner_class = learner_class_map[application]
 	learn = getattr(learner_class, f'create_{application}_learner')(response)
 	print('Created learner; completed step 1.')
@@ -43,7 +46,7 @@ def main():
 		learn, metric, lr, num_epochs, moms = verum.veritize()
 		print('Hyper-parameters optimized; completed step 2.')
 	except ImportError:
-		print('Skipping step 2 as module `ax` is not installed.')
+		print('Skipping step 2 as the module `ax` is not installed.')
 
 	print('STEP 3: Training the model.')
 	if torch.cuda.is_available():
@@ -62,6 +65,7 @@ def main():
 
 	print('STEP 4 (optional): Visualizing the attributions.')
 	insights = DashInsights(path, learn.data.batch_size, learn, application)
+	fastai.torch_core.defaults.device = 'cpu'
 	visualizer = AttributionVisualizer(
 		models=[insights.model],
 		score_func=insights.score_func,
@@ -71,9 +75,20 @@ def main():
 		application=insights.application
 	)
 
-	visualizer.serve()
-	print('Completed visualization; completed step 4. Congratulations!')
-	print('Now we need to add model-saving and production-serving.')
+	visualizer.serve(debug=True)
+	print('Completed visualization; completed step 4.')
+
+	print('STEP 5: Saving the model.')
+	save_path = save_dir / save_name
+	if not save_dir.exists():
+		save_dir.mkdir()
+	# learn.export(save_path)
+	print('Saved the model; completed step 5. Congratulations!')
+	print('(Not actually saving right now; uncomment relevant line if needed.)')
+	print('Load the model again with the following code:', end='\n\n')
+	print(f'\tlearn = load_learner(path="{save_dir}", file="{save_name}")')
+	print('-' * 50)
+	print('Now we need to add production-serving.')
 
 
 if __name__ == '__main__':

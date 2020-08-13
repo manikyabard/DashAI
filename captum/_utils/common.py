@@ -378,8 +378,10 @@ def _run_forward(
     # print('output common', type(output[0]), type(output[1]), type(output[2]))
 
     try:
+        print('captum._utlis.common: You should not be here!')
         ret = _select_targets(output, target)
     except:
+        print('captum._utils.common, output[0]:', output[0])
         ret = _select_targets(output[0], target)
 
     #Below line won't work currently as this is being called in multiple places
