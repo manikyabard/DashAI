@@ -1,16 +1,16 @@
 from fastai.tabular import *
-import torch.optim
+
 
 class DashOptimizer:
-	'''
+	"""
 	Contains methods for specifying the optimizer
-	'''
-	
+	"""
+
 	@staticmethod
 	def create_optimize(response):
-		'''
+		"""
 		Creates the optimizer using the values given in response/DashUI
-		'''
+		"""
 		try:
 			if response['chosen_opt'] == 'SGD':
 				arg = response['arguments']['SGD']
@@ -22,7 +22,6 @@ class DashOptimizer:
 					nesterov=arg['nesterov'],
 					weight_decay=arg['weight_decay']
 				)
-
 
 			if response['chosen_opt'] == 'RMSProp':
 				arg = response['arguments']['RMSProp']
@@ -36,7 +35,6 @@ class DashOptimizer:
 					centered=arg['centered']
 				)
 
-
 			if response['chosen_opt'] == 'Adam':
 				arg = response['arguments']['Adam']
 				opt_func = partial(
@@ -48,7 +46,6 @@ class DashOptimizer:
 					amsgrad=arg['amsgrad']
 				)
 
-
 			if response['chosen_opt'] == 'AdamW':
 				arg = response['arguments']['AdamW']
 				opt_func = partial(
@@ -59,7 +56,6 @@ class DashOptimizer:
 					amsgrad=arg['amsgrad'],
 					weight_decay=arg['weight_decay']
 				)
-
 
 			if response['chosen_opt'] == 'Adadelta':
 				arg = response['arguments']['Adadelta']
@@ -103,12 +99,12 @@ class DashOptimizer:
 			if response['chosen_opt'] == 'ASGD':
 				arg = response['arguments']['ASGD']
 				opt_func = partial(optim.ASGD,
-					lr=arg['lr'],
-					alpha=arg['alpha'],
-					lambd=arg['lambd'],
-					t0=arg['t0'],
-					weight_decay=arg['weight_decay']
-				)
+								   lr=arg['lr'],
+								   alpha=arg['alpha'],
+								   lambd=arg['lambd'],
+								   t0=arg['t0'],
+								   weight_decay=arg['weight_decay']
+								   )
 
 			return opt_func
 

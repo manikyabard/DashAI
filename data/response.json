@@ -1,9 +1,9 @@
 {
-    "task": "text",
+    "task": "vision",
 
     "core": {
         "data": {
-            "bs": 8,
+            "bs": 2,
             "val_bs": null,
             "device": null,
             "no_check": false,
@@ -52,9 +52,9 @@
             },
 
             "label": {
-                "method": "from_df",
+                "method": "from_folder",
                 "from_df": {
-                    "cols": "label",
+                    "cols": "salary",
                     "label_cls": null,
                     "label_delim": null,
                     "classes": null
@@ -78,9 +78,7 @@
         },
         "metric": {
             "methods": [
-                "accuracy",
-                "error_rate",
-                "Precision"
+                "accuracy"
             ],
             "accuracy_thresh": {
                 "thresh": 0.5,
@@ -219,13 +217,14 @@
 
     "tabular": {
         "input": {
-            "csv_name": "./data/hello.csv",
-            "dep_var": "columnt",
+            "csv_name": "./data/adult_sample/adult.csv",
+            "dep_var": "salary",
             "cat_names": [
-                "column1"
+                "workclass", "education", "marital-status", "occupation",
+                "relationship", "race"
             ],
             "cont_names": [
-                "column2"
+                "age", "fnlwgt", "education-num"
             ],
             "test_df": {
                 "has_test": false,
@@ -246,10 +245,10 @@
             }
         },
         "model": {
-            "type": "custom",
+            "type": "default",
             "default": {
-                "out_sz": 3,
-                "layers": [64,64],
+                "out_sz": null,
+                "layers": [200, 100],
                 "emb_drop": 0,
                 "ps": null,
                 "y_range": null,

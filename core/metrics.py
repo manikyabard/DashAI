@@ -1,17 +1,19 @@
+import os
+import sys
+
 from fastai.metrics import *
-from pathlib import Path
-import sys, os
+
 
 class DashMetrics:
-	'''
+	"""
 	Contains methods for specifying metrics to be shown during training
-	'''
+	"""
 
 	@staticmethod
 	def create_metric(response):
-		'''
+		"""
 		Specifies the metrics to be shown using training using the values given in the response/DashUI.
-		'''
+		"""
 		try:
 			if response['metric']['methods'] == "None":
 				return None
@@ -23,25 +25,25 @@ class DashMetrics:
 
 				if kind == 'accuracy_thresh':
 					kinds.append(partial(
-							accuracy_thresh,
-							thresh = response['metric']['accuracy_thresh']['thresh'], 
-							sigmoid = response['metric']['accuracy_thresh']['sigmoid']
-						)
+						accuracy_thresh,
+						thresh=response['metric']['accuracy_thresh']['thresh'],
+						sigmoid=response['metric']['accuracy_thresh']['sigmoid']
+					)
 					)
 
 				if kind == 'top_k_accuracy':
 					kinds.append(partial(
-							top_k_accuracy,
-							k = response['metric']['top_k_accuracy']['k']
-						)
+						top_k_accuracy,
+						k=response['metric']['top_k_accuracy']['k']
+					)
 					)
 
 				if kind == 'dice':
 					kinds.append(partial(
-							dice,
-							iou = response['metric']['dice']['iou'],
-							eps = response['metric']['dice']['eps']
-						)
+						dice,
+						iou=response['metric']['dice']['iou'],
+						eps=response['metric']['dice']['eps']
+					)
 					)
 
 				if kind == 'error_rate':
@@ -64,12 +66,12 @@ class DashMetrics:
 
 				if kind == 'fbeta':
 					kinds.append(partial(
-							fbeta,
-							thresh = response['metric']['fbeta']['thresh'], 
-							beta = response['metric']['fbeta']['beta'], 
-							eps = response['metric']['fbeta']['eps'],
-							sigmoid = response['metric']['accuracy_thresh']['sigmoid']
-						)
+						fbeta,
+						thresh=response['metric']['fbeta']['thresh'],
+						beta=response['metric']['fbeta']['beta'],
+						eps=response['metric']['fbeta']['eps'],
+						sigmoid=response['metric']['accuracy_thresh']['sigmoid']
+					)
 					)
 
 				if kind == 'explained_variance':
@@ -80,26 +82,26 @@ class DashMetrics:
 
 				if kind == 'Precision':
 					precision = Precision(
-						average = response['metric']['Precision']['average'],
-						pos_label = response['metric']['Precision']['pos_label'],
-						eps = response['metric']['Precision']['eps']
+						average=response['metric']['Precision']['average'],
+						pos_label=response['metric']['Precision']['pos_label'],
+						eps=response['metric']['Precision']['eps']
 					)
 					kinds.append(precision)
 
 				if kind == 'Recall':
 					recall = Recall(
-						average = response['metric']['Recall']['average'],
-						pos_label = response['metric']['Recall']['pos_label'],
-						eps = response['metric']['Recall']['eps']
+						average=response['metric']['Recall']['average'],
+						pos_label=response['metric']['Recall']['pos_label'],
+						eps=response['metric']['Recall']['eps']
 					)
 					kinds.append(recall)
 
 				if kind == 'FBeta':
 					fbetavar = FBeta(
-						average = response['metric']['FBeta']['average'],
-						pos_label = response['metric']['FBeta']['pos_label'],
-						eps = response['metric']['FBeta']['eps'],
-						beta = response['metric']['FBeta']['beta']
+						average=response['metric']['FBeta']['average'],
+						pos_label=response['metric']['FBeta']['pos_label'],
+						eps=response['metric']['FBeta']['eps'],
+						beta=response['metric']['FBeta']['beta']
 					)
 					kinds.append(fbetavar)
 
@@ -113,17 +115,17 @@ class DashMetrics:
 
 				if kind == 'KappaScore':
 					kap = KappaScore(
-						weights = response['metric']['KappaScore']['weights'],
+						weights=response['metric']['KappaScore']['weights'],
 					)
 					kinds.append(kap)
 
 				if kind == 'MultiLabelFbeta':
 					multilabelfbeta = MultiLabelFbeta(
-						beta = response['metric']['MultiLabelFbeta']['beta'],
-						eps = response['metric']['MultiLabelFbeta']['eps'],
-						thresh = response['metric']['MultiLabelFbeta']['thresh'],
-						sigmoid = response['metric']['MultiLabelFbeta']['sigmoid'],
-						average = response['metric']['MultiLabelFbeta']['average']
+						beta=response['metric']['MultiLabelFbeta']['beta'],
+						eps=response['metric']['MultiLabelFbeta']['eps'],
+						thresh=response['metric']['MultiLabelFbeta']['thresh'],
+						sigmoid=response['metric']['MultiLabelFbeta']['sigmoid'],
+						average=response['metric']['MultiLabelFbeta']['average']
 					)
 					kinds.append(multilabelfbeta)
 

@@ -3,9 +3,9 @@ from fastai.text import *
 from fastai.text.data import TokenizeProcessor, NumericalizeProcessor
 from fastai.text.transform import Tokenizer
 
+from captum.attr import configure_interpretable_embedding_layer
 from captum.insights import Batch
 from captum.insights.attr_vis.features import TextFeature, ImageFeature, TabularFeature
-from captum.attr import configure_interpretable_embedding_layer, remove_interpretable_embedding_layer
 
 
 class DashInsights:
@@ -71,7 +71,7 @@ class DashInsights:
 			TokenizeProcessor(tokenizer),
 			NumericalizeProcessor(vocab)
 		]
-	
+
 	@staticmethod
 	def get_processors_for_clas(vocab):
 		tokenizer = Tokenizer(post_rules=[replace_all_caps, deal_caps, DashInsights.limit_tokens])
@@ -79,36 +79,36 @@ class DashInsights:
 			TokenizeProcessor(tokenizer=tokenizer),
 			NumericalizeProcessor(vocab=vocab)
 		]
-	
+
 	@staticmethod
 	def limit_tokens(x: list) -> list:
 		limit = 70
 		if len(x) > limit:
 			x = x[:limit]
 		return x
-	
+
 	@staticmethod
 	def score_func(o):
 		if isinstance(o, tuple):
 			o = o[0]
 		return F.softmax(o, dim=1)
-	
+
 	def stoi(self, token):
 		return self.vocab.stoi[token]
-	
+
 	def itos(self, input):
 		return [self.vocab.itos[int(i)] for i in input.squeeze(0)]
-	
+
 	def dataset(self, texts, targets):
 		for text, target in zip(texts, targets):
 			t, t_len = self.encode_text(text)
 			t, t_len = t.unsqueeze(0), t_len.unsqueeze(0)
 			target_idx = self.vocab.stoi[target]
-			
+
 			yield Batch(
 				inputs=(t,), labels=(target_idx,), additional_args=t_len
 			)
-	
+
 	def encode_text(self, text):
 		text_arr = text.lower().split()
 		vec = torch.zeros(len(text_arr), device=torch.device('cpu')).long()
