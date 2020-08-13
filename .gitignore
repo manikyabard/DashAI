@@ -1,4 +1,5 @@
 **/__pycache__
+data/imdb_sample/models
 .ipynb_checkpoints
 .vscode
 .idea

@@ -29,6 +29,7 @@ def main():
 	print('Created learner; completed step 1.')
 
 	print('STEP 2 (optional): Optimizing the hyper-parameters.')
+<<<<<<< HEAD
 	step_2 = False  # If step 2 done, then later use returned hyper-parameters.
 	# Else, use default or mentioned hyper-parameters.
 	try:
