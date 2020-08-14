@@ -64,29 +64,29 @@ def main():
 		print('Skipping step 3 because there is no GPU.')
 
 	print('STEP 4 (optional): Visualizing the attributions.')
-	insights = DashInsights(path, learn.data.batch_size, learn, application)
+	insight = DashInsights(path, learn.data.batch_size, learn, application)
 	fastai.torch_core.defaults.device = 'cpu'
 	visualizer = AttributionVisualizer(
-		models=[insights.model],
-		score_func=insights.score_func,
-		classes=insights.data.classes,
-		features=insights.features,
-		dataset=insights.formatted_data_iter(),
-		application=insights.application
+		models=[insight.model],
+		score_func=insight.score_func,
+		classes=insight.data.classes,
+		features=insight.features,
+		dataset=insight.formatted_data_iter(),
+		application=insight.application
 	)
 
 	visualizer.serve(debug=True)
 	print('Completed visualization; completed step 4.')
 
 	print('STEP 5: Saving the model.')
-	save_path = save_dir / save_name
-	if not save_dir.exists():
-		save_dir.mkdir()
+	# save_path = save_dir / save_name
+	# if not save_dir.exists():
+	# 	save_dir.mkdir()
 	# learn.export(save_path)
 	print('Saved the model; completed step 5. Congratulations!')
-	print('(Not actually saving right now; uncomment relevant line if needed.)')
+	print('(Not actually saving right now; uncomment the relevant lines if needed.)')
 	print('Load the model again with the following code:', end='\n\n')
-	print(f'\tlearn = load_learner(path="{save_dir}", file="{save_name}")')
+	print(f'\tlearn = load_learner(path={save_dir!r}, file={save_name!r})', end='\n\n')
 	print('-' * 50)
 	print('Now we need to add production-serving.')
 

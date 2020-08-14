@@ -370,6 +370,8 @@ def _run_forward(
     inputs = _format_input(inputs)
     additional_forward_args = _format_additional_forward_args(additional_forward_args)
 
+    print('captum._utils.common: inputs', inputs)
+
     output = forward_func(
         *(*inputs, *additional_forward_args)
         if additional_forward_args is not None
@@ -384,7 +386,7 @@ def _run_forward(
         print('captum._utils.common, output[0]:', output[0])
         ret = _select_targets(output[0], target)
 
-    #Below line won't work currently as this is being called in multiple places
+    # Below line won't work currently as this is being called in multiple places
     # ret = _select_targets(output[0], target) if application == "text" else _select_targets(output, target)
     return ret  # Should be `output[0]` for text; `output` for others.
 
