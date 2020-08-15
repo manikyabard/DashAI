@@ -1,5 +1,5 @@
-const { UPDATE_DATA } = require("../actions/type/open");
 import data from '../../assets/data.json';
+const { UPDATE_DATA, UPDATE_TYPE } = require("../actions/type/open");
 
 const initState = {
     type: UPDATE_DATA,
@@ -11,11 +11,16 @@ export default function Data_Reducer(state = initState, method) {
         case UPDATE_DATA:
             return {
                 type: UPDATE_DATA,
+                payload: method.payload.value
+            }
+        case UPDATE_TYPE:
+            return {
+                type: UPDATE_TYPE,
                 payload: {
                     ...state.payload,
-                    data: method.value
+                    task: method.payload.value
                 }
             }
+        default: return state
     }
-    
 }

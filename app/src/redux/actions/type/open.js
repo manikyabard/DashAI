@@ -6,4 +6,5 @@ export const DEFAULT_PAGE = "DEFAULT_PAGE";
 
 
 export const UPDATE_DATA = "UPDATE_DATA";
+export const UPDATE_TYPE = "UPDATE_TYPE";
 export const UPDATE_PROJECT = "UPDATE_PROJECT";

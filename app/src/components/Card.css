@@ -1,9 +1,9 @@
 .main {
     background-color: rgb(114, 113, 113);
     border-radius: 10px;
-    width: 250px;
+    min-width: 350px;
     margin: 5px;
-    height: 60px;
+    height: 150px;
     align-items: center;
     justify-content: center;
     display: flex;
@@ -11,7 +11,7 @@
 }
 
 .main h3 {
-    color: white;
+    color: white;    
 }
 
 .main:hover {

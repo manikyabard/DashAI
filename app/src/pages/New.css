@@ -49,21 +49,22 @@ body {
 }
 
 div.jsoneditor{
-    background-color:#b4b4b4;
+    /* background-color:#b4b4b4; */
     border: none;
 }
 
 div.jsoneditor * {
-    font-size: medium;
+    font-size: x-large;
 }
 div.jsoneditor-field textarea {
-    font-size: medium;
+    font-size: large;
 }
 
 div.jsoneditor-menu {
-    background-color:#b4b4b4;
+    background-color:#eeeeee;
     display: none;
 }
+
 
 
 .gs-container {
@@ -164,6 +165,31 @@ div.jsoneditor-menu {
 }
 
 .btn-main h3 {
+    color: black;
+    font-weight: 200;
+}
+
+.btn-active {
+    width: 150px;
+    height: 40px;
+    margin: 10px 5px 10px 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #045fd6;
+    border-radius: 5px;
+    box-shadow: none;
+    transition: all ease-in-out .2s;
+}
+
+.btn-active:hover {
+    background-color: #003f91;
+    -webkit-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
+}
+
+.btn-active h3 {
     color: black;
     font-weight: 200;
 }

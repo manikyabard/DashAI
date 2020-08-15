@@ -1,5 +1,5 @@
 {
-    "task": "text",
+    "task": "tabular",
 
     "core": {
         "data": {

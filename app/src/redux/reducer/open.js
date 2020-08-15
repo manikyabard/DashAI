@@ -1,4 +1,4 @@
-import { OPEN_PROJECT, CLOSE_PROJECT, NEW_PROJECT, COMPILE_PROJECT, LOGIN_PAGE, DEFAULT_PAGE } from "../actions/type/open"
+import { OPEN_PROJECT, NEW_PROJECT, COMPILE_PROJECT, LOGIN_PAGE, DEFAULT_PAGE } from "../actions/type/open"
 
 const initState = {
     type: DEFAULT_PAGE,

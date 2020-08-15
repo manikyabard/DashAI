@@ -13,17 +13,13 @@ const New = ({history}) => {
         <div className="new-main">
             <div className="col-1">
             <div id={"r"}>
-                <Card task={"Tabular"}/>
-                <Card task={"Text"}/>
+                <Card history={history} task={"tabular"}/>
+                <Card history={history} task={"text"}/>
             </div>
             <div id={"r"}>
-                <Card task={"Vision"}/>
-                <Card task={"Collaborative Filtering"}/>
+                <Card history={history} task={"vision"}/>
+                <Card history={history} task={"Collaborative Filtering"}/>
             </div>
-            <Button history={history}/>
-            </div>
-            <div className="col-2">
-                <ProjectConfig />
             </div>
         </div>
     )

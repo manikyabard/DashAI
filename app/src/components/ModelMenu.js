@@ -1,53 +1,50 @@
-import React from 'react';
-import {folderOpen} from 'react-icons-kit/fa/folderOpen'
-import { Icon } from 'react-icons-kit';
-import NormalInput from './NormalInput';
+import React, { useState, useEffect } from 'react';
 import JsonEditor from './Jsoneditor';
-import DropDown from './DropDown';
 import Button from './Button';
-// import { JsonEditor as Editor, JsonEditor } from 'jsoneditor-react';
-// import 'jsoneditor-react/es/editor.min.css';
+import { update_type, update_data } from '../redux/actions/data';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 
-const data = {
-    "default": {
-        "out_sz": 3,
-        "emb_drop": 0,
-        "ps": null,
-        "y_range": null,
-        "use_bn": true,
-        "bn_final": false,
-        "layers": [64,64],
-    },
-    "custom": {
-        "layers": ["nn.Linear(4, 5)", "nn.ReLU()", "nn.Linear(5, 3)"],
-        "extra_args": {
-            "bn_begin": false
+function ModelMenu({history, data, task, setTask, setData}) {
+    const [, forceUpdate] = useState();
+
+    useEffect(() => {
+        if(history.action === "PUSH"){
+            forceUpdate({});
         }
-    }
-}
+    }, [])
 
-
-function ModelMenu(props) {
     const handClick = () => {
-
+        history.goBack();
     }
+
+    const handleChange = (update_data) => {
+        setData(update_data)
+    }
+
     return(
         <div className={'model-menu'}>
-            <div style={{
-                backgroundColor: "#a1a1a1c9"
-            }} className={'btn-gp'}>
-                <Button label={"Text"}/>
-                <Button label={"Vision"}/>
-            </div>
-            <div style={{
-                backgroundColor: "#a1a1a1c9"
-            }} className={'btn-gp'}>
-                <Button onClick={handClick} label={"Tabular"}/>
-                <Button onClick={handClick} label={"CT"}/>
-            </div>
-            <JsonEditor data={data} Title={"Configuration"} />
+            <Button onClick={handClick} label={"Back"}/>    
+            <JsonEditor 
+            onChange={handleChange} 
+            data={data[task]} 
+            Title={"Configuration"} />
         </div>
     )
 }
 
-export default ModelMenu;
+const stateToProps = (state) => {
+    return {
+        "task": state.payload.task,
+        "data": state.payload
+    }
+}
+
+const dispatchToProps = (Dispatch) => {
+    return {
+        "setData": (val) => Dispatch(update_data(val)),
+        "setTask": (val) => Dispatch(update_type(val))
+    }
+}
+
+export default withRouter(connect(stateToProps, dispatchToProps)(ModelMenu));
