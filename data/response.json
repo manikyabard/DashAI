@@ -1,5 +1,5 @@
 {
-	"task": "vision",
+	"task": "text",
 	"core": {
 		"data": {
 			"bs": 2,
@@ -50,7 +50,7 @@
 			},
 
 			"label": {
-				"method": "from_folder",
+				"method": "from_df",
 				"from_df": {
 					"cols": "label",
 					"label_cls": null,
@@ -637,7 +637,6 @@
 				"csv_name": "texts.csv",
 				"cols": 1,
 				"vocab": null
-
 			},
 			"from_folder": {
 				"path": null
