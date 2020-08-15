@@ -637,7 +637,6 @@
 				"csv_name": "texts.csv",
 				"cols": 1,
 				"vocab": null
-
 			},
 			"from_folder": {
 				"path": null

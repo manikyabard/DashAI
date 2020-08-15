@@ -3,6 +3,8 @@ from core.databunch import DashDatabunch
 from fastai.data_block import *
 import copy
 
+from insights.DashInsights import DashInsights
+
 # Options for tokenizer and numericalizer not given
 
 class DashTextDatabunch:
@@ -18,17 +20,19 @@ class DashTextDatabunch:
 			# prevent errors.
 			state = np.random.get_state()
 			np.random.set_state(state)
-			src_lm = DashTextDatabunch.get_itemlist(response_lm["text"]["input"])
+			src_lm = DashTextDatabunch.get_itemlist(response_lm["text"]["input"], processor= DashInsights.get_processors_for_lm())
 			src_lm = DashDatabunch.split_databunch(response_lm, src_lm)
 			src_lm = DashDatabunch.label_databunch(response_lm, src_lm)
-			src = DashTextDatabunch.get_itemlist(response["text"]["input"])
-			src.vocab = src_lm.vocab
+			src_lm = DashDatabunch.create_databunch(response_lm, src_lm)
+			print("printing lm data", src_lm)
+			src = DashTextDatabunch.get_itemlist(response["text"]["input"], processor=DashInsights.get_processors_for_clas(src_lm.vocab))
+			# src.vocab = src_lm.vocab
 			src = DashDatabunch.split_databunch(response, src)
 			src = DashDatabunch.label_databunch(response, src)
 			np.random.seed(seed=None)
 
 			return (DashDatabunch.create_databunch(response, src),
-					DashDatabunch.create_databunch(response_lm, src_lm))
+					src_lm)
 
 		src = DashTextDatabunch.get_itemlist(response["text"]["input"])
 		src = DashDatabunch.split_databunch(response, src)
@@ -39,8 +43,8 @@ class DashTextDatabunch:
 		return DashDatabunch.create_databunch(response, src)
 
 	@staticmethod
-	def get_itemlist(response):
+	def get_itemlist(response, **kwargs):
 		if response["method"] == "from_csv":
-			return TextList.from_csv(**response["from_csv"])
+			return TextList.from_csv(**response["from_csv"], **kwargs)
 		if response["method"] == "from_folder":
-			return TextList.from_folder(**response["from_folder"])
+			return TextList.from_folder(**response["from_folder"], **kwargs)
