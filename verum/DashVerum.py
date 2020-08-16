@@ -14,6 +14,7 @@ class DashVerum:
 	def init_parameters(self):
 		parameters = []
 		for k, v in self.response.items():
+			print(k, v)
 			if v['flag']:
 				parameters.append(v['param'])
 		return parameters

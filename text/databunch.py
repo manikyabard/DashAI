@@ -2,7 +2,7 @@ from fastai.text import *
 from core.databunch import DashDatabunch
 from fastai.data_block import *
 import copy
-
+import os
 from insights.DashInsights import DashInsights
 
 # Options for tokenizer and numericalizer not given
@@ -20,6 +20,7 @@ class DashTextDatabunch:
 			# prevent errors.
 			state = np.random.get_state()
 			np.random.set_state(state)
+			print(os.getcwd())
 			src_lm = DashTextDatabunch.get_itemlist(response_lm["text"]["input"], processor= DashInsights.get_processors_for_lm())
 			src_lm = DashDatabunch.split_databunch(response_lm, src_lm)
 			src_lm = DashDatabunch.label_databunch(response_lm, src_lm)
