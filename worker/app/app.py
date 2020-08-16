@@ -4,6 +4,11 @@ import torch
 import fastai
 
 from pathlib import Path
+import os,sys,inspect
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(currentdir)
+granddir = os.path.dirname(parentdir) 
+sys.path.insert(0,granddir) 
 
 from text.learner import DashTextLearner
 from tabular.learner import DashTabularLearner
@@ -30,24 +35,24 @@ learner_class_map = {
 
 @app.route("/", methods=['GET'])
 def helper():
-    return render_template("helper.html")
+	return render_template("helper.html")
 
 @app.route("/generate", methods=['POST'])
 def generate():
-    res = {
-        "status": "COMPLETE",
-        "message": "",
-        "payload": []
-    }
-    response = request.form.get()
-    application = response['task']
+	res = {
+		"status": "COMPLETE",
+		"message": "",
+		"payload": []
+	}
+	response = request.form.get()
+	application = response['task']
 	save_dir = Path(response['save']['save_dir'])
 	save_name = Path(response['save']['save_name'])
 	learner_class = learner_class_map[application]
 	learn = getattr(learner_class, f'create_{application}_learner')(response)
 	emit(print('-'*10, 'Created learner', '-'*10))
 
-    emit('STEP 2 (optional): Optimizing the hyper-parameters.')
+	emit('STEP 2 (optional): Optimizing the hyper-parameters.')
 	step_2 = False  # If step 2 done, then later use returned hyper-parameters.
 	# Else, use default or mentioned hyper-parameters.
 	try:
@@ -62,7 +67,7 @@ def generate():
 	except ImportError:
 		emit('Skipping step 2 as the module `ax` is not installed.')
 
-    emit('STEP 3: Training the model.')
+	emit('STEP 3: Training the model.')
 	if torch.cuda.is_available():
 		with open('../../data/train.json') as f:
 			response = json.load(f)
@@ -103,7 +108,7 @@ def generate():
 	print(f'\tlearn = load_learner(path={save_dir!r}, file={save_name!r})', end='\n\n')
 	emit('-' * 50)
 	print('Now we need to add production-serving.')
-    return jsonify(res)
+	return jsonify(res)
 
 
 # @socketio.on('connect')
@@ -112,4 +117,4 @@ def generate():
 
 
 if __name__ == "__main__":
-    socketio.run(app)
+	socketio.run(app)
