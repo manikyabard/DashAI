@@ -24,8 +24,10 @@ function ModelMenu({history, data, task, setTask, setData}) {
 
     return(
         <div className={'model-menu'}>
-            <Button onClick={handClick} label={"Back"} type={"back"}/>
-            <h2 style={{textAlign: 'center'}}>{task}</h2>    
+            <div className={"header-main"}>
+                <Button onClick={handClick} label={"Back"} type={"back"}/>
+                <h2 style={{textAlign: 'center'}}>{task}</h2>    
+            </div>
             <JsonEditor 
             onChange={handleChange} 
             data={data[task]} 
