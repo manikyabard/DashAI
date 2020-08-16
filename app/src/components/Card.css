@@ -1,7 +1,7 @@
 .main {
     background-color: rgb(114, 113, 113);
     border-radius: 10px;
-    min-width: 350px;
+    min-width: 250px;
     margin: 5px;
     height: 150px;
     align-items: center;
@@ -15,5 +15,5 @@
 }
 
 .main:hover {
-    background-color: rgb(94, 93, 93);
+    background-color: #0c7ae0;
 }

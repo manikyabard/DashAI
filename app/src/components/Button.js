@@ -1,11 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-const Button = ({label, onClick, task}) => {
+
+import { Icon } from 'react-icons-kit';
+import {androidArrowBack} from 'react-icons-kit/ionicons/androidArrowBack'
+import {androidClose} from 'react-icons-kit/ionicons/androidClose'
+const Button = ({label, onClick, task, type}) => {
     return(
         <div onClick={() => onClick(label)} className={(task === label)?"btn-active":"btn-main"}>
-            <h3>
-                {label}
-            </h3>
+            <Icon icon={type === "back" ? androidArrowBack:androidClose} size={30}/>
         </div>
     )
 }

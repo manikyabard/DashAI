@@ -18,7 +18,7 @@ const TunnelPage = ({visibility, setVisibility}) => {
                 </div>
                 <div className={"header"}>
                     <div className={'btn-gp'}>
-                        <Button onClick={handlePop} label={"Cancel"}/>
+                        <Button onClick={handlePop} label={"Cancel"} type={"close"}/>
                     </div>
                 </div>
             </div>
