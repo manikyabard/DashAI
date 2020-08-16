@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Button from './Button';
+import { connect } from 'react-redux';
 
 
-const TunnelPage = ({visibility, setVisibility}) => {
+const TunnelPage = ({visibility, setVisibility, data}) => {
     const handlePop = () => {
         setVisibility(false);
     }
+
+    useEffect(() => {
+        fetch("http://localhost:5000/generate/", {
+            method: 'POST',
+            body: JSON.stringify(data)
+        })
+    }, [])
+
     return(
         <div 
         style={{
@@ -26,4 +35,18 @@ const TunnelPage = ({visibility, setVisibility}) => {
     )
 }
 
-export default TunnelPage;
+
+const stateToProps = (state) => {
+    return {
+        "data": state.payload,
+    }
+}
+
+const dispatchToProps = (Dispatch) => {
+    return {
+        
+    }
+}
+
+
+export default connect(stateToProps, dispatchToProps)(TunnelPage);
