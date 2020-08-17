@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from typing import Any, Callable, Dict, List, NamedTuple, Optional, Tuple, Union
-
+import json
 from captum.attr import (
     Deconvolution,
     DeepLift,
@@ -10,9 +10,18 @@ from captum.attr import (
     IntegratedGradients,
     Occlusion,
     Saliency,
-    LayerIntegratedGradients
+    LayerIntegratedGradients,
+    LayerFeatureAblation,
+    LayerConductance,
+    LayerDeepLift,
+    LayerActivation,
+    LayerGradCam
 )
 from captum.attr._utils.approximation_methods import SUPPORTED_METHODS
+
+with open('data/response.json') as f:
+    response_json = json.load(f)
+
 
 
 class NumberConfig(NamedTuple):
@@ -34,6 +43,7 @@ class StrConfig(NamedTuple):
 
 Config = Union[NumberConfig, StrEnumConfig, StrConfig]
 
+
 SUPPORTED_ATTRIBUTION_METHODS = [
     Deconvolution,
     DeepLift,
@@ -42,8 +52,14 @@ SUPPORTED_ATTRIBUTION_METHODS = [
     IntegratedGradients,
     Saliency,
     FeatureAblation,
-    Occlusion,
-    LayerIntegratedGradients
+    Occlusion
+] if response_json["task"] == "vision" else [
+    LayerIntegratedGradients,
+    LayerFeatureAblation,
+    # LayerConductance,
+    # LayerDeepLift,
+    # LayerActivation,
+    # LayerGradCam
 ]
 
 
@@ -96,4 +112,24 @@ ATTRIBUTION_METHOD_CONFIG: Dict[str, ConfigParameters] = {
         },
         post_process={"n_steps": int},
     ),
+    LayerFeatureAblation.get_name(): ConfigParameters(
+        params={
+            "perturbations_per_eval": NumberConfig(value=1, limit=(1, 100)) 
+        }
+    ),
+    # LayerGradCam.get_name(): ConfigParameters(
+    #     params={}
+    # ),
+    # LayerDeepLift.get_name(): ConfigParameters(
+    #     params={}
+    # ),
+    # LayerConductance.get_name(): ConfigParameters(
+    #     params={
+    #         "n_steps": NumberConfig(value=25, limit=(2, None)),
+    #         "method": StrEnumConfig(limit=SUPPORTED_METHODS, value="gausslegendre"),
+    #     }
+    # ),
+    # LayerActivation.get_name(): ConfigParameters(
+    #     params={}
+    # )
 }
