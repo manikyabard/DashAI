@@ -10,6 +10,7 @@ from captum.insights.attr_vis import AttributionVisualizer
 
 def main():
 	path = untar_data(URLs.IMDB_SAMPLE)
+	fastai.torch_core.defaults.device = 'cpu'
 	bs = 16
 	data_lm = (
 		TextList.from_csv(
@@ -40,7 +41,7 @@ def main():
 	awd = text_classifier_learner(data_clas, AWD_LSTM, drop_mult=0.5, pretrained=False)
 	awd.load_encoder('lm_encoder')
 	fastai.torch_core.defaults.device = 'cpu'
-	
+	awd.model[0].bptt = 2000
 	# path = untar_data(URLs.MNIST_SAMPLE)
 	# bs = 2
 	# data = ImageDataBunch.from_folder(path, valid_pct=0.2, size=28)
