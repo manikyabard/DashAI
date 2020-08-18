@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, jsonify
 import json
 import torch
 import fastai
-
+import os
 from pathlib import Path
 import os,sys,inspect
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
@@ -39,37 +39,41 @@ def helper():
 
 @app.route("/generate", methods=['POST'])
 def generate():
+	print(os.getcwd())
 	res = {
 		"status": "COMPLETE",
 		"message": "",
 		"payload": []
 	}
-	response = request.form.get()
+	
+	response = json.loads(request.data)
 	application = response['task']
 	save_dir = Path(response['save']['save_dir'])
 	save_name = Path(response['save']['save_name'])
 	learner_class = learner_class_map[application]
 	learn = getattr(learner_class, f'create_{application}_learner')(response)
-	emit(print('-'*10, 'Created learner', '-'*10))
+	print(print('-'*10, 'Created learner', '-'*10))
 
-	emit('STEP 2 (optional): Optimizing the hyper-parameters.')
+	print('STEP 2 (optional): Optimizing the hyper-parameters.')
 	step_2 = False  # If step 2 done, then later use returned hyper-parameters.
 	# Else, use default or mentioned hyper-parameters.
 	try:
 		import ax
+		print(ax.__version__)
 		from verum.DashVerum import DashVerum
 		step_2 = True
-		with open('../../data/verum.json') as f:
+		with open('./data/verum.json') as f:
 			response = json.load(f)
+		# print(response)
 		verum = DashVerum(response, learn)
 		learn, metric, lr, num_epochs, moms = verum.veritize()
-		emit('Hyper-parameters optimized; completed step 2.')
+		print('Hyper-parameters optimized; completed step 2.')
 	except ImportError:
-		emit('Skipping step 2 as the module `ax` is not installed.')
+		print('Skipping step 2 as the module `ax` is not installed.')
 
-	emit('STEP 3: Training the model.')
+	print('STEP 3: Training the model.')
 	if torch.cuda.is_available():
-		with open('../../data/train.json') as f:
+		with open('./data/train.json') as f:
 			response = json.load(f)
 		if step_2:
 			response['fit']['epochs'] = num_epochs
@@ -78,11 +82,11 @@ def generate():
 			response['fit_one_cycle']['moms'] = str(moms)
 
 		getattr(DashTrain, response['training']['type'])(response, learn)
-		emit('Trained model; completed step 3.')
+		print('Trained model; completed step 3.')
 	else:
-		emit('Skipping step 3 because there is no GPU.')
+		print('Skipping step 3 because there is no GPU.')
 
-	emit('STEP 4 (optional): Visualizing the attributions.')
+	print('STEP 4 (optional): Visualizing the attributions.')
 	insight = DashInsights(path, learn.data.batch_size, learn, application)
 	fastai.torch_core.defaults.device = 'cpu'
 	visualizer = AttributionVisualizer(
@@ -95,25 +99,26 @@ def generate():
 	)
 
 	visualizer.serve(debug=True)
-	emit('Completed visualization; completed step 4.')
+	print('Completed visualization; completed step 4.')
 
 	print('STEP 5: Saving the model.')
 	# save_path = save_dir / save_name
 	# if not save_dir.exists():
 	# 	save_dir.mkdir()
 	# learn.export(save_path)
-	emit('Saved the model; completed step 5. Congratulations!')
+	print('Saved the model; completed step 5. Congratulations!')
 	print('(Not actually saving right now; uncomment the relevant lines if needed.)')
 	print('Load the model again with the following code:', end='\n\n')
 	print(f'\tlearn = load_learner(path={save_dir!r}, file={save_name!r})', end='\n\n')
-	emit('-' * 50)
+	print('-' * 50)
 	print('Now we need to add production-serving.')
+
 	return jsonify(res)
 
 
 # @socketio.on('connect')
 # def talk_to_me():
-#     emit('after connect',  {'data':'Lets dance'})
+#     print('after connect',  {'data':'Lets dance'})
 
 
 if __name__ == "__main__":

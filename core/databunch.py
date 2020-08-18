@@ -27,41 +27,41 @@ class DashDatabunch:
 
 			if response_split['validation']['method'] == 'subsets':
 				args = {
-					'train_size': response_split['validation']['subsets']['train_size'],
-					'valid_size': response_split['validation']['subsets']['valid_size'],
-					'seed': response_split['validation']['subsets']['seed']
+					'train_size': response_split['validation']['by_subsets']['train_size'],
+					'valid_size': response_split['validation']['by_subsets']['valid_size'],
+					'seed': response_split['validation']['by_subsets']['seed']
 				}
 
 			if response_split['validation']['method'] == 'by_files':  # TODO: test it out
-				args = {'valid_name': response_split['validation']['files']['valid_names']}
+				args = {'valid_name': response_split['validation']['by_files']['valid_names']}
 
 			if response_split['validation']['method'] == 'by_fname_file':
 				args = {
-					'fname': response_split['validation']['fname_files']['fname'],
-					'path': response_split['validation']['fname_files']['path']
+					'fname': response_split['validation']['by_fname_files']['fname'],
+					'path': response_split['validation']['by_fname_files']['path']
 				}
 
 			if response_split['validation']['method'] == 'by_folder':
 				args = {
-					'train': response_split['validation']['folder']['train'],
-					'valid': response_split['validation']['folder']['valid']
+					'train': response_split['validation']['by_folder']['train'],
+					'valid': response_split['validation']['by_folder']['valid']
 				}
 			# For tabular, same csv; for vision, csv with labels
 			if response_split['validation']['method'] == 'by_idx':
 				df = pd.open_csv(response_split['validation']['csv_name'])
-				valid_idx = range(len(df) - response_split['validation']['idx']['valid_idx'], len(df))
+				valid_idx = range(len(df) - response_split['validation']['by_idx']['valid_idx'], len(df))
 				args = {'valid_idx': valid_idx}
 
 			if response_split['validation']['method'] == 'by_idxs':
 				args = {
-					'train_idx': response_split['validation']['idxs']['train_idx'],
-					'valid_idx': response_split['validation']['idxs']['valid_idx']
+					'train_idx': response_split['validation']['by_idxs']['train_idx'],
+					'valid_idx': response_split['validation']['by_idxs']['valid_idx']
 				}
 
 			if response_split['validation']['method'] == 'by_list':
 				args = {
-					'train': response_split['validation']['list']['train'],
-					'valid': response_split['validation']['list']['valid']
+					'train': response_split['validation']['by_list']['train'],
+					'valid': response_split['validation']['by_list']['valid']
 				}
 
 			if response_split['validation']['method'] == 'by_valid_func':

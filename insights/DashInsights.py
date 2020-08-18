@@ -9,6 +9,7 @@ from captum.insights.attr_vis.features import TextFeature, ImageFeature, Tabular
 
 
 class DashInsights:
+	limit = None
 	def __init__(
 			self, path, bs, learn, application,
 			baseline_func_default=False, baseline_token=None, baseline_fn=None
@@ -63,6 +64,23 @@ class DashInsights:
 			]
 		)
 
+	# @staticmethod
+	# def get_processors_for_lm():
+	# 	tokenizer = Tokenizer(post_rules=[replace_all_caps, deal_caps, DashInsights.limit_tokens])
+	# 	vocab = None
+	# 	return [
+	# 		TokenizeProcessor(tokenizer),
+	# 		NumericalizeProcessor(vocab)
+	# 	]
+
+	# @staticmethod
+	# def get_processors_for_clas(vocab):
+	# 	tokenizer = Tokenizer(post_rules=[replace_all_caps, deal_caps, DashInsights.limit_tokens])
+	# 	return [
+	# 		TokenizeProcessor(tokenizer=tokenizer),
+	# 		NumericalizeProcessor(vocab=vocab)
+	# 	]
+
 	@staticmethod
 	def get_processors_for_lm():
 		tokenizer = Tokenizer(post_rules=[replace_all_caps, deal_caps, DashInsights.limit_tokens])
@@ -82,7 +100,10 @@ class DashInsights:
 
 	@staticmethod
 	def limit_tokens(x: list) -> list:
-		limit = 70
+		# Under the assumption that the first input is the longest
+		if not DashInsights.limit:
+			DashInsights.limit = len(x)
+		limit = DashInsights.limit
 		if len(x) > limit:
 			x = x[:limit]
 		return x
@@ -135,6 +156,9 @@ class DashInsights:
 			while True:
 				inputs, labels = dataloader.one_batch()
 				yield Batch(inputs=tuple(inputs), labels=labels)
+				# if DashInsights.limit:
+				# 	self.model[0].bptt = DashInsights.limit
+				# 	print('-'*10,'\n',DashInsights.limit,'\n', '-'*10)
 		else:
 			dataloader.batch_size = self.bs
 			while True:
