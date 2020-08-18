@@ -233,6 +233,17 @@
   color: rgb(39, 216, 83);
 }
 
+.training {
+  width: 90%;
+  height: 80%;
+  /* border: 2px solid green; */
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
 .floating-btn * {
   margin-left: 3px;
 }

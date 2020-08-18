@@ -163,6 +163,8 @@ div.jsoneditor-menu {
 .header-main {
     border: 2px solid #eeeeee;
     position: relative;
+    /* border: 2px solid green; */
+    height: 70px;
 }
 
 .btn-main:hover {

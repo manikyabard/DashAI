@@ -6,8 +6,10 @@
   "private": true,
   "dependencies": {
     "bootstrap": "^4.5.0",
+    "child_process": "^1.0.2",
     "custom-electron-titlebar": "^3.2.2-hotfix62",
     "electron-is-dev": "^1.1.0",
+    "exec-sh": "^0.3.4",
     "jsoneditor": "^9.0.3",
     "jsoneditor-react": "^3.0.0",
     "react": "^16.13.1",
@@ -22,6 +24,8 @@
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
+    "react-spinners": "^0.9.0",
+    "react-toastify": "^6.0.8",
     "redux": "^4.0.5",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.88.2"

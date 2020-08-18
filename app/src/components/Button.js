@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Icon } from 'react-icons-kit';
 import {androidArrowBack} from 'react-icons-kit/ionicons/androidArrowBack'
 import {androidClose} from 'react-icons-kit/ionicons/androidClose'
-const Button = ({label, onClick, task, type}) => {
+const CButton = ({label, onClick, task, type}) => {
     return(
         <div onClick={() => onClick(label)} className={(task === label)?"btn-active":"btn-main"}>
             <Icon icon={type === "back" ? androidArrowBack:androidClose} size={30}/>
@@ -25,4 +25,4 @@ const dispatchToProps = (Dispatch) => {
     }
 }
 
-export default connect(stateToProps, dispatchToProps)(Button);
+export default connect(stateToProps, dispatchToProps)(CButton);

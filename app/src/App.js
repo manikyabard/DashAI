@@ -13,6 +13,8 @@ import New from './pages/New';
 import TunnelPage from './components/TunnelPage';
 import FloatingBtn from './components/FloatingBtn';
 // import FloatingBtn from './components/FloatingBtn';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 function App({data}) {
   const [training, setTraining] = useState(false);
