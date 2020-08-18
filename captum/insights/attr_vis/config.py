@@ -19,7 +19,7 @@ from captum.attr import (
 )
 from captum.attr._utils.approximation_methods import SUPPORTED_METHODS
 
-with open('data/response.json') as f:
+with open('data/response_temp.json') as f:
     response_json = json.load(f)
 
 
