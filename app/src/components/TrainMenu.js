@@ -6,9 +6,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import Button from 'react-bootstrap/esm/Button';
 
-function ModelGen({history, data, task, setTask, setData}) {
+function TrainModel({history, data, task, setTask, setData}) {
     const [, forceUpdate] = useState();
-
     useEffect(() => {
         if(history.action === "PUSH"){
             forceUpdate({});
@@ -16,11 +15,10 @@ function ModelGen({history, data, task, setTask, setData}) {
     }, [])
 
     const handClick = (label) => {
-        if (label === "Back")
-            history.goBack();
-        else history.push("/train")
+        if(label === "Back")
+            history.goBack();   
+        else history.push("/verum")
     }
-
 
     const handleChange = (update_data) => {
         setData(update_data)
@@ -30,19 +28,18 @@ function ModelGen({history, data, task, setTask, setData}) {
         <div className={'model-menu'}>
             <div className={"header-main"}>
                 <CButton onClick={handClick} label={"Back"} type={"back"}/>
-
                 <div style={{
                     position: "absolute",
                     right: "70px",
                     top: "0px"
                 }}>
-                    <CButton onClick={handClick} label={"Forward"} type={"train"}/>
+                    <CButton onClick={handClick} label={"Forward"} type={"verum"}/>
                 </div>
             </div>
             <JsonEditor 
             onChange={handleChange} 
-            data={data["data"][task]} 
-            Title={task + ": Model Builder"} />
+            data={data} 
+            Title={"Training Configuration"} />
         </div>
     )
 }
@@ -50,7 +47,7 @@ function ModelGen({history, data, task, setTask, setData}) {
 const stateToProps = (state) => {
     return {
         "task": state.payload.data.task,
-        "data": state.payload
+        "data": state.payload.train
     }
 }
 
@@ -61,4 +58,4 @@ const dispatchToProps = (Dispatch) => {
     }
 }
 
-export default withRouter(connect(stateToProps, dispatchToProps)(ModelGen));
+export default withRouter(connect(stateToProps, dispatchToProps)(TrainModel));

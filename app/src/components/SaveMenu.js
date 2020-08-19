@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import Button from 'react-bootstrap/esm/Button';
 
-function ModelGen({history, data, task, setTask, setData}) {
+function SaveMenu({history, data, task, setTask, setData}) {
     const [, forceUpdate] = useState();
 
     useEffect(() => {
@@ -15,42 +15,28 @@ function ModelGen({history, data, task, setTask, setData}) {
         }
     }, [])
 
-    const handClick = (label) => {
-        if (label === "Back")
-            history.goBack();
-        else history.push("/train")
+    const handClick = () => {
+        history.goBack();
     }
-
 
     const handleChange = (update_data) => {
         setData(update_data)
     }
 
     return(
-        <div className={'model-menu'}>
-            <div className={"header-main"}>
-                <CButton onClick={handClick} label={"Back"} type={"back"}/>
-
-                <div style={{
-                    position: "absolute",
-                    right: "70px",
-                    top: "0px"
-                }}>
-                    <CButton onClick={handClick} label={"Forward"} type={"train"}/>
-                </div>
-            </div>
+        <div style={{width: "80%"}} className={'model-menu'}>
             <JsonEditor 
             onChange={handleChange} 
-            data={data["data"][task]} 
-            Title={task + ": Model Builder"} />
+            data={data["save"]} 
+            Title={"Saved Model"} />
         </div>
     )
 }
 
 const stateToProps = (state) => {
     return {
-        "task": state.payload.data.task,
-        "data": state.payload
+        "task": state.payload.task,
+        "data": state.payload.data
     }
 }
 
@@ -61,4 +47,4 @@ const dispatchToProps = (Dispatch) => {
     }
 }
 
-export default withRouter(connect(stateToProps, dispatchToProps)(ModelGen));
+export default withRouter(connect(stateToProps, dispatchToProps)(SaveMenu));

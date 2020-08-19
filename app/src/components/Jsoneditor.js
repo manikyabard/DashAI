@@ -28,7 +28,7 @@ const GetRenderer = ({sample, header, state, onChange}) => {
             backgroundColor: expand ? "#eeeeee":"#eeeeee"
         }}
         className={"collapsable"} onClick={() => setExpand(!expand)}>
-        <h3>{header}</h3>
+        <h2 style={{padding: "20px"}}>{header}</h2>
         <Icon style={{
             position: 'absolute',
             top: "26%",

@@ -4,10 +4,17 @@ import { connect } from 'react-redux';
 import { Icon } from 'react-icons-kit';
 import {androidArrowBack} from 'react-icons-kit/ionicons/androidArrowBack'
 import {androidClose} from 'react-icons-kit/ionicons/androidClose'
+import {androidArrowForward} from 'react-icons-kit/ionicons/androidArrowForward'
+const which = {
+    "Back": androidArrowBack,
+    "Cancel": androidClose,
+    "Forward": androidArrowForward
+}
+
 const CButton = ({label, onClick, task, type}) => {
     return(
-        <div onClick={() => onClick(label)} className={(task === label)?"btn-active":"btn-main"}>
-            <Icon icon={type === "back" ? androidArrowBack:androidClose} size={30}/>
+        <div onClick={() => onClick(label)} className={"btn-main"}>
+            <Icon icon={which[label]} size={30}/>
         </div>
     )
 }

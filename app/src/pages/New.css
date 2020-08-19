@@ -53,11 +53,13 @@ div.jsoneditor{
     border: none;
 }
 
+
+
 div.jsoneditor * {
-    font-size: x-large;
+    font-size: large;
 }
 div.jsoneditor-field textarea {
-    font-size: large;
+    font-size: 130%;
 }
 
 div.jsoneditor-menu {

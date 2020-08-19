@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import JsonEditor from './Jsoneditor';
-import CButton from './Button';
+import Button from './Button';
 import { update_type, update_data } from '../redux/actions/data';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import Button from 'react-bootstrap/esm/Button';
 
-function ModelGen({history, data, task, setTask, setData}) {
+function VerumMenu({history, data, task, setTask, setData}) {
     const [, forceUpdate] = useState();
 
     useEffect(() => {
@@ -15,12 +14,9 @@ function ModelGen({history, data, task, setTask, setData}) {
         }
     }, [])
 
-    const handClick = (label) => {
-        if (label === "Back")
-            history.goBack();
-        else history.push("/train")
+    const handClick = () => {
+        history.goBack();
     }
-
 
     const handleChange = (update_data) => {
         setData(update_data)
@@ -29,20 +25,12 @@ function ModelGen({history, data, task, setTask, setData}) {
     return(
         <div className={'model-menu'}>
             <div className={"header-main"}>
-                <CButton onClick={handClick} label={"Back"} type={"back"}/>
-
-                <div style={{
-                    position: "absolute",
-                    right: "70px",
-                    top: "0px"
-                }}>
-                    <CButton onClick={handClick} label={"Forward"} type={"train"}/>
-                </div>
+                <Button onClick={handClick} label={"Back"} type={"back"}/>
             </div>
             <JsonEditor 
             onChange={handleChange} 
-            data={data["data"][task]} 
-            Title={task + ": Model Builder"} />
+            data={data} 
+            Title={"Verum : AI based Model Optimizer"} />
         </div>
     )
 }
@@ -50,7 +38,7 @@ function ModelGen({history, data, task, setTask, setData}) {
 const stateToProps = (state) => {
     return {
         "task": state.payload.data.task,
-        "data": state.payload
+        "data": state.payload.verum
     }
 }
 
@@ -61,4 +49,4 @@ const dispatchToProps = (Dispatch) => {
     }
 }
 
-export default withRouter(connect(stateToProps, dispatchToProps)(ModelGen));
+export default withRouter(connect(stateToProps, dispatchToProps)(VerumMenu));

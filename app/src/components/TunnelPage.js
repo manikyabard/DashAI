@@ -5,6 +5,7 @@ import BarLoader from "react-spinners/BarLoader";
 import  Button from 'react-bootstrap/Button';
 import ClimbingBoxLoader from "react-spinners/ClimbingBoxLoader";
 import Selectr from 'jsoneditor/dist/jsoneditor-minimalist';
+import SaveMenu from './SaveMenu';
 
 const override = `
   display: block;
@@ -66,15 +67,11 @@ const TunnelPage = ({visibility, setVisibility, data}) => {
                 <div style={{
                     display: !train && generated ? "flex": "none"
                 }} className={"training"}>
-                    <ClimbingBoxLoader
-                        css={override}
-                        size={50}
-                        color={"#2987bc"}
-                        loading={!train && generated}
-                    />
+                    <SaveMenu />
                     <div style={{
-                        position: 'absolute',
-                        bottom: '30px'
+                        // position: 'absolute',
+                        // bottom: '20px'
+                        marginBottom: "20px"
                     }}>
                         <Button size="lg" onClick={() => setTrain(true)} variant="light">Train Model</Button>
                     </div>
@@ -84,6 +81,8 @@ const TunnelPage = ({visibility, setVisibility, data}) => {
                     <div className={'btn-gp'}>
                         <CButton onClick={handlePop} label={"Cancel"} type={"close"}/>
                     </div>
+
+                    
                 </div>
             </div>
         </div>

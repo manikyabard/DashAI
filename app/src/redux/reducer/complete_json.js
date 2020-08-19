@@ -1,9 +1,15 @@
 import data from '../../assets/data.json';
+import verum from '../../assets/verum.json';
+import train from '../../assets/train.json';
 const { UPDATE_DATA, UPDATE_TYPE } = require("../actions/type/open");
 
 const initState = {
     type: UPDATE_DATA,
-    payload: data
+    payload: {
+        "data":data,
+        "verum": verum,
+        "train": train
+    }
 }
 
 export default function Data_Reducer(state = initState, method) {
@@ -11,14 +17,20 @@ export default function Data_Reducer(state = initState, method) {
         case UPDATE_DATA:
             return {
                 type: UPDATE_DATA,
-                payload: method.payload.value
+                payload: {
+                    ...state.payload,
+                    [method.level]: method.payload.value
+                }
             }
         case UPDATE_TYPE:
             return {
                 type: UPDATE_TYPE,
                 payload: {
                     ...state.payload,
-                    task: method.payload.value
+                    "data": {
+                        ...state.payload.data,
+                        task: method.payload.value
+                    }
                 }
             }
         default: return state

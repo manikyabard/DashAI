@@ -18,7 +18,7 @@ const New = ({history}) => {
             </div>
             <div id={"r"}>
                 <Card history={history} task={"vision"}/>
-                <Card history={history} task={"Collaborative Filtering"}/>
+                <Card history={history} task={"collab"}/>
             </div>
             </div>
         </div>
