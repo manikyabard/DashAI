@@ -24,9 +24,9 @@ learner_class_map = {
 
 def main():
 	
-	fastai.torch_core.defaults.device = 'cpu'
+	# fastai.torch_core.defaults.device = 'cpu'
 	print('STEP 1: Creating the learner.')
-	with open('./data/response_temp.json') as f:
+	with open('./data/response.json') as f:
 		response = json.load(f)
 	application = response['task']
 	save_dir = Path(response['save']['save_dir'])

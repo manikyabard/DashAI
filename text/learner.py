@@ -19,6 +19,7 @@ class DashTextLearner:
             response_lm = copy.deepcopy(response)
             response_lm['core']['data']['label']['method'] = 'for_lm'
             lm = DashTextLearner.create_text_lm_learner_default(data_lm, response['text']['model']['language_model']['default'])
+            lm.fit_one_cycle(response["text"]["model"]["classifier"]["lm_train_epochs"])
             lm.save_encoder('lm_encoder')
             data.vocab.itos = data_lm.vocab.itos
             clas = DashTextLearner.create_text_classifier_learner_default(data, response['text']['model']['classifier']['default'])
