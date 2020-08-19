@@ -14,9 +14,9 @@ class DashVerum:
 	def init_parameters(self):
 		parameters = []
 		for k, v in self.response.items():
-			print(k, v)
-			if v['flag']:
-				parameters.append(v['param'])
+			if isinstance(v, dict) and 'flag' in v:
+				if v['flag']:
+					parameters.append(v['param'])
 		return parameters
 
 	def get_param_value(self, param):
