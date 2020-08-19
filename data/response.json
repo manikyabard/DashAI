@@ -647,7 +647,7 @@
 			"type": "classifier",
 			"classifier": {
 				"method": "default",
-				"lm_train_epochs": 1,
+				"lm_train_epochs": 0,
 				"default": {
 					"arch": "AWD_LSTM",
 					"extra": {
