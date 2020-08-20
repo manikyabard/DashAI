@@ -18,7 +18,7 @@ function ModelGen({history, data, task, setTask, setData}) {
     const handClick = (label) => {
         if (label === "Back")
             history.goBack();
-        else history.push("/train")
+        else history.push("/verum")
     }
 
 

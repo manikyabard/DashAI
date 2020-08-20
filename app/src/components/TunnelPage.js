@@ -6,6 +6,7 @@ import  Button from 'react-bootstrap/Button';
 import ClimbingBoxLoader from "react-spinners/ClimbingBoxLoader";
 import Selectr from 'jsoneditor/dist/jsoneditor-minimalist';
 import SaveMenu from './SaveMenu';
+import TrainMenu from './TrainMenu';
 
 const override = `
   display: block;
@@ -67,7 +68,7 @@ const TunnelPage = ({visibility, setVisibility, data}) => {
                 <div style={{
                     display: !train && generated ? "flex": "none"
                 }} className={"training"}>
-                    <SaveMenu />
+                    <TrainMenu />
                     <div style={{
                         // position: 'absolute',
                         // bottom: '20px'

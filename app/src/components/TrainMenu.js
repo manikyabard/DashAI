@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import Button from 'react-bootstrap/esm/Button';
 
-function TrainModel({history, data, task, setTask, setData}) {
+function TrainModel({history, data, save, setTask, setData}) {
     const [, forceUpdate] = useState();
     useEffect(() => {
         if(history.action === "PUSH"){
@@ -25,8 +25,8 @@ function TrainModel({history, data, task, setTask, setData}) {
     }
 
     return(
-        <div className={'model-menu'}>
-            <div className={"header-main"}>
+        <div style={{width: "90%"}} className={'model-menu'}>
+            {/*<div className={"header-main"}>
                 <CButton onClick={handClick} label={"Back"} type={"back"}/>
                 <div style={{
                     position: "absolute",
@@ -35,11 +35,16 @@ function TrainModel({history, data, task, setTask, setData}) {
                 }}>
                     <CButton onClick={handClick} label={"Forward"} type={"verum"}/>
                 </div>
-            </div>
+            </div>*/}
             <JsonEditor 
             onChange={handleChange} 
             data={data} 
             Title={"Training Configuration"} />
+
+            <JsonEditor 
+            onChange={handleChange} 
+            data={save} 
+            Title={"Save Model (Optional)"} />
         </div>
     )
 }
@@ -47,7 +52,8 @@ function TrainModel({history, data, task, setTask, setData}) {
 const stateToProps = (state) => {
     return {
         "task": state.payload.data.task,
-        "data": state.payload.train
+        "data": state.payload.train,
+        "save": state.payload.data.save
     }
 }
 
