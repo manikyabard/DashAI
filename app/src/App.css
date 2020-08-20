@@ -230,7 +230,7 @@
 .training-page .header {
   width: 100%;
   padding-bottom: 10px;
-  border-top: 1px solid rgba(0, 0, 0, 0.082);
+  /* border-top: 1px solid rgba(0, 0, 0, 0.082); */
 }
 
 .console {
@@ -254,6 +254,12 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+}
+
+.tunnel-train-btn {
+  position: absolute;
+  top: 5px;
+  right: 70px
 }
 
 .floating-btn * {

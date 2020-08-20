@@ -48,6 +48,9 @@ const TunnelPage = ({visibility, setVisibility, data}) => {
         }}
         className={"pop-main"}>
             <div className={"training-page"}>
+                <div className={"tunnel-train-btn"}>
+                    <CButton onClick={handlePop} label={"Cancel"} type={"close"}/>
+                </div>
                 <div style={{
                     display: train ? "block": "none"
                 }} className={"console"}>
@@ -62,25 +65,19 @@ const TunnelPage = ({visibility, setVisibility, data}) => {
                         color={"#2987bc"}
                         loading={!generated}
                     />
-                    <br/>
+                    
                     <h3>Generating Model</h3>
                 </div>
                 <div style={{
                     display: !train && generated ? "flex": "none"
                 }} className={"training"}>
                     <TrainMenu />
-                    <div style={{
-                        // position: 'absolute',
-                        // bottom: '20px'
-                        marginBottom: "20px"
-                    }}>
-                        <Button size="lg" onClick={() => setTrain(true)} variant="light">Train Model</Button>
-                    </div>
-                    
                 </div>
-                <div className={"header"}>
+                <div style={{
+                    display: !train && generated ? "block": "none"
+                }} className={"header"}>
                     <div className={'btn-gp'}>
-                        <CButton onClick={handlePop} label={"Cancel"} type={"close"}/>
+                    <Button size="lg" onClick={() => setTrain(true)} variant="light">Train Model</Button>
                     </div>
 
                     
