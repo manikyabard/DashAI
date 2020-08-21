@@ -27,14 +27,22 @@ const TunnelPage = ({visibility, setVisibility, data}) => {
 
     useEffect(() => {
         if(visibility){
+            
+            fetch("http://127.0.0.1:5000/generate", {
+            method: 'POST',
+            body: JSON.stringify(data)
+        }).then(response => response.json())
+        .then(data => {
+            fetch("http://127.0.0.1:5000/train", {
+            method: 'POST',
+            body: JSON.stringify(data)
+        }).then(response => response.json())
+        .then(data => {
             socket.on('training', data => {
                 console.log(data);
             })
-        //     fetch("http://127.0.0.1:5000/generate", {
-        //     method: 'POST',
-        //     body: JSON.stringify(data)
-        // }).then(response => response.json())
-        // .then(data => console.log(data))
+        })
+        })
         setTimeout(() => {
             setGenerated(true);
         }, 3000);
