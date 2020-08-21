@@ -46,7 +46,7 @@ def main():
 		with open('./data/verum.json') as f:
 			response = json.load(f)
 		verum = DashVerum(response, data, learn)
-		learn, metric, lr, num_epochs, moms = verum.veritize()
+		learn, lr, num_epochs, moms = verum.veritize()
 		print('Hyper-parameters optimized; completed step 2.')
 	except ImportError:
 		print('Skipping step 2 as the module `ax` is not installed.')
