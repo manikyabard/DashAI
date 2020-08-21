@@ -7,6 +7,9 @@ import ClimbingBoxLoader from "react-spinners/ClimbingBoxLoader";
 import Selectr from 'jsoneditor/dist/jsoneditor-minimalist';
 import SaveMenu from './SaveMenu';
 import TrainMenu from './TrainMenu';
+import io from 'socket.io-client';
+
+const socket = io('http://localhost:5000/home');
 
 const override = `
   display: block;
@@ -24,6 +27,9 @@ const TunnelPage = ({visibility, setVisibility, data}) => {
 
     useEffect(() => {
         if(visibility){
+            socket.on('training', data => {
+                console.log(data);
+            })
         //     fetch("http://127.0.0.1:5000/generate", {
         //     method: 'POST',
         //     body: JSON.stringify(data)

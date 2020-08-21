@@ -21,7 +21,7 @@ from flask_socketio import SocketIO, emit
 
 
 app = Flask(__name__, template_folder="template")
-socketio = SocketIO(app) # socket object to setup websocket connection
+socketio = SocketIO(app, cors_allowed_origins="*") # socket object to setup websocket connection
 learner = None
 
 path = Path('./')
@@ -39,7 +39,6 @@ def helper():
 
 @app.route("/generate", methods=['POST'])
 def generate():
-	print(os.getcwd())
 	res = {
 		"status": "COMPLETE",
 		"message": "",
@@ -54,7 +53,26 @@ def generate():
 	learn = getattr(learner_class, f'create_{application}_learner')(response)
 	print(print('-'*10, 'Created learner', '-'*10))
 
-	print('STEP 2 (optional): Optimizing the hyper-parameters.')
+	
+
+	return jsonify(res)
+
+@app.route("/train", methods=['POST'])
+def generate():
+	res = {
+		"status": "COMPLETE",
+		"message": "",
+		"payload": []
+	}
+	
+	response = json.loads(request.data)
+	train = json.loads(response["train"])
+	verum = json.loads(response["verum"])
+ 
+	with open('./data/verum.json', 'w') as outfile:
+    	json.dump(verum, outfile)
+ 
+ 	emit('STEP 2 (optional): Optimizing the hyper-parameters.')
 	step_2 = False  # If step 2 done, then later use returned hyper-parameters.
 	# Else, use default or mentioned hyper-parameters.
 	try:
@@ -70,8 +88,17 @@ def generate():
 		print('Hyper-parameters optimized; completed step 2.')
 	except ImportError:
 		print('Skipping step 2 as the module `ax` is not installed.')
-
-	print('STEP 3: Training the model.')
+ 
+	with open('./data/train.json', 'w') as outfile:
+    	json.dump(train, outfile)
+     
+    
+    return jsonify(res)
+ 	
+	
+@socketio.on('training')
+def training_worker():
+    emit('training', 'STEP 3: Training the model.')
 	if torch.cuda.is_available():
 		with open('./data/train.json') as f:
 			response = json.load(f)
@@ -82,11 +109,11 @@ def generate():
 			response['fit_one_cycle']['moms'] = str(moms)
 
 		getattr(DashTrain, response['training']['type'])(response, learn)
-		print('Trained model; completed step 3.')
+		emit('training', 'Trained model; completed step 3.')
 	else:
-		print('Skipping step 3 because there is no GPU.')
+		emit('training', 'Skipping step 3 because there is no GPU.')
 
-	print('STEP 4 (optional): Visualizing the attributions.')
+	emit('training', 'STEP 4 (optional): Visualizing the attributions.')
 	insight = DashInsights(path, learn.data.batch_size, learn, application)
 	fastai.torch_core.defaults.device = 'cpu'
 	visualizer = AttributionVisualizer(
@@ -99,7 +126,7 @@ def generate():
 	)
 
 	visualizer.serve(debug=True)
-	print('Completed visualization; completed step 4.')
+	emit('training', 'Completed visualization; completed step 4.')
 
 	print('STEP 5: Saving the model.')
 	# save_path = save_dir / save_name
@@ -113,8 +140,6 @@ def generate():
 	print('-' * 50)
 	print('Now we need to add production-serving.')
 
-	return jsonify(res)
-
 
 # @socketio.on('connect')
 # def talk_to_me():
@@ -122,4 +147,4 @@ def generate():
 
 
 if __name__ == "__main__":
-	socketio.run(app)
+	socketio.run(app, , port=5001)
