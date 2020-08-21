@@ -34,7 +34,8 @@ def main():
 	learner_class = learner_class_map[application]
 	learn = getattr(learner_class, f'create_{application}_learner')(response)
 	print('Created learner; completed step 1.')
-
+	learn.export('verum_test.pkl')
+	data = learn.data
 	print('STEP 2 (optional): Optimizing the hyper-parameters.')
 	step_2 = False  # If step 2 done, then later use returned hyper-parameters.
 	# Else, use default or mentioned hyper-parameters.
@@ -44,7 +45,7 @@ def main():
 		step_2 = True
 		with open('./data/verum.json') as f:
 			response = json.load(f)
-		verum = DashVerum(response, learn)
+		verum = DashVerum(response, data, learn)
 		learn, metric, lr, num_epochs, moms = verum.veritize()
 		print('Hyper-parameters optimized; completed step 2.')
 	except ImportError:
