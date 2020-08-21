@@ -28,7 +28,7 @@
 	"momentum0": {
 		"flag": true,
 		"param": {
-			"name": "momentum",
+			"name": "momentum0",
 			"type": "range",
 			"bounds": [0.9, 0.99]
 		},
@@ -37,7 +37,7 @@
 	"momentum1": {
 		"flag": true,
 		"param": {
-			"name": "momentum",
+			"name": "momentum1",
 			"type": "range",
 			"bounds": [0.8, 0.89]
 		},
