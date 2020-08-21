@@ -96,7 +96,7 @@ def train():
     return jsonify(res)
      
     
-@socketio.on('training')
+@socketio.on('training',namespace='/home')
 def training_worker():
     emit('training', 'STEP 3: Training the model.')
     if torch.cuda.is_available():

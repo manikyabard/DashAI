@@ -9,7 +9,7 @@ import SaveMenu from './SaveMenu';
 import TrainMenu from './TrainMenu';
 import io from 'socket.io-client';
 
-const socket = io('http://localhost:5000/home');
+const socket = io('http://localhost:5001/home');
 
 const override = `
   display: block;
@@ -28,12 +28,12 @@ const TunnelPage = ({visibility, setVisibility, data}) => {
     useEffect(() => {
         if(visibility){
             
-            fetch("http://127.0.0.1:5000/generate", {
+            fetch("http://127.0.0.1:5001/generate", {
             method: 'POST',
             body: JSON.stringify(data)
         }).then(response => response.json())
         .then(data => {
-            fetch("http://127.0.0.1:5000/train", {
+            fetch("http://127.0.0.1:5001/train", {
             method: 'POST',
             body: JSON.stringify(data)
         }).then(response => response.json())
