@@ -104,7 +104,7 @@ class DashVerum:
 			DashVerum.learn.model.use_bn = best_parameters['use_bn']
 
 			return (
-				DashVerum.learn, best_parameters['metric'],
+				DashVerum.learn,
 				best_parameters['learning_rate'], best_parameters['num_epochs'],
 				(best_parameters['momentum0'], best_parameters['momentum1'])
 			)
