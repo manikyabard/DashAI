@@ -337,6 +337,8 @@
 		},
 		"gan": {
 			"noise_sz": 100
+			}
+
 		},
 		"object-detection": {},
 		"points": {},
@@ -376,6 +378,27 @@
 						"bottle": false
 					}
 				}
+			},
+			"gan": {
+				"generator": {
+					"in_size": 64,
+					"n_channels": 3,
+					"n_features": 64,
+					"n_extra_layers": 0
+				},
+				"critic": {
+					"noise_sz": 100,
+					"in_size": 64,
+					"n_channels": 3,
+					"n_features": 64,
+					"n_extra_layers": 0
+				},
+				"extra": {
+					"switcher": null,
+					"clip": 0.01
+				}
+
+
 			},
 			"custom": {
 				"layers": ["nn.Conv2d(3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)",
