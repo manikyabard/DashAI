@@ -17,6 +17,8 @@ class DashVisionLearner:
 				return DashVisionLearner.create_vision_unet_learner_default(data, response["vision"]["model"]["unet"])
 		if response["vision"]["model"]["type"] == "custom":
 			return DashVisionLearner.create_vision_learner_custom(data, response["vision"]["model"]["custom"])
+		if response["vision"]["model"]["type"] == "gan":
+			return DashVisionLearner.create_gan_learner_default(data, response["vision"]["model"]["gan"])
 
 	@staticmethod
 	def create_vision_cnn_learner_default(data, response):
@@ -39,3 +41,10 @@ class DashVisionLearner:
 	def create_vision_learner_custom(data, response):
 		model = nn.Sequential(*[eval(x) for x in response["layers"]])
 		return Learner(data, model, **response["extra"])
+
+	def create_gan_learner_default(data, response):
+		generator = basic_generator(**response["generator"])
+		critic = basic_critic(**response["critic"])
+		switcher = eval(response["switcher"])
+		learn = GANLearner.wgan(data, generator, critic, switcher)
+		return learn
