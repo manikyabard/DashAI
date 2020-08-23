@@ -18,12 +18,22 @@ from core.train import DashTrain
 from insights.DashInsights import DashInsights
 from captum.insights.attr_vis import AttributionVisualizer
 from flask_socketio import SocketIO, emit
+from flask_cors import CORS
 
 
 app = Flask(__name__, template_folder="template")
+app.config['SECRET_KEY'] = 'some-super-secret-key'
+app.config['DEFAULT_PARSERS'] = [
+    'flask.ext.api.parsers.JSONParser',
+    'flask.ext.api.parsers.URLEncodedParser',
+    'flask.ext.api.parsers.FormParser',
+    'flask.ext.api.parsers.MultiPartParser'
+]
+cors = CORS(app,resources={r"/*":{"origins":"*"}})
 socketio = SocketIO(app, cors_allowed_origins="*") # socket object to setup websocket connection
-learner = None
-
+# learner = None
+# learn = metric = lr = num_epochs = moms = None
+ready_to_train = False
 path = Path('./')
 learner_class_map = {
     'collab': DashCollabLearner,
@@ -32,6 +42,8 @@ learner_class_map = {
     'vision': DashVisionLearner
 }
 
+step_2 = False  # If step 2 done, then later use returned hyper-parameters.
+# Else, use default or mentioned hyper-parameters.
 
 @app.route("/", methods=['GET'])
 def helper():
@@ -44,16 +56,14 @@ def generate():
         "message": "",
         "payload": []
     }
-    
+    global learn
     response = json.loads(request.data)
     application = response['task']
     save_dir = Path(response['save']['save_dir'])
     save_name = Path(response['save']['save_name'])
     learner_class = learner_class_map[application]
     learn = getattr(learner_class, f'create_{application}_learner')(response)
-    print(print('-'*10, 'Created learner', '-'*10))
-
-    
+    print('-'*10, 'Created learner', '-'*10)
 
     return jsonify(res)
 
@@ -64,17 +74,17 @@ def train():
         "message": "",
         "payload": []
     }
-    
+    global learn
+    print("line 76", learn)
     response = json.loads(request.data)
-    train = json.loads(response["train"])
-    verum = json.loads(response["verum"])
+    print(response)
+    train = response["train"]
+    verum = response["verum"]
  
     with open('./data/verum.json', 'w') as outfile:
         json.dump(verum, outfile)
  
-    emit('STEP 2 (optional): Optimizing the hyper-parameters.')
-    step_2 = False  # If step 2 done, then later use returned hyper-parameters.
-    # Else, use default or mentioned hyper-parameters.
+    print('STEP 2 (optional): Optimizing the hyper-parameters.')
     try:
         import ax
         print(ax.__version__)
@@ -86,19 +96,33 @@ def train():
         verum = DashVerum(response, learn)
         learn, metric, lr, num_epochs, moms = verum.veritize()
         print('Hyper-parameters optimized; completed step 2.')
+        
     except ImportError:
         print('Skipping step 2 as the module `ax` is not installed.')
  
     with open('./data/train.json', 'w') as outfile:
         json.dump(train, outfile)
-     
     
+    if res["status"] == "SUCCESS":
+        global ready_to_train
+        ready_to_train = True
     return jsonify(res)
      
+
+@app.route("/start", methods=['GET'])
+def start():
+    res = {
+        "status": "COMPLETE",
+        "message": "",
+        "payload": []
+    }
+    training_worker()
+    return jsonify(res)
+
     
 @socketio.on('training',namespace='/home')
 def training_worker():
-    emit('training', 'STEP 3: Training the model.')
+    socketio.emit('training',{"msg": "STEP 3: Training the model."})
     if torch.cuda.is_available():
         with open('./data/train.json') as f:
             response = json.load(f)
@@ -107,13 +131,12 @@ def training_worker():
             response['fit']['lr'] = lr
             response['fit_one_cycle']['max_lr'] = lr
             response['fit_one_cycle']['moms'] = str(moms)
-
         getattr(DashTrain, response['training']['type'])(response, learn)
-        emit('training', 'Trained model; completed step 3.')
+        socketio.emit('training', 'Trained model; completed step 3.')
     else:
-        emit('training', 'Skipping step 3 because there is no GPU.')
+        socketio.emit('training', 'Skipping step 3 because there is no GPU.')
 
-    emit('training', 'STEP 4 (optional): Visualizing the attributions.')
+    socketio.emit('training', 'STEP 4 (optional): Visualizing the attributions.')
     insight = DashInsights(path, learn.data.batch_size, learn, application)
     fastai.torch_core.defaults.device = 'cpu'
     visualizer = AttributionVisualizer(
@@ -126,7 +149,7 @@ def training_worker():
     )
 
     visualizer.serve(debug=True)
-    emit('training', 'Completed visualization; completed step 4.')
+    socketio.emit('training', 'Completed visualization; completed step 4.')
 
     print('STEP 5: Saving the model.')
     # save_path = save_dir / save_name

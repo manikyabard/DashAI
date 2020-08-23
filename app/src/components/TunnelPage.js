@@ -17,7 +17,7 @@ const override = `
   border-color: red;
 `;
 
-const TunnelPage = ({visibility, setVisibility, data}) => {
+const TunnelPage = ({visibility, setVisibility, res}) => {
 
     const [generated, setGenerated] = useState(false);
     const [train, setTrain] = useState(false);
@@ -27,20 +27,21 @@ const TunnelPage = ({visibility, setVisibility, data}) => {
 
     useEffect(() => {
         if(visibility){
-            
-            fetch("http://127.0.0.1:5001/generate", {
+            fetch("http://localhost:5001/generate", {
             method: 'POST',
-            body: JSON.stringify(data)
+            body: JSON.stringify(res.data)
         }).then(response => response.json())
         .then(data => {
-            fetch("http://127.0.0.1:5001/train", {
+            console.log(data)
+            fetch("http://localhost:5001/train", {
             method: 'POST',
-            body: JSON.stringify(data)
-        }).then(response => response.json())
-        .then(data => {
-            socket.on('training', data => {
-                console.log(data);
+            body: JSON.stringify({
+                "train": res.train,
+                "verum": res.verum
             })
+        }).then(response => response.json())
+        .then(data => {
+            console.log(data);
         })
         })
         setTimeout(() => {
@@ -54,6 +55,19 @@ const TunnelPage = ({visibility, setVisibility, data}) => {
 
        
     }, [visibility])
+
+    const handleTrain = () => {
+        setTrain(true);
+        fetch("http://localhost:5001/start", {
+            method: 'GET',
+        }).then(response => response.json())
+        .then(data => {
+            console.log(data)
+        })
+        socket.on('training', data => {
+            console.log(data);
+        });
+    }
 
     return(
         <div 
@@ -91,7 +105,7 @@ const TunnelPage = ({visibility, setVisibility, data}) => {
                     display: !train && generated ? "block": "none"
                 }} className={"header"}>
                     <div className={'btn-gp'}>
-                    <Button size="lg" onClick={() => setTrain(true)} variant="light">Train Model</Button>
+                    <Button size="lg" onClick={handleTrain} variant="light">Train Model</Button>
                     </div>
 
                     
@@ -104,7 +118,7 @@ const TunnelPage = ({visibility, setVisibility, data}) => {
 
 const stateToProps = (state) => {
     return {
-        "data": state.payload,
+        "res": state.payload,
     }
 }
 
