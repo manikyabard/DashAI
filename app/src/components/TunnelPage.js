@@ -8,7 +8,7 @@ import Selectr from 'jsoneditor/dist/jsoneditor-minimalist';
 import SaveMenu from './SaveMenu';
 import TrainMenu from './TrainMenu';
 import io from 'socket.io-client';
-
+import console_output from '../assets/result.txt';
 const socket = io('http://localhost:5001/home');
 
 const override = `
@@ -16,6 +16,8 @@ const override = `
   margin: 0 auto;
   border-color: red;
 `;
+
+
 
 const TunnelPage = ({visibility, setVisibility, res}) => {
 
@@ -82,7 +84,7 @@ const TunnelPage = ({visibility, setVisibility, res}) => {
                 <div style={{
                     display: train ? "block": "none"
                 }} className={"console"}>
-                    <p>console view</p>
+                    <p>{console_output}</p>
                 </div>
                 <div style={{
                     display: !generated ? "flex": "none"
