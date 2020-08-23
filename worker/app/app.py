@@ -20,6 +20,13 @@ from captum.insights.attr_vis import AttributionVisualizer
 from flask_socketio import SocketIO, emit
 from flask_cors import CORS
 
+import sys
+sys.stdout = open('result.txt', 'w')
+
+# sys.stdout.flush()
+
+# with open('result.txt', 'w+') as f:
+#     f.write("worked here")
 
 app = Flask(__name__, template_folder="template")
 app.config['SECRET_KEY'] = 'some-super-secret-key'
@@ -47,6 +54,7 @@ step_2 = False  # If step 2 done, then later use returned hyper-parameters.
 
 @app.route("/", methods=['GET'])
 def helper():
+    print("Started")
     return render_template("helper.html")
 
 @app.route("/generate", methods=['POST'])
@@ -170,4 +178,5 @@ def training_worker():
 
 
 if __name__ == "__main__":
+    # app.run(debug=True, host='0.0.0.0')
     socketio.run(app, port=5001)
