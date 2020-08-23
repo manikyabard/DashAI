@@ -67,19 +67,22 @@ def main():
 		print('Skipping step 3 because there is no GPU.')
 
 	print('STEP 4 (optional): Visualizing the attributions.')
-	insight = DashInsights(path, learn.data.batch_size, learn, application)
-	fastai.torch_core.defaults.device = 'cpu'
-	visualizer = AttributionVisualizer(
-		models=[insight.model],
-		score_func=insight.score_func,
-		classes=insight.data.classes,
-		features=insight.features,
-		dataset=insight.formatted_data_iter(),
-		application=insight.application
-	)
+	if(application == 'text' or application == 'vision'):
+		insight = DashInsights(path, learn.data.batch_size, learn, application)
+		fastai.torch_core.defaults.device = 'cpu'
+		visualizer = AttributionVisualizer(
+			models=[insight.model],
+			score_func=insight.score_func,
+			classes=insight.data.classes,
+			features=insight.features,
+			dataset=insight.formatted_data_iter(),
+			application=insight.application
+		)
 
-	visualizer.serve(debug=True)
-	print('Completed visualization; completed step 4.')
+		visualizer.serve(debug=True)
+		print('Completed visualization; completed step 4.')
+	else:
+		print("Visualization is not possible for this application")
 
 	print('STEP 5: Saving the model.')
 	# save_path = save_dir / save_name

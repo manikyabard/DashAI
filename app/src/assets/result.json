@@ -1,0 +1,62 @@
+<class 'UnboundLocalError'> loss.py 26
+---------- Created learner ----------
+line 76 Learner(data=TabularDataBunch;
+
+Train: LabelList (26049 items)
+x: TabularList
+workclass  Private; education  Assoc-acdm; marital-status  Married-civ-spouse; occupation #na#; relationship  Wife; race  White; education-num_na False; age 0.7719; fnlwgt -0.8392; education-num 0.7498; ,workclass  Private; education  Masters; marital-status  Divorced; occupation  Exec-managerial; relationship  Not-in-family; race  White; education-num_na False; age 0.4037; fnlwgt 0.4382; education-num 1.5328; ,workclass  Private; education  HS-grad; marital-status  Divorced; occupation #na#; relationship  Unmarried; race  Black; education-num_na True; age -0.0383; fnlwgt -0.8877; education-num -0.0331; ,workclass  Self-emp-inc; education  Prof-school; marital-status  Married-civ-spouse; occupation  Prof-specialty; relationship  Husband; race  Asian-Pac-Islander; education-num_na False; age -0.0383; fnlwgt -0.7305; education-num 1.9243; ,workclass  Private; education  HS-grad; marital-status  Never-married; occupation  Handlers-cleaners; relationship  Own-child; race  White; education-num_na False; age -1.3640; fnlwgt -1.1987; education-num -0.4246; 
+y: CategoryList
+>=50k,>=50k,<50k,>=50k,<50k
+Path: .;
+
+Valid: LabelList (6512 items)
+x: TabularList
+workclass  Private; education  HS-grad; marital-status  Divorced; occupation  Priv-house-serv; relationship  Not-in-family; race  White; education-num_na False; age 0.6246; fnlwgt 1.4261; education-num -0.4246; ,workclass  Private; education  HS-grad; marital-status  Married-civ-spouse; occupation  Prof-specialty; relationship  Husband; race  White; education-num_na False; age -0.3329; fnlwgt 0.4818; education-num -0.4246; ,workclass  Federal-gov; education  HS-grad; marital-status  Never-married; occupation  Exec-managerial; relationship  Unmarried; race  White; education-num_na False; age -0.4802; fnlwgt -0.9398; education-num -0.4246; ,workclass  Self-emp-not-inc; education  HS-grad; marital-status  Married-civ-spouse; occupation  Farming-fishing; relationship  Husband; race  White; education-num_na False; age 2.0977; fnlwgt 0.5901; education-num -0.4246; ,workclass  Federal-gov; education  HS-grad; marital-status  Married-civ-spouse; occupation  Adm-clerical; relationship  Husband; race  White; education-num_na False; age -0.1119; fnlwgt -1.4881; education-num -0.4246; 
+y: CategoryList
+<50k,<50k,<50k,<50k,>=50k
+Path: .;
+
+Test: None, model=TabularModel(
+  (embeds): ModuleList(
+    (0): Embedding(10, 6)
+    (1): Embedding(17, 8)
+    (2): Embedding(8, 5)
+    (3): Embedding(16, 8)
+    (4): Embedding(7, 5)
+    (5): Embedding(6, 4)
+    (6): Embedding(3, 3)
+  )
+  (emb_drop): Dropout(p=0.0, inplace=False)
+  (bn_cont): BatchNorm1d(3, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (layers): Sequential(
+    (0): Linear(in_features=42, out_features=200, bias=True)
+    (1): ReLU(inplace=True)
+    (2): BatchNorm1d(200, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (3): Linear(in_features=200, out_features=100, bias=True)
+    (4): ReLU(inplace=True)
+    (5): BatchNorm1d(100, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (6): Linear(in_features=100, out_features=2, bias=True)
+  )
+), opt_func=functools.partial(<class 'torch.optim.adamw.AdamW'>, lr=0.001, betas=(0.9, 0.999), eps=1e-08, amsgrad=False, weight_decay=0.01), loss_func=FlattenedLoss of CrossEntropyLoss(), metrics=[<function accuracy at 0x7f378526d4d0>], true_wd=True, bn_wd=True, wd=0.01, train_bn=True, path=PosixPath('.'), model_dir='models', callback_fns=[functools.partial(<class 'fastai.basic_train.Recorder'>, add_time=True, silent=False)], callbacks=[], layer_groups=[Sequential(
+  (0): Embedding(10, 6)
+  (1): Embedding(17, 8)
+  (2): Embedding(8, 5)
+  (3): Embedding(16, 8)
+  (4): Embedding(7, 5)
+  (5): Embedding(6, 4)
+  (6): Embedding(3, 3)
+  (7): Dropout(p=0.0, inplace=False)
+  (8): BatchNorm1d(3, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (9): Linear(in_features=42, out_features=200, bias=True)
+  (10): ReLU(inplace=True)
+  (11): BatchNorm1d(200, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (12): Linear(in_features=200, out_features=100, bias=True)
+  (13): ReLU(inplace=True)
+  (14): BatchNorm1d(100, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (15): Linear(in_features=100, out_features=2, bias=True)
+)], add_time=True, silent=False)
+{'train': {'training': {'type': 'fit_one_cycle', 'fit': {'epochs': 0, 'lr': 'slice(None, 0.003, None)', 'wd': None}, 'fit_one_cycle': {'cyc_len': 1, 'max_lr': 'slice(None, 0.003, None)', 'moms': '(0.95, 0.85)', 'div_factor': 25, 'pct_start': 0.3, 'final_div': None, 'wd': None, 'tot_epochs': None, 'start_epoch': None}}, 'pre-training options': {'lr_find': {'start_lr': 1e-07, 'end_lr': 10, 'num_it': 100, 'stop_div': True, 'wd': None}, 'to_fp16': {'loss_scale': None, 'max_noskip': 1000, 'dynamic': True, 'clip': None, 'flat_master': False, 'max_scale': 16777216, 'loss_fp32': True}, 'to_fp32': {}}, 'post-training options': {'plot_metrics': {}, 'plot_losses': {}}}, 'verum': {'return': True, 'metric': {'name': 'error', 'minimize': True, 'num_trials': None}, 'learning_rate': {'flag': True, 'param': {'name': 'learning_rate', 'type': 'range', 'bounds': [1e-05, 0.5], 'log_scale': True}, 'default': 'slice(None, 0.003, None)'}, 'num_epochs': {'flag': True, 'param': {'name': 'num_epochs', 'type': 'range', 'bounds': [2, 50], 'digits': 0}, 'default': 5}, 'momentum0': {'flag': True, 'param': {'name': 'momentum', 'type': 'range', 'bounds': [0.9, 0.99]}, 'default': 0.95}, 'momentum1': {'flag': True, 'param': {'name': 'momentum', 'type': 'range', 'bounds': [0.8, 0.89]}, 'default': 0.85}, 'dropout_ps': {'flag': True, 'param': {'name': 'dropout_ps', 'type': 'range', 'bounds': [0, 1]}, 'default': None}, 'weight_decay': {'flag': True, 'param': {'name': 'weight_decay', 'type': 'range', 'bounds': [1e-06, 1], 'log_scale': True}, 'default': None}, 'use_bn': {'flag': True, 'param': {'name': 'use_bn', 'type': 'choice', 'values': [True, False]}, 'default': True}}}
+STEP 2 (optional): Optimizing the hyper-parameters.
+Skipping step 2 as the module `ax` is not installed.
+█epoch     train_loss  valid_loss  accuracy  time    
+█

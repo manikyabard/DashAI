@@ -20,8 +20,8 @@ from captum.insights.attr_vis import AttributionVisualizer
 from flask_socketio import SocketIO, emit
 from flask_cors import CORS
 
-import sys
-sys.stdout = open('result.txt', 'w')
+# import sys
+# sys.stdout = open('result.txt', 'w')
 
 # sys.stdout.flush()
 
@@ -37,10 +37,13 @@ app.config['DEFAULT_PARSERS'] = [
     'flask.ext.api.parsers.MultiPartParser'
 ]
 cors = CORS(app,resources={r"/*":{"origins":"*"}})
-socketio = SocketIO(app, cors_allowed_origins="*") # socket object to setup websocket connection
+socketio = SocketIO(app, cors_allowed_origins="*", ping_timeout=5) # socket object to setup websocket connection
 # learner = None
 # learn = metric = lr = num_epochs = moms = None
 ready_to_train = False
+application = ""
+save_dir = ""
+save_name = ""
 path = Path('./')
 learner_class_map = {
     'collab': DashCollabLearner,
@@ -65,6 +68,9 @@ def generate():
         "payload": []
     }
     global learn
+    global application
+    global save_dir
+    global save_name
     response = json.loads(request.data)
     application = response['task']
     save_dir = Path(response['save']['save_dir'])
@@ -127,11 +133,19 @@ def start():
     training_worker()
     return jsonify(res)
 
-    
+
+@socketio.on('connect',  namespace='/home')
+def connected():
+    emit('connect', {"msg": "STEP 3: Training the model."}, namespace="/home")
+
 @socketio.on('training',namespace='/home')
 def training_worker():
-    socketio.emit('training',{"msg": "STEP 3: Training the model."})
-    if torch.cuda.is_available():
+    global application
+    global save_dir
+    global save_name
+    emit('connect',{"msg": "STEP 3: Training the model."}, namespace="/home", broadcast=True)
+    # if torch.cuda.is_available():
+    if True:
         with open('./data/train.json') as f:
             response = json.load(f)
         if step_2:
@@ -140,24 +154,27 @@ def training_worker():
             response['fit_one_cycle']['max_lr'] = lr
             response['fit_one_cycle']['moms'] = str(moms)
         getattr(DashTrain, response['training']['type'])(response, learn)
-        socketio.emit('training', 'Trained model; completed step 3.')
+        emit('training', 'Trained model; completed step 3.')
     else:
-        socketio.emit('training', 'Skipping step 3 because there is no GPU.')
+        emit('training', 'Skipping step 3 because there is no GPU.')
 
-    socketio.emit('training', 'STEP 4 (optional): Visualizing the attributions.')
-    insight = DashInsights(path, learn.data.batch_size, learn, application)
-    fastai.torch_core.defaults.device = 'cpu'
-    visualizer = AttributionVisualizer(
-        models=[insight.model],
-        score_func=insight.score_func,
-        classes=insight.data.classes,
-        features=insight.features,
-        dataset=insight.formatted_data_iter(),
-        application=insight.application
-    )
+    emit('training', 'STEP 4 (optional): Visualizing the attributions.')
+    if(application == 'text' or application == 'vision'):
+        insight = DashInsights(path, learn.data.batch_size, learn, application)
+        fastai.torch_core.defaults.device = 'cpu'
+        visualizer = AttributionVisualizer(
+            models=[insight.model],
+            score_func=insight.score_func,
+            classes=insight.data.classes,
+            features=insight.features,
+            dataset=insight.formatted_data_iter(),
+            application=insight.application
+        )
 
-    visualizer.serve(debug=True)
-    socketio.emit('training', 'Completed visualization; completed step 4.')
+        visualizer.serve(debug=True)
+        print('Completed visualization; completed step 4.')
+    else:
+        print("Visualization is not possible for this application")
 
     print('STEP 5: Saving the model.')
     # save_path = save_dir / save_name
@@ -179,4 +196,4 @@ def training_worker():
 
 if __name__ == "__main__":
     # app.run(debug=True, host='0.0.0.0')
-    socketio.run(app, port=5001)
+    socketio.run(app, port=5001, debug=True)
