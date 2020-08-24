@@ -9,8 +9,9 @@ import SaveMenu from './SaveMenu';
 import TrainMenu from './TrainMenu';
 import io from 'socket.io-client';
 // import console_output from '../assets/result.txt';
+import userHome from 'user-home';
 
-const socket = io('http://localhost:5001/home');
+//const socket = io('http://localhost:5001/home');
 
 const override = `
   display: block;
@@ -19,18 +20,21 @@ const override = `
 `;
 
 
+
 const TunnelPage = ({visibility, setVisibility, res}) => {
 
     const [generated, setGenerated] = useState(false);
     const [train, setTrain] = useState(false);
     const [result, setResult] = useState("");
+    const [home, setHome] = useState("");
     const handlePop = () => {
         setVisibility(false);
     }
-
-    const  showFile = async () => {
+    
+    const  showFile = async (home) => {
         var p = new XMLHttpRequest();
-        p.open('GET', './result.txt', false);
+        console.log(home + '/.dashai/result.txt')
+        p.open('GET', home + '/.dashai/result.txt', false);
         p.send(null);
         setResult(p.responseText)
         // p.onreadystatechange = () => {
@@ -51,7 +55,25 @@ const TunnelPage = ({visibility, setVisibility, res}) => {
 
     useEffect(() => {
         if(visibility){
-            // handleChangeFile(console_output);
+            // handleChangeFile(console_output)
+            fetch("http://localhost:5001/gethome", {
+                method: 'GET',
+                "Access-Control-Allow-Origin": "*",
+            }).then(response => response.json())
+            .then(data => {
+                setHome(data.payload)
+            })
+    } else {
+        setGenerated(false);
+        setTrain(false);
+    }
+
+       
+    }, [visibility])
+
+    useEffect(() => {
+        if(home !== ""){
+            console.log(home)
             fetch("http://localhost:5001/generate", {
             method: 'POST',
             "Access-Control-Allow-Origin": "*",
@@ -73,15 +95,11 @@ const TunnelPage = ({visibility, setVisibility, res}) => {
         })
         setTimeout(() => {
             setGenerated(true);
-        }, 3000);
+        }, 2999);
         
-    } else {
-        setGenerated(false);
-        setTrain(false);
-    }
 
-       
-    }, [visibility])
+        }
+    }, [home])
 
     const handleTrain = () => {
         setTrain(true);
@@ -96,7 +114,7 @@ const TunnelPage = ({visibility, setVisibility, res}) => {
         // });
 
         setInterval(() => {
-            showFile();
+            showFile(home);
         }, 1000);
     }
 
@@ -119,7 +137,7 @@ const TunnelPage = ({visibility, setVisibility, res}) => {
                         transform: "translateX(-50%)",
                         bottom: "80px"
                     }}>
-                        <CButton onClick={showFile} label={"reload"} type={"close"}/>
+                        <CButton onClick={() => showFile(home)} label={"reload"} type={"close"}/>
                     </div>
                     
                     <pre>{result}</pre>
