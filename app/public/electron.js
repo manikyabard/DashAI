@@ -12,7 +12,7 @@ function createWindow() {
     width: 800, 
     height: 480,
     fullscreen: false,
-    frame: false,
+    frame: true,
     resizable: true,
     icon: __dirname +  "/visualAI.png",
     webPreferences: {

@@ -5,6 +5,7 @@ import fastai
 import os
 from pathlib import Path
 import os,sys,inspect
+import multiprocessing 
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 granddir = os.path.dirname(parentdir) 
@@ -44,6 +45,8 @@ ready_to_train = False
 application = ""
 save_dir = ""
 save_name = ""
+all_processes = []
+
 path = Path('./')
 home = os.path.expanduser('~')
 learner_class_map = {
@@ -136,9 +139,28 @@ def start():
         "message": "",
         "payload": []
     }
-    training_worker()
+    
+    global all_processes
+    
+    process = multiprocessing.Process(target=training_worker, args=()) 
+    process.start()
+    all_processes.append(process)
     return jsonify(res)
 
+@app.route("/stop", method=['GET'])
+def stop():
+    global all_processes
+    res = {
+        "status": "COMPLETE",
+        "message": "",
+        "payload": []
+    }
+    
+    for process in all_processes:
+        process..terminate()
+        
+    return jsonify(res)
+    
 
 #@socketio.on('training',namespace='/home')
 def training_worker():

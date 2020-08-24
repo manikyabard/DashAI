@@ -9,7 +9,7 @@ import SaveMenu from './SaveMenu';
 import TrainMenu from './TrainMenu';
 import io from 'socket.io-client';
 // import console_output from '../assets/result.txt';
-import userHome from 'user-home';
+// import userHome from 'user-home';
 
 //const socket = io('http://localhost:5001/home');
 
@@ -27,13 +27,19 @@ const TunnelPage = ({visibility, setVisibility, res}) => {
     const [train, setTrain] = useState(false);
     const [result, setResult] = useState("");
     const [home, setHome] = useState("");
+    const [serverRes, setServerRes] = useState("UNSET");
     const handlePop = () => {
-        setVisibility(false);
+        fetch("http://localhost:5001/stop", {
+                method: 'GET',
+                "Access-Control-Allow-Origin": "*",
+            }).then(response => response.json())
+            .then(data => {
+                setVisibility(false);
+            })   
     }
     
     const  showFile = async (home) => {
         var p = new XMLHttpRequest();
-        console.log(home + '/.dashai/result.txt')
         p.open('GET', home + '/.dashai/result.txt', false);
         p.send(null);
         setResult(p.responseText)
@@ -51,7 +57,7 @@ const TunnelPage = ({visibility, setVisibility, res}) => {
         // };
         // // console.log(e.target.files)
         // reader.readAsText(e.target.files[0])
-      }
+      } 
 
     useEffect(() => {
         if(visibility){
@@ -73,45 +79,44 @@ const TunnelPage = ({visibility, setVisibility, res}) => {
 
     useEffect(() => {
         if(home !== ""){
-            console.log(home)
             fetch("http://localhost:5001/generate", {
             method: 'POST',
             "Access-Control-Allow-Origin": "*",
             body: JSON.stringify(res.data)
         }).then(response => response.json())
         .then(data => {
-            console.log(data)
-            fetch("http://localhost:5001/train", {
-            method: 'POST',
-            "Access-Control-Allow-Origin": "*",
-            body: JSON.stringify({
-                "train": res.train,
-                "verum": res.verum
-            })
-        }).then(response => response.json())
-        .then(data => {
-            console.log(data);
+            if(data.status === "SUCCESS"){
+                fetch("http://localhost:5001/train", {
+                method: 'POST',
+                "Access-Control-Allow-Origin": "*",
+                body: JSON.stringify({
+                    "train": res.train,
+                    "verum": res.verum
+                })
+                }).then(response => response.json())
+                .then(data => {
+                    setServerRes("TRAINING")
+                })
+                setServerRes("GENERATED")
+            }   
         })
-        })
-        setTimeout(() => {
-            setGenerated(true);
-        }, 2999);
-        
-
         }
     }, [home])
 
+    useEffect(() => {
+        if(serverRes === "GENERATED"){
+            setGenerated(true);
+        }
+    }, [serverRes])
+
     const handleTrain = () => {
-        setTrain(true);
         fetch("http://localhost:5001/start", {
             method: 'GET',
             "Access-Control-Allow-Origin": "*",
         }).then(response => response.json())
         .then(data => {
+            setTrain(true);
         })
-        // socket.on('training', data => {
-        //     console.log(data);
-        // });
 
         setInterval(() => {
             showFile(home);
