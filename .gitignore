@@ -6,3 +6,5 @@ data/imdb_sample/models
 .DS_Store
 data/imdb_sample
 node_modules
+build
+dist
