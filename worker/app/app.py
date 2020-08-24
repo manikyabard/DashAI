@@ -37,14 +37,15 @@ app.config['DEFAULT_PARSERS'] = [
     'flask.ext.api.parsers.MultiPartParser'
 ]
 cors = CORS(app,resources={r"/*":{"origins":"*"}})
-socketio = SocketIO(app, cors_allowed_origins="*", ping_timeout=5) # socket object to setup websocket connection
+#socketio = SocketIO(app, cors_allowed_origins="*", ping_timeout=5) # socket object to setup websocket connection
 # learner = None
-# learn = metric = lr = num_epochs = moms = None
+learn = metric = lr = num_epochs = moms = None
 ready_to_train = False
 application = ""
 save_dir = ""
 save_name = ""
 path = Path('./')
+home = os.path.expanduser('~')
 learner_class_map = {
     'collab': DashCollabLearner,
     'tabular': DashTabularLearner,
@@ -59,6 +60,13 @@ step_2 = False  # If step 2 done, then later use returned hyper-parameters.
 def helper():
     print("Started")
     return render_template("helper.html")
+
+@app.route('/gethome', methods=['GET'])
+def gethome():
+    global home
+    return jsonify({
+        "payload": home
+    })
 
 @app.route("/generate", methods=['POST'])
 def generate():
@@ -89,9 +97,8 @@ def train():
         "payload": []
     }
     global learn
-    print("line 76", learn)
+    
     response = json.loads(request.data)
-    print(response)
     train = response["train"]
     verum = response["verum"]
  
@@ -106,7 +113,6 @@ def train():
         step_2 = True
         with open('./data/verum.json') as f:
             response = json.load(f)
-        # print(response)
         verum = DashVerum(response, learn)
         learn, metric, lr, num_epochs, moms = verum.veritize()
         print('Hyper-parameters optimized; completed step 2.')
@@ -134,16 +140,13 @@ def start():
     return jsonify(res)
 
 
-@socketio.on('connect',  namespace='/home')
-def connected():
-    emit('connect', {"msg": "STEP 3: Training the model."}, namespace="/home")
-
-@socketio.on('training',namespace='/home')
+#@socketio.on('training',namespace='/home')
 def training_worker():
     global application
     global save_dir
     global save_name
-    emit('connect',{"msg": "STEP 3: Training the model."}, namespace="/home", broadcast=True)
+    global learn
+    print('connect',{"msg": "STEP 3: Training the model."})
     # if torch.cuda.is_available():
     if True:
         with open('./data/train.json') as f:
@@ -154,11 +157,11 @@ def training_worker():
             response['fit_one_cycle']['max_lr'] = lr
             response['fit_one_cycle']['moms'] = str(moms)
         getattr(DashTrain, response['training']['type'])(response, learn)
-        emit('training', 'Trained model; completed step 3.')
+        print('training', 'Trained model; completed step 3.')
     else:
-        emit('training', 'Skipping step 3 because there is no GPU.')
+        print('training', 'Skipping step 3 because there is no GPU.')
 
-    emit('training', 'STEP 4 (optional): Visualizing the attributions.')
+    print('training', 'STEP 4 (optional): Visualizing the attributions.')
     if(application == 'text' or application == 'vision'):
         insight = DashInsights(path, learn.data.batch_size, learn, application)
         fastai.torch_core.defaults.device = 'cpu'
@@ -195,5 +198,5 @@ def training_worker():
 
 
 if __name__ == "__main__":
-    # app.run(debug=True, host='0.0.0.0')
-    socketio.run(app, port=5001, debug=True)
+    app.run(debug=True, port=5001)
+    #socketio.run(app, port=5001, debug=True)

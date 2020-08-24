@@ -322,4 +322,254 @@ Load the model again with the following code:
 
 --------------------------------------------------
 Now we need to add production-serving.
-Amit Jhs
+Amit Jhs<class 'UnboundLocalError'> loss.py 26
+---------- Created learner ----------
+line 76 Learner(data=TabularDataBunch;
+
+Train: LabelList (26049 items)
+x: TabularList
+workclass  Private; education  Assoc-acdm; marital-status  Married-civ-spouse; occupation #na#; relationship  Wife; race  White; education-num_na False; age 0.7730; fnlwgt -0.8372; education-num 0.7527; ,workclass  Private; education  Masters; marital-status  Divorced; occupation  Exec-managerial; relationship  Not-in-family; race  White; education-num_na False; age 0.4055; fnlwgt 0.4344; education-num 1.5374; ,workclass  Private; education  HS-grad; marital-status  Divorced; occupation #na#; relationship  Unmarried; race  Black; education-num_na True; age -0.0354; fnlwgt -0.8854; education-num -0.0319; ,workclass  Self-emp-not-inc; education  7th-8th; marital-status  Married-civ-spouse; occupation  Other-service; relationship  Wife; race  Black; education-num_na True; age 0.2586; fnlwgt -1.0158; education-num -0.0319; ,workclass  Private; education  HS-grad; marital-status  Married-civ-spouse; occupation  Craft-repair; relationship  Husband; race  White; education-num_na False; age 0.5525; fnlwgt 1.2934; education-num -0.4242; 
+y: CategoryList
+>=50k,>=50k,<50k,<50k,>=50k
+Path: .;
+
+Valid: LabelList (6512 items)
+x: TabularList
+workclass  Private; education  HS-grad; marital-status  Married-civ-spouse; occupation  Craft-repair; relationship  Husband; race  White; education-num_na False; age -0.6233; fnlwgt -0.7941; education-num -0.4242; ,workclass  Private; education  Bachelors; marital-status  Married-civ-spouse; occupation  Prof-specialty; relationship  Husband; race  White; education-num_na False; age 0.3320; fnlwgt -0.7035; education-num 1.1451; ,workclass  Local-gov; education  Some-college; marital-status  Divorced; occupation  Other-service; relationship  Unmarried; race  White; education-num_na False; age 0.4055; fnlwgt 0.0699; education-num -0.0319; ,workclass  Private; education  11th; marital-status  Never-married; occupation  Transport-moving; relationship  Not-in-family; race  Black; education-num_na False; age 0.6260; fnlwgt -0.2705; education-num -1.2088; ,workclass  Local-gov; education  Bachelors; marital-status  Divorced; occupation  Exec-managerial; relationship  Not-in-family; race  White; education-num_na False; age 0.8465; fnlwgt 2.2097; education-num 1.1451; 
+y: CategoryList
+<50k,>=50k,<50k,<50k,>=50k
+Path: .;
+
+Test: None, model=TabularModel(
+  (embeds): ModuleList(
+    (0): Embedding(10, 6)
+    (1): Embedding(17, 8)
+    (2): Embedding(8, 5)
+    (3): Embedding(16, 8)
+    (4): Embedding(7, 5)
+    (5): Embedding(6, 4)
+    (6): Embedding(3, 3)
+  )
+  (emb_drop): Dropout(p=0.0, inplace=False)
+  (bn_cont): BatchNorm1d(3, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (layers): Sequential(
+    (0): Linear(in_features=42, out_features=200, bias=True)
+    (1): ReLU(inplace=True)
+    (2): BatchNorm1d(200, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (3): Linear(in_features=200, out_features=100, bias=True)
+    (4): ReLU(inplace=True)
+    (5): BatchNorm1d(100, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (6): Linear(in_features=100, out_features=2, bias=True)
+  )
+), opt_func=functools.partial(<class 'torch.optim.adamw.AdamW'>, lr=0.001, betas=(0.9, 0.999), eps=1e-08, amsgrad=False, weight_decay=0.01), loss_func=FlattenedLoss of CrossEntropyLoss(), metrics=[<function accuracy at 0x111aafe60>], true_wd=True, bn_wd=True, wd=0.01, train_bn=True, path=PosixPath('.'), model_dir='models', callback_fns=[functools.partial(<class 'fastai.basic_train.Recorder'>, add_time=True, silent=False)], callbacks=[], layer_groups=[Sequential(
+  (0): Embedding(10, 6)
+  (1): Embedding(17, 8)
+  (2): Embedding(8, 5)
+  (3): Embedding(16, 8)
+  (4): Embedding(7, 5)
+  (5): Embedding(6, 4)
+  (6): Embedding(3, 3)
+  (7): Dropout(p=0.0, inplace=False)
+  (8): BatchNorm1d(3, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (9): Linear(in_features=42, out_features=200, bias=True)
+  (10): ReLU(inplace=True)
+  (11): BatchNorm1d(200, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (12): Linear(in_features=200, out_features=100, bias=True)
+  (13): ReLU(inplace=True)
+  (14): BatchNorm1d(100, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (15): Linear(in_features=100, out_features=2, bias=True)
+)], add_time=True, silent=False)
+{'train': {'training': {'type': 'fit_one_cycle', 'fit': {'epochs': 0, 'lr': 'slice(None, 0.003, None)', 'wd': None}, 'fit_one_cycle': {'cyc_len': 1, 'max_lr': 'slice(None, 0.003, None)', 'moms': '(0.95, 0.85)', 'div_factor': 25, 'pct_start': 0.3, 'final_div': None, 'wd': None, 'tot_epochs': None, 'start_epoch': None}}, 'pre-training options': {'lr_find': {'start_lr': 1e-07, 'end_lr': 10, 'num_it': 100, 'stop_div': True, 'wd': None}, 'to_fp16': {'loss_scale': None, 'max_noskip': 1000, 'dynamic': True, 'clip': None, 'flat_master': False, 'max_scale': 16777216, 'loss_fp32': True}, 'to_fp32': {}}, 'post-training options': {'plot_metrics': {}, 'plot_losses': {}}}, 'verum': {'return': True, 'metric': {'name': 'error', 'minimize': True, 'num_trials': None}, 'learning_rate': {'flag': True, 'param': {'name': 'learning_rate', 'type': 'range', 'bounds': [1e-05, 0.5], 'log_scale': True}, 'default': 'slice(None, 0.003, None)'}, 'num_epochs': {'flag': True, 'param': {'name': 'num_epochs', 'type': 'range', 'bounds': [2, 50], 'digits': 0}, 'default': 5}, 'momentum0': {'flag': True, 'param': {'name': 'momentum', 'type': 'range', 'bounds': [0.9, 0.99]}, 'default': 0.95}, 'momentum1': {'flag': True, 'param': {'name': 'momentum', 'type': 'range', 'bounds': [0.8, 0.89]}, 'default': 0.85}, 'dropout_ps': {'flag': True, 'param': {'name': 'dropout_ps', 'type': 'range', 'bounds': [0, 1]}, 'default': None}, 'weight_decay': {'flag': True, 'param': {'name': 'weight_decay', 'type': 'range', 'bounds': [1e-06, 1], 'log_scale': True}, 'default': None}, 'use_bn': {'flag': True, 'param': {'name': 'use_bn', 'type': 'choice', 'values': [True, False]}, 'default': True}}}
+STEP 2 (optional): Optimizing the hyper-parameters.
+Skipping step 2 as the module `ax` is not installed.
+█epoch     train_loss  valid_loss  accuracy  time    
+██0         0.499663    0.440545    0.768735  01:35     
+<class 'UnboundLocalError'> loss.py 26
+---------- Created learner ----------
+█epoch     train_loss  valid_loss  accuracy  time    
+██0         0.521430    0.464199    0.775491  01:40     
+<class 'UnboundLocalError'> loss.py 26
+---------- Created learner ----------
+line 76 Learner(data=TabularDataBunch;
+
+Train: LabelList (26049 items)
+x: TabularList
+workclass  Private; education  Assoc-acdm; marital-status  Married-civ-spouse; occupation #na#; relationship  Wife; race  White; education-num_na False; age 0.7678; fnlwgt -0.8336; education-num 0.7469; ,workclass  Private; education  Masters; marital-status  Divorced; occupation  Exec-managerial; relationship  Not-in-family; race  White; education-num_na False; age 0.4004; fnlwgt 0.4494; education-num 1.5296; ,workclass  Private; education  HS-grad; marital-status  Divorced; occupation #na#; relationship  Unmarried; race  Black; education-num_na True; age -0.0405; fnlwgt -0.8823; education-num -0.0357; ,workclass  Self-emp-inc; education  Prof-school; marital-status  Married-civ-spouse; occupation  Prof-specialty; relationship  Husband; race  Asian-Pac-Islander; education-num_na False; age -0.0405; fnlwgt -0.7244; education-num 1.9209; ,workclass  Self-emp-not-inc; education  7th-8th; marital-status  Married-civ-spouse; occupation  Other-service; relationship  Wife; race  Black; education-num_na True; age 0.2534; fnlwgt -1.0139; education-num -0.0357; 
+y: CategoryList
+>=50k,>=50k,<50k,>=50k,<50k
+Path: .;
+
+Valid: LabelList (6512 items)
+x: TabularList
+workclass  Private; education  11th; marital-status  Divorced; occupation  Sales; relationship  Other-relative; race  White; education-num_na False; age 0.0330; fnlwgt -0.0491; education-num -1.2097; ,workclass  Private; education  Some-college; marital-status  Never-married; occupation  Other-service; relationship  Not-in-family; race  White; education-num_na False; age -1.3632; fnlwgt 1.0397; education-num -0.0357; ,workclass  Private; education  Some-college; marital-status  Married-civ-spouse; occupation  Sales; relationship  Husband; race  Black; education-num_na False; age -0.7753; fnlwgt 0.3335; education-num -0.0357; ,workclass  Private; education  HS-grad; marital-status  Married-civ-spouse; occupation  Sales; relationship  Husband; race  White; education-num_na False; age 0.5474; fnlwgt -0.3820; education-num -0.4270; ,workclass  ?; education  Bachelors; marital-status  Widowed; occupation  ?; relationship  Unmarried; race  White; education-num_na False; age 1.4292; fnlwgt 1.5532; education-num 1.1383; 
+y: CategoryList
+<50k,<50k,<50k,>=50k,>=50k
+Path: .;
+
+Test: None, model=TabularModel(
+  (embeds): ModuleList(
+    (0): Embedding(10, 6)
+    (1): Embedding(17, 8)
+    (2): Embedding(8, 5)
+    (3): Embedding(16, 8)
+    (4): Embedding(7, 5)
+    (5): Embedding(6, 4)
+    (6): Embedding(3, 3)
+  )
+  (emb_drop): Dropout(p=0.0, inplace=False)
+  (bn_cont): BatchNorm1d(3, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (layers): Sequential(
+    (0): Linear(in_features=42, out_features=200, bias=True)
+    (1): ReLU(inplace=True)
+    (2): BatchNorm1d(200, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (3): Linear(in_features=200, out_features=100, bias=True)
+    (4): ReLU(inplace=True)
+    (5): BatchNorm1d(100, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (6): Linear(in_features=100, out_features=2, bias=True)
+  )
+), opt_func=functools.partial(<class 'torch.optim.adamw.AdamW'>, lr=0.001, betas=(0.9, 0.999), eps=1e-08, amsgrad=False, weight_decay=0.01), loss_func=FlattenedLoss of CrossEntropyLoss(), metrics=[<function accuracy at 0x111aafe60>], true_wd=True, bn_wd=True, wd=0.01, train_bn=True, path=PosixPath('.'), model_dir='models', callback_fns=[functools.partial(<class 'fastai.basic_train.Recorder'>, add_time=True, silent=False)], callbacks=[], layer_groups=[Sequential(
+  (0): Embedding(10, 6)
+  (1): Embedding(17, 8)
+  (2): Embedding(8, 5)
+  (3): Embedding(16, 8)
+  (4): Embedding(7, 5)
+  (5): Embedding(6, 4)
+  (6): Embedding(3, 3)
+  (7): Dropout(p=0.0, inplace=False)
+  (8): BatchNorm1d(3, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (9): Linear(in_features=42, out_features=200, bias=True)
+  (10): ReLU(inplace=True)
+  (11): BatchNorm1d(200, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (12): Linear(in_features=200, out_features=100, bias=True)
+  (13): ReLU(inplace=True)
+  (14): BatchNorm1d(100, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (15): Linear(in_features=100, out_features=2, bias=True)
+)], add_time=True, silent=False)
+{'train': {'training': {'type': 'fit_one_cycle', 'fit': {'epochs': 0, 'lr': 'slice(None, 0.003, None)', 'wd': None}, 'fit_one_cycle': {'cyc_len': 1, 'max_lr': 'slice(None, 0.003, None)', 'moms': '(0.95, 0.85)', 'div_factor': 25, 'pct_start': 0.3, 'final_div': None, 'wd': None, 'tot_epochs': None, 'start_epoch': None}}, 'pre-training options': {'lr_find': {'start_lr': 1e-07, 'end_lr': 10, 'num_it': 100, 'stop_div': True, 'wd': None}, 'to_fp16': {'loss_scale': None, 'max_noskip': 1000, 'dynamic': True, 'clip': None, 'flat_master': False, 'max_scale': 16777216, 'loss_fp32': True}, 'to_fp32': {}}, 'post-training options': {'plot_metrics': {}, 'plot_losses': {}}}, 'verum': {'return': True, 'metric': {'name': 'error', 'minimize': True, 'num_trials': None}, 'learning_rate': {'flag': True, 'param': {'name': 'learning_rate', 'type': 'range', 'bounds': [1e-05, 0.5], 'log_scale': True}, 'default': 'slice(None, 0.003, None)'}, 'num_epochs': {'flag': True, 'param': {'name': 'num_epochs', 'type': 'range', 'bounds': [2, 50], 'digits': 0}, 'default': 5}, 'momentum0': {'flag': True, 'param': {'name': 'momentum', 'type': 'range', 'bounds': [0.9, 0.99]}, 'default': 0.95}, 'momentum1': {'flag': True, 'param': {'name': 'momentum', 'type': 'range', 'bounds': [0.8, 0.89]}, 'default': 0.85}, 'dropout_ps': {'flag': True, 'param': {'name': 'dropout_ps', 'type': 'range', 'bounds': [0, 1]}, 'default': None}, 'weight_decay': {'flag': True, 'param': {'name': 'weight_decay', 'type': 'range', 'bounds': [1e-06, 1], 'log_scale': True}, 'default': None}, 'use_bn': {'flag': True, 'param': {'name': 'use_bn', 'type': 'choice', 'values': [True, False]}, 'default': True}}}
+STEP 2 (optional): Optimizing the hyper-parameters.
+Skipping step 2 as the module `ax` is not installed.
+█epoch     train_loss  valid_loss  accuracy  time    
+██0         0.499430    0.485337    0.774724  01:40     
+Started
+<class 'UnboundLocalError'> loss.py 26
+---------- Created learner ----------
+line 76 Learner(data=TabularDataBunch;
+
+Train: LabelList (26049 items)
+x: TabularList
+workclass  Private; education  Masters; marital-status  Divorced; occupation  Exec-managerial; relationship  Not-in-family; race  White; education-num_na False; age 0.3958; fnlwgt 0.4463; education-num 1.5359; ,workclass  Private; education  HS-grad; marital-status  Divorced; occupation #na#; relationship  Unmarried; race  Black; education-num_na True; age -0.0437; fnlwgt -0.8810; education-num -0.0312; ,workclass  Self-emp-inc; education  Prof-school; marital-status  Married-civ-spouse; occupation  Prof-specialty; relationship  Husband; race  Asian-Pac-Islander; education-num_na False; age -0.0437; fnlwgt -0.7236; education-num 1.9277; ,workclass  Self-emp-not-inc; education  7th-8th; marital-status  Married-civ-spouse; occupation  Other-service; relationship  Wife; race  Black; education-num_na True; age 0.2493; fnlwgt -1.0121; education-num -0.0312; ,workclass  Private; education  Some-college; marital-status  Divorced; occupation #na#; relationship  Other-relative; race  White; education-num_na False; age 0.7620; fnlwgt -1.3697; education-num -0.0312; 
+y: CategoryList
+>=50k,<50k,>=50k,<50k,<50k
+Path: .;
+
+Valid: LabelList (6512 items)
+x: TabularList
+workclass  Private; education  Masters; marital-status  Married-civ-spouse; occupation  Exec-managerial; relationship  Husband; race  White; education-num_na False; age 1.0550; fnlwgt 0.1100; education-num 1.5359; ,workclass  Private; education  HS-grad; marital-status  Never-married; occupation  Adm-clerical; relationship  Own-child; race  White; education-num_na False; age -1.2889; fnlwgt 2.3748; education-num -0.4230; ,workclass  Private; education  5th-6th; marital-status  Divorced; occupation  Other-service; relationship  Not-in-family; race  White; education-num_na False; age 0.8352; fnlwgt 0.8092; education-num -2.7736; ,workclass  Private; education  Some-college; marital-status  Married-civ-spouse; occupation  Machine-op-inspct; relationship  Wife; race  White; education-num_na False; age -0.9227; fnlwgt -0.0738; education-num -0.0312; ,workclass  ?; education  Some-college; marital-status  Never-married; occupation  ?; relationship  Own-child; race  White; education-num_na False; age -1.3621; fnlwgt 0.4017; education-num -0.0312; 
+y: CategoryList
+>=50k,<50k,<50k,<50k,<50k
+Path: .;
+
+Test: None, model=TabularModel(
+  (embeds): ModuleList(
+    (0): Embedding(10, 6)
+    (1): Embedding(17, 8)
+    (2): Embedding(8, 5)
+    (3): Embedding(16, 8)
+    (4): Embedding(7, 5)
+    (5): Embedding(6, 4)
+    (6): Embedding(3, 3)
+  )
+  (emb_drop): Dropout(p=0.0, inplace=False)
+  (bn_cont): BatchNorm1d(3, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (layers): Sequential(
+    (0): Linear(in_features=42, out_features=200, bias=True)
+    (1): ReLU(inplace=True)
+    (2): BatchNorm1d(200, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (3): Linear(in_features=200, out_features=100, bias=True)
+    (4): ReLU(inplace=True)
+    (5): BatchNorm1d(100, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (6): Linear(in_features=100, out_features=2, bias=True)
+  )
+), opt_func=functools.partial(<class 'torch.optim.adamw.AdamW'>, lr=0.001, betas=(0.9, 0.999), eps=1e-08, amsgrad=False, weight_decay=0.01), loss_func=FlattenedLoss of CrossEntropyLoss(), metrics=[<function accuracy at 0x111aafe60>], true_wd=True, bn_wd=True, wd=0.01, train_bn=True, path=PosixPath('.'), model_dir='models', callback_fns=[functools.partial(<class 'fastai.basic_train.Recorder'>, add_time=True, silent=False)], callbacks=[], layer_groups=[Sequential(
+  (0): Embedding(10, 6)
+  (1): Embedding(17, 8)
+  (2): Embedding(8, 5)
+  (3): Embedding(16, 8)
+  (4): Embedding(7, 5)
+  (5): Embedding(6, 4)
+  (6): Embedding(3, 3)
+  (7): Dropout(p=0.0, inplace=False)
+  (8): BatchNorm1d(3, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (9): Linear(in_features=42, out_features=200, bias=True)
+  (10): ReLU(inplace=True)
+  (11): BatchNorm1d(200, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (12): Linear(in_features=200, out_features=100, bias=True)
+  (13): ReLU(inplace=True)
+  (14): BatchNorm1d(100, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (15): Linear(in_features=100, out_features=2, bias=True)
+)], add_time=True, silent=False)
+{'train': {'training': {'type': 'fit_one_cycle', 'fit': {'epochs': 0, 'lr': 'slice(None, 0.003, None)', 'wd': None}, 'fit_one_cycle': {'cyc_len': 1, 'max_lr': 'slice(None, 0.003, None)', 'moms': '(0.95, 0.85)', 'div_factor': 25, 'pct_start': 0.3, 'final_div': None, 'wd': None, 'tot_epochs': None, 'start_epoch': None}}, 'pre-training options': {'lr_find': {'start_lr': 1e-07, 'end_lr': 10, 'num_it': 100, 'stop_div': True, 'wd': None}, 'to_fp16': {'loss_scale': None, 'max_noskip': 1000, 'dynamic': True, 'clip': None, 'flat_master': False, 'max_scale': 16777216, 'loss_fp32': True}, 'to_fp32': {}}, 'post-training options': {'plot_metrics': {}, 'plot_losses': {}}}, 'verum': {'return': True, 'metric': {'name': 'error', 'minimize': True, 'num_trials': None}, 'learning_rate': {'flag': True, 'param': {'name': 'learning_rate', 'type': 'range', 'bounds': [1e-05, 0.5], 'log_scale': True}, 'default': 'slice(None, 0.003, None)'}, 'num_epochs': {'flag': True, 'param': {'name': 'num_epochs', 'type': 'range', 'bounds': [2, 50], 'digits': 0}, 'default': 5}, 'momentum0': {'flag': True, 'param': {'name': 'momentum', 'type': 'range', 'bounds': [0.9, 0.99]}, 'default': 0.95}, 'momentum1': {'flag': True, 'param': {'name': 'momentum', 'type': 'range', 'bounds': [0.8, 0.89]}, 'default': 0.85}, 'dropout_ps': {'flag': True, 'param': {'name': 'dropout_ps', 'type': 'range', 'bounds': [0, 1]}, 'default': None}, 'weight_decay': {'flag': True, 'param': {'name': 'weight_decay', 'type': 'range', 'bounds': [1e-06, 1], 'log_scale': True}, 'default': None}, 'use_bn': {'flag': True, 'param': {'name': 'use_bn', 'type': 'choice', 'values': [True, False]}, 'default': True}}}
+STEP 2 (optional): Optimizing the hyper-parameters.
+Skipping step 2 as the module `ax` is not installed.
+<class 'UnboundLocalError'> loss.py 26
+---------- Created learner ----------
+line 76 Learner(data=TabularDataBunch;
+
+Train: LabelList (26049 items)
+x: TabularList
+workclass  Private; education  Assoc-acdm; marital-status  Married-civ-spouse; occupation #na#; relationship  Wife; race  White; education-num_na False; age 0.7699; fnlwgt -0.8346; education-num 0.7529; ,workclass  Private; education  Masters; marital-status  Divorced; occupation  Exec-managerial; relationship  Not-in-family; race  White; education-num_na False; age 0.4026; fnlwgt 0.4551; education-num 1.5377; ,workclass  Private; education  HS-grad; marital-status  Divorced; occupation #na#; relationship  Unmarried; race  Black; education-num_na True; age -0.0382; fnlwgt -0.8835; education-num -0.0319; ,workclass  Self-emp-inc; education  Prof-school; marital-status  Married-civ-spouse; occupation  Prof-specialty; relationship  Husband; race  Asian-Pac-Islander; education-num_na False; age -0.0382; fnlwgt -0.7248; education-num 1.9301; ,workclass  Self-emp-not-inc; education  7th-8th; marital-status  Married-civ-spouse; occupation  Other-service; relationship  Wife; race  Black; education-num_na True; age 0.2556; fnlwgt -1.0157; education-num -0.0319; 
+y: CategoryList
+>=50k,>=50k,<50k,>=50k,<50k
+Path: .;
+
+Valid: LabelList (6512 items)
+x: TabularList
+workclass  Local-gov; education  Some-college; marital-status  Divorced; occupation  Adm-clerical; relationship  Not-in-family; race  White; education-num_na False; age 0.7699; fnlwgt 0.3275; education-num -0.0319; ,workclass  Private; education  Some-college; marital-status  Never-married; occupation  Other-service; relationship  Own-child; race  White; education-num_na False; age -1.2872; fnlwgt -0.9891; education-num -0.0319; ,workclass  Private; education  HS-grad; marital-status  Never-married; occupation  Machine-op-inspct; relationship  Other-relative; race  White; education-num_na False; age -1.2872; fnlwgt 0.2234; education-num -0.4243; ,workclass  Private; education  Bachelors; marital-status  Married-civ-spouse; occupation  Sales; relationship  Husband; race  White; education-num_na False; age -0.7729; fnlwgt -1.1325; education-num 1.1453; ,workclass  Private; education  HS-grad; marital-status  Married-civ-spouse; occupation  Adm-clerical; relationship  Other-relative; race  White; education-num_na False; age 0.9168; fnlwgt -1.1255; education-num -0.4243; 
+y: CategoryList
+<50k,<50k,<50k,>=50k,<50k
+Path: .;
+
+Test: None, model=TabularModel(
+  (embeds): ModuleList(
+    (0): Embedding(10, 6)
+    (1): Embedding(17, 8)
+    (2): Embedding(8, 5)
+    (3): Embedding(16, 8)
+    (4): Embedding(7, 5)
+    (5): Embedding(6, 4)
+    (6): Embedding(3, 3)
+  )
+  (emb_drop): Dropout(p=0.0, inplace=False)
+  (bn_cont): BatchNorm1d(3, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (layers): Sequential(
+    (0): Linear(in_features=42, out_features=200, bias=True)
+    (1): ReLU(inplace=True)
+    (2): BatchNorm1d(200, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (3): Linear(in_features=200, out_features=100, bias=True)
+    (4): ReLU(inplace=True)
+    (5): BatchNorm1d(100, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (6): Linear(in_features=100, out_features=2, bias=True)
+  )
+), opt_func=functools.partial(<class 'torch.optim.adamw.AdamW'>, lr=0.001, betas=(0.9, 0.999), eps=1e-08, amsgrad=False, weight_decay=0.01), loss_func=FlattenedLoss of CrossEntropyLoss(), metrics=[<function accuracy at 0x111aafe60>], true_wd=True, bn_wd=True, wd=0.01, train_bn=True, path=PosixPath('.'), model_dir='models', callback_fns=[functools.partial(<class 'fastai.basic_train.Recorder'>, add_time=True, silent=False)], callbacks=[], layer_groups=[Sequential(
+  (0): Embedding(10, 6)
+  (1): Embedding(17, 8)
+  (2): Embedding(8, 5)
+  (3): Embedding(16, 8)
+  (4): Embedding(7, 5)
+  (5): Embedding(6, 4)
+  (6): Embedding(3, 3)
+  (7): Dropout(p=0.0, inplace=False)
+  (8): BatchNorm1d(3, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (9): Linear(in_features=42, out_features=200, bias=True)
+  (10): ReLU(inplace=True)
+  (11): BatchNorm1d(200, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (12): Linear(in_features=200, out_features=100, bias=True)
+  (13): ReLU(inplace=True)
+  (14): BatchNorm1d(100, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (15): Linear(in_features=100, out_features=2, bias=True)
+)], add_time=True, silent=False)
+{'train': {'training': {'type': 'fit_one_cycle', 'fit': {'epochs': 0, 'lr': 'slice(None, 0.003, None)', 'wd': None}, 'fit_one_cycle': {'cyc_len': 1, 'max_lr': 'slice(None, 0.003, None)', 'moms': '(0.95, 0.85)', 'div_factor': 25, 'pct_start': 0.3, 'final_div': None, 'wd': None, 'tot_epochs': None, 'start_epoch': None}}, 'pre-training options': {'lr_find': {'start_lr': 1e-07, 'end_lr': 10, 'num_it': 100, 'stop_div': True, 'wd': None}, 'to_fp16': {'loss_scale': None, 'max_noskip': 1000, 'dynamic': True, 'clip': None, 'flat_master': False, 'max_scale': 16777216, 'loss_fp32': True}, 'to_fp32': {}}, 'post-training options': {'plot_metrics': {}, 'plot_losses': {}}}, 'verum': {'return': True, 'metric': {'name': 'error', 'minimize': True, 'num_trials': None}, 'learning_rate': {'flag': True, 'param': {'name': 'learning_rate', 'type': 'range', 'bounds': [1e-05, 0.5], 'log_scale': True}, 'default': 'slice(None, 0.003, None)'}, 'num_epochs': {'flag': True, 'param': {'name': 'num_epochs', 'type': 'range', 'bounds': [2, 50], 'digits': 0}, 'default': 5}, 'momentum0': {'flag': True, 'param': {'name': 'momentum', 'type': 'range', 'bounds': [0.9, 0.99]}, 'default': 0.95}, 'momentum1': {'flag': True, 'param': {'name': 'momentum', 'type': 'range', 'bounds': [0.8, 0.89]}, 'default': 0.85}, 'dropout_ps': {'flag': True, 'param': {'name': 'dropout_ps', 'type': 'range', 'bounds': [0, 1]}, 'default': None}, 'weight_decay': {'flag': True, 'param': {'name': 'weight_decay', 'type': 'range', 'bounds': [1e-06, 1], 'log_scale': True}, 'default': None}, 'use_bn': {'flag': True, 'param': {'name': 'use_bn', 'type': 'choice', 'values': [True, False]}, 'default': True}}}
+STEP 2 (optional): Optimizing the hyper-parameters.
+Skipping step 2 as the module `ax` is not installed.
+█epoch     train_loss  valid_loss  accuracy  time    
+██
