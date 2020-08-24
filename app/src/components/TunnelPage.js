@@ -8,7 +8,8 @@ import Selectr from 'jsoneditor/dist/jsoneditor-minimalist';
 import SaveMenu from './SaveMenu';
 import TrainMenu from './TrainMenu';
 import io from 'socket.io-client';
-import console_output from '../assets/result.txt';
+// import console_output from '../assets/result.txt';
+
 const socket = io('http://localhost:5001/home');
 
 const override = `
@@ -18,25 +19,49 @@ const override = `
 `;
 
 
-
 const TunnelPage = ({visibility, setVisibility, res}) => {
 
     const [generated, setGenerated] = useState(false);
     const [train, setTrain] = useState(false);
+    const [result, setResult] = useState("");
     const handlePop = () => {
         setVisibility(false);
     }
 
+    const  showFile = async () => {
+        var p = new XMLHttpRequest();
+        p.open('GET', './result.txt', false);
+        p.send(null);
+        setResult(p.responseText)
+        // p.onreadystatechange = () => {
+        //     if (p.readyState === 4) {
+                
+        //     }
+        // }
+        // e.preventDefault()
+        // const reader = new FileReader()
+        // reader.onload = async (e) => { 
+        //   const text = (e.target.result)
+        //   setResult(text);
+        // //   alert(text)
+        // };
+        // // console.log(e.target.files)
+        // reader.readAsText(e.target.files[0])
+      }
+
     useEffect(() => {
         if(visibility){
+            // handleChangeFile(console_output);
             fetch("http://localhost:5001/generate", {
             method: 'POST',
+            "Access-Control-Allow-Origin": "*",
             body: JSON.stringify(res.data)
         }).then(response => response.json())
         .then(data => {
             console.log(data)
             fetch("http://localhost:5001/train", {
             method: 'POST',
+            "Access-Control-Allow-Origin": "*",
             body: JSON.stringify({
                 "train": res.train,
                 "verum": res.verum
@@ -62,13 +87,17 @@ const TunnelPage = ({visibility, setVisibility, res}) => {
         setTrain(true);
         fetch("http://localhost:5001/start", {
             method: 'GET',
+            "Access-Control-Allow-Origin": "*",
         }).then(response => response.json())
         .then(data => {
-            console.log(data)
         })
-        socket.on('training', data => {
-            console.log(data);
-        });
+        // socket.on('training', data => {
+        //     console.log(data);
+        // });
+
+        setInterval(() => {
+            showFile();
+        }, 1000);
     }
 
     return(
@@ -84,7 +113,16 @@ const TunnelPage = ({visibility, setVisibility, res}) => {
                 <div style={{
                     display: train ? "block": "none"
                 }} className={"console"}>
-                    <p>{console_output}</p>
+                    <div style={{
+                        position: 'absolute',
+                        left: "50%",
+                        transform: "translateX(-50%)",
+                        bottom: "80px"
+                    }}>
+                        <CButton onClick={showFile} label={"reload"} type={"close"}/>
+                    </div>
+                    
+                    <pre>{result}</pre>
                 </div>
                 <div style={{
                     display: !generated ? "flex": "none"

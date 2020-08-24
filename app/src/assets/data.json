@@ -124,7 +124,7 @@
 		"loss": {
 			"type": "pre-defined",
 			"pre-defined": {
-				"func": "MSELossFlat"
+				"func": null
 			},
 			"custom": {
 				"fname": null,

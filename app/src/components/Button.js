@@ -5,10 +5,12 @@ import { Icon } from 'react-icons-kit';
 import {androidArrowBack} from 'react-icons-kit/ionicons/androidArrowBack'
 import {androidClose} from 'react-icons-kit/ionicons/androidClose'
 import {androidArrowForward} from 'react-icons-kit/ionicons/androidArrowForward'
+import {reload} from 'react-icons-kit/iconic/reload'
 const which = {
     "Back": androidArrowBack,
     "Cancel": androidClose,
-    "Forward": androidArrowForward
+    "Forward": androidArrowForward,
+    "reload": reload
 }
 
 const CButton = ({label, onClick, task, type}) => {
