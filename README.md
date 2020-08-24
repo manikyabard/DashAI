@@ -29,7 +29,7 @@ $dashai = [PATH TO DASHAI]/run.sh
 
 ## Quick Starter Guide
 
-Should we have this section and below part is enough?
+Should we have this section or below part is enough?
 
 ## Working
 ### Step 1: Choosing the task.
