@@ -26,9 +26,7 @@ function TrainModel({history, data, save, setTask, setData}) {
             "train": json 
         })
     }
-    useEffect(() => {
-        console.log(data.train)
-    }, [data])
+
     return(
         <div style={{width: "90%"}} className={'model-menu'}>
             {/*<div className={"header-main"}>

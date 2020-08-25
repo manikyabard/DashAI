@@ -83,7 +83,7 @@ def main():
 			application=insight.application
 		)
 
-		visualizer.serve(debug=True)
+		visualizer.serve(debug=False)
 		print('Completed visualization; completed step 4.')
 	else:
 		print("Visualization is not possible for this application")

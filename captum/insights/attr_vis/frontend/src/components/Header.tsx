@@ -5,7 +5,7 @@ import cx from "../utils/cx";
 function Header() {
   return (
     <header className={styles.header}>
-      <div className={styles.header__name}>Captum Insights</div>
+      <div className={styles.header__name}>Dash Insights</div>
       <nav className={styles.header__nav}>
         <ul>
           <li

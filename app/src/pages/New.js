@@ -54,12 +54,12 @@ const New = ({history}) => {
             </div>
 
             <div id={"learn-more"}>
-            <a target="_blank" href={"https://github.com/manikyabard/DashAI"}>
+            <a target="_blank" href={"https://github.com/manikyabard/DashAI/wiki"}>
                 <div>
                     Learn More
                 </div>
             </a>
-            <a target="_blank" href={"https://github.com/fastai/fastai1"}>
+            <a target="_blank" href={"https://fastai1.fast.ai/"}>
                 <div>
                 fast.ai
                 </div>

@@ -82,8 +82,6 @@ const TunnelPage = ({visibility, setVisibility, res}) => {
 
     useEffect(() => {
         if(visibility && home !== ""){
-
-            console.log(home);
             fetch("http://localhost:5001/generate", {
             method: 'POST',
             "Access-Control-Allow-Origin": "*",
@@ -91,20 +89,7 @@ const TunnelPage = ({visibility, setVisibility, res}) => {
         }).then(response => response.json())
         .then(data => {
             if(data.status === "COMPLETE"){
-                setServerRes("GENERATED")
-                fetch("http://localhost:5001/train", {
-                method: 'POST',
-                "Access-Control-Allow-Origin": "*",
-                body: JSON.stringify({
-                    "train": res.train,
-                    "verum": res.verum,
-                    "data": res.data
-                })
-                }).then(response => response.json())
-                .then(data => {
-                    setServerRes("TRAINING")
-                })
-                
+                setServerRes("GENERATED");
             }   
         })
         }
@@ -135,13 +120,28 @@ const TunnelPage = ({visibility, setVisibility, res}) => {
         }
     }, [result])
 
+
     const handleTrain = () => {
-        fetch("http://localhost:5001/start", {
-            method: 'GET',
-            "Access-Control-Allow-Origin": "*",
-        }).then(response => response.json())
-        .then(data => {
-            setTrain(true);
+        fetch("http://localhost:5001/train", {
+                method: 'POST',
+                "Access-Control-Allow-Origin": "*",
+                body: JSON.stringify({
+                    "train": res.train,
+                    "verum": res.verum,
+                    "data": res.data
+                })
+                }).then(response => response.json())
+                .then(data => {
+                    if(data.status === "COMPLETE"){
+                        setServerRes("TRAINING");
+                        fetch("http://localhost:5001/start", {
+                            method: 'GET',
+                            "Access-Control-Allow-Origin": "*",
+                        }).then(response => response.json())
+                        .then(data => {
+                            setTrain(true);
+                        })
+                    }
         })
 
         setInterval(() => {

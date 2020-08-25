@@ -75,7 +75,7 @@ def gethome():
 def generate():
     res = {
         "status": "COMPLETE",
-        "message": "",
+        "message": "GENERATED_MODEL",
         "payload": []
     }
     global learn
@@ -83,6 +83,8 @@ def generate():
     global save_dir
     global save_name
     response = json.loads(request.data)
+    with open('./data/response.json', 'w') as outfile:
+        json.dump(response, outfile, indent=4)
     application = response['task']
     save_dir = Path(response['save']['save_dir'])
     save_name = Path(response['save']['save_name'])
@@ -96,21 +98,23 @@ def generate():
 def train():
     res = {
         "status": "COMPLETE",
-        "message": "",
+        "message": "TRAINING_MODEL",
         "payload": []
     }
     global learn
 
     response = json.loads(request.data)
     train = response["train"]
-    print(train)
     verum = response["verum"]
     data = response["data"]
     with open('./data/verum.json', 'w') as outfile:
-        json.dump(verum, outfile)
- 
+        json.dump(verum, outfile, indent=4)
+
+    with open('./data/train.json', 'w') as outfile:
+        json.dump(train, outfile, indent=4) 
+
     with open('./data/response.json', 'w') as outfile:
-        json.dump(data, outfile)
+        json.dump(data, outfile, indent=4)
  
     print('STEP 2 (optional): Optimizing the hyper-parameters.')
     try:
@@ -120,15 +124,14 @@ def train():
         step_2 = True
         with open('./data/verum.json') as f:
             response = json.load(f)
-        verum = DashVerum(response, learn)
-        learn, metric, lr, num_epochs, moms = verum.veritize()
+        verum = DashVerum(response, data, learn)
+        learn, lr, num_epochs, moms = verum.veritize()
         print('Hyper-parameters optimized; completed step 2.')
         
     except ImportError:
         print('Skipping step 2 as the module `ax` is not installed.')
  
-    with open('./data/train.json', 'w') as outfile:
-        json.dump(train, outfile)
+
     
     if res["status"] == "SUCCESS":
         global ready_to_train
@@ -213,11 +216,11 @@ def training_worker():
     # 	save_dir.mkdir()
     # learn.export(save_path)
     print('Saved the model; completed step 5. Congratulations!')
-    print('(Not actually saving right now; uncomment the relevant lines if needed.)')
+    # print('(Not actually saving right now; uncomment the relevant lines if needed.)')
     print('Load the model again with the following code:', end='\n\n')
     print(f'\tlearn = load_learner(path={save_dir!r}, file={save_name!r})', end='\n\n')
     print('-' * 50)
-    print('Now we need to add production-serving.')
+    # print('Now we need to add production-serving.')
     print('COMPLETE')
 
 

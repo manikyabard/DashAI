@@ -24,6 +24,7 @@ learner_class_map = {
 class DashVerum:
 	v_resp = {}
 	learn = None
+	
 	def __init__(self, response, data, learn):
 		DashVerum.v_resp = response
 		DashVerum.learn = learn
@@ -54,12 +55,36 @@ class DashVerum:
 		# wd = self.get_param_value('weight_decay')
 		# use_bn = self.get_param_value('use_bn')
 
-		lr = parameters['learning_rate']
-		num_epochs = parameters['num_epochs']
-		moms = (parameters['momentum0'], parameters['momentum1'])
-		ps = parameters['dropout_ps']
-		wd = parameters['weight_decay']
-		use_bn = parameters['use_bn']
+		lr = (
+			eval(DashVerum.v_resp['learning_rate']['default']) if not DashVerum.v_resp['learning_rate']['flag']
+			else parameters['learning_rate']
+		)
+		num_epochs = (
+			DashVerum.v_resp['num_epochs']['default'] if not DashVerum.v_resp['num_epochs']['flag']
+			else parameters['num_epochs']
+		)
+		moms = (
+			(
+				DashVerum.v_resp['momentum0']['default'] if not DashVerum.v_resp['momentum0']['flag']
+				else parameters['momentum0']
+			),
+			(
+				DashVerum.v_resp['momentum1']['default'] if not DashVerum.v_resp['learning_rate']['flag']
+				else parameters['momentum1']
+			)
+		)
+		ps = (
+			DashVerum.v_resp['dropout_ps']['default'] if not DashVerum.v_resp['learning_rate']['flag']
+			else parameters['dropout_ps']
+		)
+		# wd = (
+		# 	DashVerum.v_resp['weight_decay']['default'] if not DashVerum.v_resp['weight_decay']['flag']
+		# 	else parameters['weight_decay']
+		# )
+		use_bn = (
+			DashVerum.v_resp['use_bn']['default'] if not DashVerum.v_resp['use_bn']['flag']
+			else parameters['use_bn']
+		)
 
 
 		# learn = load_learner('./','verum_test.pkl')
@@ -73,7 +98,7 @@ class DashVerum:
 		learn = getattr(learner_class, f'create_{application}_learner')(response)
 
 		learn.model.ps = ps
-		learn.model.wd = wd
+		# learn.model.wd = wd
 		learn.model.use_bn = use_bn
 
 		validation_set = learn.data.valid_dl
@@ -91,7 +116,11 @@ class DashVerum:
 		return metric
 
 	def veritize(self):
-		total_trials = DashVerum.v_resp['metric']['num_trials'] if DashVerum.v_resp['metric']['num_trials'] else 20
+		total_trials = (
+			DashVerum.v_resp['metric']['num_trials']
+			if DashVerum.v_resp['metric']['num_trials'] is not None
+			else 2
+		)
 		best_parameters, best_values, experiment, model = optimize(
 			parameters=self.init_parameters(),
 			evaluation_function=self.evaluation_fn,
@@ -99,15 +128,26 @@ class DashVerum:
 			total_trials=total_trials
 		)
 		if DashVerum.v_resp['return']:
-			DashVerum.learn.model.ps = best_parameters['dropout_ps']
-			DashVerum.learn.model.wd = best_parameters['weight_decay']
-			DashVerum.learn.model.use_bn = best_parameters['use_bn']
+			try: DashVerum.learn.model.ps = best_parameters['dropout_ps']
+			except: pass
+			# try: DashVerum.learn.model.wd = best_parameters['weight_decay']
+			# except: pass
+			try: DashVerum.learn.model.use_bn = best_parameters['use_bn']
+			except: pass
 
-			return (
-				DashVerum.learn,
-				best_parameters['learning_rate'], best_parameters['num_epochs'],
-				(best_parameters['momentum0'], best_parameters['momentum1'])
-			)
+			return_list = [DashVerum.learn]
+			try: return_list.append(best_parameters['learning_rate'])
+			except: return_list.append(DashVerum.v_resp['learning_rate']['default'])
+			try: return_list.append(best_parameters['num_epochs'])
+			except: return_list.append(DashVerum.v_resp['num_epochs']['default'])
+			momentum_list = []
+			try: momentum_list.append(best_parameters['momentum0'])
+			except: momentum_list.append(DashVerum.v_resp['momentum0']['default'])
+			try: momentum_list.append(best_parameters['momentum1'])
+			except: momentum_list.append(DashVerum.v_resp['momentum1']['default'])
+			return_list.append(tuple(momentum_list))
+
+			return tuple(return_list)
 
 		else:
-			pass  # TODO show this on console.
+			print(json.dumps(best_parameters, indent=4))
