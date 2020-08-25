@@ -70,7 +70,7 @@ DashAI then provides a simple training interface, where, if you have not chosen 
 You can then choose to visualize the attributions in the explainability component of DashAI, _DashInsights_. You may choose from a multitude of attribution-calculation algorithms, depending on your task. The visualizations can provide insight into why a model is predicting what it is predicting.
 
 ### Step 7: (Optional) Saving the model.
-Finally, if users are so inclined, they can save their models as .pth files. We provide instructions on how to use these files in [the Deployment section of our Wiki](https://github.com/manikyabard/DashAI/wiki/6.-Deployment).
+Finally, you can save your models as .pth files. We provide instructions on how to use these files in [the Deployment section of our Wiki](https://github.com/manikyabard/DashAI/wiki/6.-Deployment).
 
 ## More Info
 Check out our [Wiki](https://github.com/manikyabard/DashAI/wiki)!
