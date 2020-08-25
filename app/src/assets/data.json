@@ -1,5 +1,5 @@
 {
-	"task": "tabular",
+	"task": "vision",
 	"core": {
 		"data": {
 			"bs": 2,
@@ -8,36 +8,36 @@
 			"no_check": false,
 			"num_workers": 16,
 			"validation": {
-				"method": "by_rand_pct",
+				"method": "by_folder",
 				"by_rand_pct": {
 					"valid_pct": 0.2,
 					"seed": null
 				},
-				"idx": {
+				"by_idx": {
 					"csv_name": null,
 					"valid_idx": 20
 				},
-				"subsets": {
+				"by_subsets": {
 					"train_size": 0.08,
 					"valid_size": 0.2,
 					"seed": null
 				},
-				"files": {
+				"by_files": {
 					"valid_names": null
 				},
-				"fname_file": {
+				"by_fname_file": {
 					"fname": null,
 					"path": null
 				},
-				"folder": {
+				"by_folder": {
 					"train": "train",
-					"valid": "train"
+					"valid": "valid"
 				},
-				"idxs": {
+				"by_idxs": {
 					"train_idx": null,
 					"valid_idx": null
 				},
-				"list": {
+				"by_list": {
 					"train": null,
 					"valid": null
 				},
@@ -50,9 +50,9 @@
 			},
 
 			"label": {
-				"method": "from_df",
+				"method": "from_folder",
 				"from_df": {
-					"cols": "salary",
+					"cols": 0,
 					"label_cls": null,
 					"label_delim": null,
 					"classes": null
@@ -124,7 +124,7 @@
 		"loss": {
 			"type": "pre-defined",
 			"pre-defined": {
-				"func": null
+				"func": "MSELossFlat"
 			},
 			"custom": {
 				"fname": null,
@@ -647,7 +647,6 @@
 			"type": "classifier",
 			"classifier": {
 				"method": "default",
-				"lm_train_epochs": 0,
 				"default": {
 					"arch": "AWD_LSTM",
 					"extra": {
