@@ -91,7 +91,8 @@ const TunnelPage = ({visibility, setVisibility, res}) => {
             body: JSON.stringify(res.data)
         }).then(response => response.json())
         .then(data => {
-            if(data.status === "SUCCESS"){
+            if(data.status === "COMPLETE"){
+                setServerRes("GENERATED")
                 fetch("http://localhost:5001/train", {
                 method: 'POST',
                 "Access-Control-Allow-Origin": "*",
@@ -104,7 +105,7 @@ const TunnelPage = ({visibility, setVisibility, res}) => {
                 .then(data => {
                     setServerRes("TRAINING")
                 })
-                setServerRes("GENERATED")
+                
             }   
         })
         }
