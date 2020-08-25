@@ -100,9 +100,10 @@ def train():
         "payload": []
     }
     global learn
-    
+
     response = json.loads(request.data)
     train = response["train"]
+    print(train)
     verum = response["verum"]
     data = response["data"]
     with open('./data/verum.json', 'w') as outfile:
@@ -198,10 +199,10 @@ def training_worker():
             dataset=insight.formatted_data_iter(),
             application=insight.application
         )
-        
-        process = multiprocessing.Process(target=visualizer.serve, args=()) 
-        process.start()
-        all_processes.append(process)
+        visualizer.serve(debug=True)
+        # process = multiprocessing.Process(target=visualizer.serve, args=(debug=True)) 
+        # process.start()
+        # all_processes.append(process)
         print('Completed visualization; completed step 4.')
     else:
         print("Visualization is not possible for this application")

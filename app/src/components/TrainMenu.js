@@ -20,13 +20,15 @@ function TrainModel({history, data, save, setTask, setData}) {
         else history.push("/verum")
     }
 
-    const handleChange = (update_data) => {
+    const handleChange = (json) => {
         setData({
             ...data,
-            "train": update_data
+            "train": json 
         })
     }
-
+    useEffect(() => {
+        console.log(data.train)
+    }, [data])
     return(
         <div style={{width: "90%"}} className={'model-menu'}>
             {/*<div className={"header-main"}>
