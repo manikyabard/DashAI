@@ -2,8 +2,8 @@
     "return": true,
     "metric": {
         "name": "error",
-        "minimize": false,
-        "num_trials": null
+        "minimize": true,
+        "num_trials": 1
     },
     "learning_rate": {
         "flag": true,
@@ -29,7 +29,7 @@
             ],
             "digits": 0
         },
-        "default": 5
+        "default": 0
     },
     "momentum0": {
         "flag": true,

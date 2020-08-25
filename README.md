@@ -28,16 +28,21 @@ cd DashAI/
 ```shell
 chmod +x install.sh && ./install.sh
 ```
-### 4. Add DashAI to your PATH Environment Variable
-#### 4.1. Open your bashrc file
+### 4. Activate the environment
 ```shell
-sudo nano ~/.bashrc
+conda activate server
 ```
-#### 4.2. Scroll down to the bottom and paste the following line
+### 5. Run the server
+:warning: from DashAI folder
 ```shell
-$dashai = [PATH TO DASHAI]/run.sh
+mkdir ~/.dashai && python -u worker/app/app.py > ~/.dashai/result.txt
 ```
-:warning: Replace _[PATH TO DASHAI]_ with the _path_
+
+### 5. Install the application
+> Install App by clicking on DashAI/app/dist/DashAI.dmg
+
+### 6. Start the application from your launcher
+
 
 ## Quick Start
 Complete the [installation](#installation) steps as shown above. To start using DashAI, open a terminal window and type in the following command.

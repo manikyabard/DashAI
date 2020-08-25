@@ -2,7 +2,7 @@
     "task": "vision",
     "core": {
         "data": {
-            "bs": 8,
+            "bs": 2,
             "val_bs": null,
             "device": null,
             "no_check": false,

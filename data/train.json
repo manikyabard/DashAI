@@ -1,6 +1,6 @@
 {
     "training": {
-        "type": "fit_one_cycle",
+        "type": "fit",
         "fit": {
             "epochs": 0,
             "lr": "slice(None, 0.003, None)",

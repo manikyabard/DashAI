@@ -1,3 +1,1 @@
-FLASK_APP=worker.app.app.py
-FLASK_ENV=development
-flask run
+mkdir ~/.dashai && python -u worker/app/app.py > ~/.dashai/result.txt
