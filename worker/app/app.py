@@ -198,8 +198,10 @@ def training_worker():
             dataset=insight.formatted_data_iter(),
             application=insight.application
         )
-
-        visualizer.serve(debug=True)
+        
+        process = multiprocessing.Process(target=visualizer.serve, args=()) 
+        process.start()
+        all_processes.append(process)
         print('Completed visualization; completed step 4.')
     else:
         print("Visualization is not possible for this application")

@@ -130,7 +130,7 @@ const TunnelPage = ({visibility, setVisibility, res}) => {
     }, [serverRes])
 
     useEffect(() => {
-        if(result.substring(result.length - 8, result.length) === "COMPLETE"){
+        if(result.includes("COMPLETE")){
             setServerRes("TRAINED");
         }
     }, [result])
