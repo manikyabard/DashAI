@@ -14,23 +14,37 @@
 
 ## Installation
 
-### Install Dependencies
+To install, just run the following commands in order.
+
+### 1. Clone our Repo
+```shell
+git clone https://github.com/manikyabard/DashAI.git
+```
+### 2. cd into our Repo
+```shell
+cd DashAI/
+```
+### 3. Install the Dependencies
 ```shell
 chmod +x install.sh && ./install.sh
 ```
-### Add DashAI to path
+### 4. Add DashAI to your PATH Environment Variable
+#### 4.1. Open your bashrc file
 ```shell
 sudo nano ~/.bashrc
 ```
-#### Scroll down to the bottom and past the following script
+#### 4.2. Scroll down to the bottom and paste the following line
 ```shell
 $dashai = [PATH TO DASHAI]/run.sh
 ```
 :warning: Replace _[PATH TO DASHAI]_ with the _path_
 
-## Quick Starter Guide
-
-Should we have this section or below part is enough?
+## Quick Start
+Complete the [installation](#installation) steps as shown above. To start using DashAI, open a terminal window and type in the following command.
+```shell
+dashai
+```
+This will start a server and run the app. See [Working](#working) for next steps.
 
 ## Working
 ### Step 1: Choosing the task.
