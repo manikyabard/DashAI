@@ -150,7 +150,7 @@ def start():
     all_processes.append(process)
     return jsonify(res)
 
-@app.route("/stop", method=['GET'])
+@app.route("/stop", methods=['GET'])
 def stop():
     global all_processes
     res = {
