@@ -21,7 +21,10 @@ function TrainModel({history, data, save, setTask, setData}) {
     }
 
     const handleChange = (update_data) => {
-        setData(update_data)
+        setData({
+            ...data,
+            "train": update_data
+        })
     }
 
     return(
@@ -38,7 +41,7 @@ function TrainModel({history, data, save, setTask, setData}) {
             </div>*/}
             <JsonEditor 
             onChange={handleChange} 
-            data={data} 
+            data={data.train} 
             Title={"Training Configuration"} />
 
             <JsonEditor 
@@ -52,7 +55,7 @@ function TrainModel({history, data, save, setTask, setData}) {
 const stateToProps = (state) => {
     return {
         "task": state.payload.data.task,
-        "data": state.payload.train,
+        "data": state.payload,
         "save": state.payload.data.save
     }
 }

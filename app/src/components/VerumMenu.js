@@ -19,9 +19,13 @@ function VerumMenu({history, data, task, setTask, setData}) {
     }
 
     const handleChange = (update_data) => {
-        setData(update_data)
+        setData({
+            ...data,
+            "verum": update_data
+        })
     }
 
+    
     return(
         <div className={'model-menu'}>
             <div className={"header-main"}>
@@ -29,7 +33,7 @@ function VerumMenu({history, data, task, setTask, setData}) {
             </div>
             <JsonEditor 
             onChange={handleChange} 
-            data={data} 
+            data={data.verum} 
             Title={"Verum : AI based Model Optimizer"} />
         </div>
     )
@@ -38,7 +42,7 @@ function VerumMenu({history, data, task, setTask, setData}) {
 const stateToProps = (state) => {
     return {
         "task": state.payload.data.task,
-        "data": state.payload.verum
+        "data": state.payload
     }
 }
 

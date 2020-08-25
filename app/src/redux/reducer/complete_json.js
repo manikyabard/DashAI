@@ -17,10 +17,7 @@ export default function Data_Reducer(state = initState, method) {
         case UPDATE_DATA:
             return {
                 type: UPDATE_DATA,
-                payload: {
-                    ...state.payload,
-                    [method.level]: method.payload.value
-                }
+                payload: method.payload.value
             }
         case UPDATE_TYPE:
             return {

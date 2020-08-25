@@ -23,8 +23,16 @@ function CoreMenu({history, data, task, setTask, setData}) {
 
 
     const handleChange = (update_data) => {
-        setData(update_data)
+        setData({
+            ...data,
+            "data": {
+                ...data["data"],
+                "core":  update_data
+            }
+        })
     }
+
+    
 
     return(
         <div className={'model-menu'}>

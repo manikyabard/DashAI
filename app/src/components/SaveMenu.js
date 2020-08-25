@@ -20,14 +20,20 @@ function SaveMenu({history, data, task, setTask, setData}) {
     }
 
     const handleChange = (update_data) => {
-        setData(update_data)
+        setData({
+            ...data,
+            "data": {
+                ...data["data"],
+                "save": update_data
+            }
+        })
     }
 
     return(
         <div style={{width: "80%"}} className={'model-menu'}>
             <JsonEditor 
             onChange={handleChange} 
-            data={data["save"]} 
+            data={data["data"]["save"]} 
             Title={"Saved Model"} />
         </div>
     )
@@ -36,7 +42,7 @@ function SaveMenu({history, data, task, setTask, setData}) {
 const stateToProps = (state) => {
     return {
         "task": state.payload.task,
-        "data": state.payload.data
+        "data": state.payload
     }
 }
 

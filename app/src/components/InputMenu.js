@@ -21,8 +21,18 @@ function ModelMenu({history, data, task, setTask, setData}) {
         else history.push("/core")
     }
 
-    const handleChange = (update_data) => {
-        setData(update_data)
+    const handleChange = (json) => {
+        // console.log(update_data)
+        setData({
+            ...data,
+            "data": {
+                ...data["data"],
+                [task]: {
+                    ...data["data"][task],
+                    "input": json
+                }
+            }
+        })
     }
 
     return(

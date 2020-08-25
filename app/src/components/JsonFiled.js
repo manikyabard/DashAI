@@ -11,21 +11,17 @@ import { update_data } from '../redux/actions/data';
 const ajv = new Ajv({ allErrors: true, verbose: true });
 
 const JsonFiled = ({onChange, data, task, sample, header}) => {
-    const handleChange = (updated_data) => {
-        // var temp = {
-        //     ...sample,
-        //     [label]: e.target.value
-        // }
-
-        onChange({
-            ...data,
-            [task]: {
-                ...data[task],
-                [header]: {
-                    ...update_data
-                }
-            }
-        });
+    const handleChange = (json) => {
+        // onChange({
+        //     ...data,
+        //     [task]: {
+        //         ...data[task],
+        //         [header]: {
+        //             ...update_data
+        //         }
+        //     }
+        // });
+        console.log(json)
     }
 
     
@@ -43,7 +39,7 @@ const JsonFiled = ({onChange, data, task, sample, header}) => {
             mode={'tree'}
             ajv={ajv}
             value={sample}
-            onChange={handleChange}
+            onChange={onChange}
             />
         </div>
         

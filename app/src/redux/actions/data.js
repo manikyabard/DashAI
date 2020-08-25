@@ -1,10 +1,9 @@
 import { UPDATE_DATA, UPDATE_TYPE } from './type/open';
 
 
-export const update_data = (val, level = "data") => {
+export const update_data = (val) => {
     return {
         type: UPDATE_DATA,
-        level: level,
         payload: {
             value: val,
         }
