@@ -70,13 +70,10 @@ const TunnelPage = ({visibility, setVisibility, res}) => {
             fetch("http://localhost:5001/gethome", {
                 method: 'GET',
                 "Access-Control-Allow-Origin": "*",
-            }).then((response, err) => {
-                if(err) setServerRes("NO_SERVER")
-                response.json()
-            })
-            .then(data => {
-                setHome(data.payload)
-            })
+            }).then((response, err) =>
+                response.json())
+            .then(data =>
+                setHome(data.payload))
     } else {
         setGenerated(false);
         setTrain(false);
