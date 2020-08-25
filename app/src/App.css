@@ -449,6 +449,22 @@
   color: #c5c5c5;
 }
 
+#captum {
+  position: 'absolute';
+  left: "50%";
+  transform: "translateX(-50%)";
+  bottom: "80px";
+  color: black;
+  padding: 10px;
+  border-radius: 5px;
+  background: #f8f8f8;
+}
+
+#captum a {
+  text-decoration: none;
+  outline: none;
+}
+
 .db-col2 {
   width: 80%;
   height: 100%;

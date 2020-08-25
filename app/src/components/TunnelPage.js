@@ -125,7 +125,7 @@ const TunnelPage = ({visibility, setVisibility, res}) => {
                 draggable: true,
                 progress: undefined,
             });
-
+            setCaptum(true);
         }
     }, [serverRes])
 
@@ -159,6 +159,11 @@ const TunnelPage = ({visibility, setVisibility, res}) => {
                 <div className={"tunnel-train-btn"}>
                     <CButton onClick={handlePop} label={"Cancel"} type={"close"}/>
                 </div>
+                <div id={"captum"} style={{
+                    display: captum ? "block":"none",
+                }} className={'btn-gp'}>
+                <a target="_blank" href={"http://127.0.0.1:5003"}>Open DashInsights</a>
+                </div>
                 <div style={{
                     display: train ? "block": "none"
                 }} className={"console"}>
@@ -169,16 +174,6 @@ const TunnelPage = ({visibility, setVisibility, res}) => {
                         bottom: "80px"
                     }}>
                         <CButton onClick={() => showFile(home)} label={"reload"} type={"close"}/>
-                    </div>
-
-                    <div  style={{
-                        position: 'absolute',
-                        display: captum ? "block":"none",
-                        left: "50%",
-                        transform: "translateX(-50%)",
-                        bottom: "80px"
-                    }} className={'btn-gp'}>
-                    <a size="lg" href={"http://127.0.0.1:5003"} target={"_blank"} variant="light">Open Captum</a>
                     </div>
                     
                     <pre>{result}</pre>
