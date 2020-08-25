@@ -104,9 +104,12 @@ def train():
     response = json.loads(request.data)
     train = response["train"]
     verum = response["verum"]
- 
+    data = response["data"]
     with open('./data/verum.json', 'w') as outfile:
         json.dump(verum, outfile)
+ 
+    with open('./data/response.json', 'w') as outfile:
+        json.dump(data, outfile)
  
     print('STEP 2 (optional): Optimizing the hyper-parameters.')
     try:
@@ -157,7 +160,7 @@ def stop():
     }
     
     for process in all_processes:
-        process..terminate()
+        process.terminate()
         
     return jsonify(res)
     
@@ -212,6 +215,7 @@ def training_worker():
     print(f'\tlearn = load_learner(path={save_dir!r}, file={save_name!r})', end='\n\n')
     print('-' * 50)
     print('Now we need to add production-serving.')
+    print('COMPLETE')
 
 
 # @socketio.on('connect')

@@ -40,7 +40,7 @@ const JsonFiled = ({onChange, data, task, sample, header}) => {
     </div>
             </div>*/}
             <Editor
-            mode={'form'}
+            mode={'tree'}
             ajv={ajv}
             value={sample}
             onChange={handleChange}

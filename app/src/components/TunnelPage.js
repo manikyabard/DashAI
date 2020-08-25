@@ -13,12 +13,16 @@ import io from 'socket.io-client';
 
 //const socket = io('http://localhost:5001/home');
 
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 const override = `
   display: block;
   margin: 0 auto;
   border-color: red;
 `;
-
 
 
 const TunnelPage = ({visibility, setVisibility, res}) => {
@@ -28,6 +32,7 @@ const TunnelPage = ({visibility, setVisibility, res}) => {
     const [result, setResult] = useState("");
     const [home, setHome] = useState("");
     const [serverRes, setServerRes] = useState("UNSET");
+    const [captum, setCaptum] = useState(false);
     const handlePop = () => {
         fetch("http://localhost:5001/stop", {
                 method: 'GET',
@@ -65,16 +70,17 @@ const TunnelPage = ({visibility, setVisibility, res}) => {
             fetch("http://localhost:5001/gethome", {
                 method: 'GET',
                 "Access-Control-Allow-Origin": "*",
-            }).then(response => response.json())
+            }).then((response, err) => {
+                if(err) setServerRes("NO_SERVER")
+                response.json()
+            })
             .then(data => {
                 setHome(data.payload)
             })
     } else {
         setGenerated(false);
         setTrain(false);
-    }
-
-       
+    }       
     }, [visibility])
 
     useEffect(() => {
@@ -91,7 +97,8 @@ const TunnelPage = ({visibility, setVisibility, res}) => {
                 "Access-Control-Allow-Origin": "*",
                 body: JSON.stringify({
                     "train": res.train,
-                    "verum": res.verum
+                    "verum": res.verum,
+                    "data": res.data
                 })
                 }).then(response => response.json())
                 .then(data => {
@@ -106,8 +113,27 @@ const TunnelPage = ({visibility, setVisibility, res}) => {
     useEffect(() => {
         if(serverRes === "GENERATED"){
             setGenerated(true);
+        }else if(serverRes === "NO_SERVER"){
+
+        }else if(serverRes === "TRAINED"){
+            toast.success('Model is Trained', {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+
         }
     }, [serverRes])
+
+    useEffect(() => {
+        if(result.substring(result.length - 8, result.length) === "COMPLETE"){
+            setServerRes("TRAINED");
+        }
+    }, [result])
 
     const handleTrain = () => {
         fetch("http://localhost:5001/start", {
@@ -139,10 +165,20 @@ const TunnelPage = ({visibility, setVisibility, res}) => {
                     <div style={{
                         position: 'absolute',
                         left: "50%",
-                        transform: "translateX(-50%)",
+                        transform: "translateX(-40%)",
                         bottom: "80px"
                     }}>
                         <CButton onClick={() => showFile(home)} label={"reload"} type={"close"}/>
+                    </div>
+
+                    <div  style={{
+                        position: 'absolute',
+                        display: captum ? "block":"none",
+                        left: "50%",
+                        transform: "translateX(-50%)",
+                        bottom: "80px"
+                    }} className={'btn-gp'}>
+                    <a size="lg" href={"http://127.0.0.1:5003"} target={"_blank"} variant="light">Open Captum</a>
                     </div>
                     
                     <pre>{result}</pre>
@@ -170,10 +206,19 @@ const TunnelPage = ({visibility, setVisibility, res}) => {
                     <div className={'btn-gp'}>
                     <Button size="lg" onClick={handleTrain} variant="light">Train Model</Button>
                     </div>
-
-                    
                 </div>
             </div>
+            <ToastContainer
+            position="bottom-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            />
         </div>
     )
 }
