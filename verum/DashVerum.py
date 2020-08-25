@@ -86,7 +86,7 @@ class DashVerum:
 		if DashVerum.v_resp['metric']['name'] == 'error':
 			metric = learn.validate()[0]
 		else:
-			metric = learn.validate(metrics=accuracy)[0]
+			metric = learn.validate(metrics=eval(DashVerum.v_resp['metric']['name']))[0]
 
 		return metric
 

@@ -40,6 +40,8 @@ const TunnelPage = ({visibility, setVisibility, res}) => {
             }).then(response => response.json())
             .then(data => {
                 setVisibility(false);
+                setGenerated(false);
+                setTrain(false);
             })   
     }
     
@@ -65,8 +67,9 @@ const TunnelPage = ({visibility, setVisibility, res}) => {
       } 
 
     useEffect(() => {
-        if(visibility){
+
             // handleChangeFile(console_output)
+            console.log(visibility);
             fetch("http://localhost:5001/gethome", {
                 method: 'GET',
                 "Access-Control-Allow-Origin": "*",
@@ -74,14 +77,13 @@ const TunnelPage = ({visibility, setVisibility, res}) => {
                 response.json())
             .then(data =>
                 setHome(data.payload))
-    } else {
-        setGenerated(false);
-        setTrain(false);
-    }       
-    }, [visibility])
+        }
+    , [])
 
     useEffect(() => {
-        if(home !== ""){
+        if(visibility && home !== ""){
+
+            console.log(home);
             fetch("http://localhost:5001/generate", {
             method: 'POST',
             "Access-Control-Allow-Origin": "*",
@@ -106,7 +108,7 @@ const TunnelPage = ({visibility, setVisibility, res}) => {
             }   
         })
         }
-    }, [home])
+    }, [home, visibility])
 
     useEffect(() => {
         if(serverRes === "GENERATED"){
