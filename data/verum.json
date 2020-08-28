@@ -3,7 +3,7 @@
     "metric": {
         "name": "error",
         "minimize": true,
-        "num_trials": 1
+        "num_trials": null
     },
     "learning_rate": {
         "flag": true,

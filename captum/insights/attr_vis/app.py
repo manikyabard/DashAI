@@ -286,7 +286,8 @@ class AttributionVisualizer(object):
             return self._serve(blocking=blocking, debug=debug, port=port)
 
     def _serve(self, blocking=False, debug=False, port=None):
-        from .server import start_server
+        # from .server import start_server
+        from worker.app.app import start_server
 
         return start_server(self, blocking=blocking, debug=debug, _port=port)
 

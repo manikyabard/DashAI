@@ -99,6 +99,7 @@ def start_server(
         t = threading.Thread(target=run_app, kwargs={"debug": debug})
         t.start()
         sleep(0.01)  # add a short delay to allow server to start up
+        print(t, blocking, sep='\n')
         if blocking:
             t.join()
 
