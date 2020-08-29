@@ -19,7 +19,7 @@
         "default": "slice(None, 0.003, None)"
     },
     "num_epochs": {
-        "flag": false,
+        "flag": true,
         "param": {
             "name": "num_epochs",
             "type": "range",

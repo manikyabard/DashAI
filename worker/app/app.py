@@ -190,6 +190,7 @@ def training_worker():
     global save_dir
     global save_name
     global learn
+    global visualizer
     print('connect',{"msg": "STEP 3: Training the model."})
     # if torch.cuda.is_available():
     if True:

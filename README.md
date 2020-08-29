@@ -35,13 +35,13 @@ conda activate server
 ### 5. Run the server
 :warning: from DashAI folder
 ```shell
-mkdir ~/.dashai && python -u worker/app/app.py > ~/.dashai/result.txt
+mkdir -p ~/.dashai && python -u worker/app/app.py > ~/.dashai/result.txt
 ```
 
-### 5. Install the application
+### 6. Install the application
 > Install App by clicking on DashAI/app/dist/DashAI.dmg
 
-### 6. Start the application from your launcher
+### 7. Start the application from your launcher
 
 
 ## Quick Start
