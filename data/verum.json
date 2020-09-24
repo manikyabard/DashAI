@@ -3,7 +3,7 @@
     "metric": {
         "name": "error",
         "minimize": true,
-        "num_trials": 1
+        "num_trials": null
     },
     "learning_rate": {
         "flag": true,
@@ -19,7 +19,7 @@
         "default": "slice(None, 0.003, None)"
     },
     "num_epochs": {
-        "flag": false,
+        "flag": true,
         "param": {
             "name": "num_epochs",
             "type": "range",

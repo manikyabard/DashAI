@@ -94,6 +94,9 @@ ATTRIBUTION_METHOD_CONFIG: Dict[str, ConfigParameters] = {
     FeatureAblation.get_name(): ConfigParameters(
         params={"perturbations_per_eval": NumberConfig(value=1, limit=(1, 100))},
     ),
+    Deconvolution.get_name(): ConfigParameters(
+        params={}
+    ),
     Occlusion.get_name(): ConfigParameters(
         params={
             "sliding_window_shapes": StrConfig(value=""),

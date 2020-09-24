@@ -366,7 +366,7 @@
                         "lin_ftrs": [
                             512
                         ],
-                        "ps": 0.7,
+                        "ps": 0.5,
                         "custom_head": null,
                         "split_on": null,
                         "bn_final": false,

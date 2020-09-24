@@ -1,13 +1,13 @@
 {
     "training": {
-        "type": "fit",
+        "type": "fit_one_cycle",
         "fit": {
             "epochs": 0,
             "lr": "slice(None, 0.003, None)",
             "wd": null
         },
         "fit_one_cycle": {
-            "cyc_len": 1,
+            "cyc_len": 0,
             "max_lr": "slice(None, 0.003, None)",
             "moms": "(0.95, 0.85)",
             "div_factor": 25,

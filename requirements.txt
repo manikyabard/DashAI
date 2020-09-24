@@ -20,3 +20,4 @@ traitlets~=4.3.3
 path~=13.1.0
 eventlet
 flask_cors
+ax

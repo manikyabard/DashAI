@@ -162,7 +162,7 @@ const TunnelPage = ({visibility, setVisibility, res}) => {
                 <div id={"captum"} style={{
                     display: captum ? "block":"none",
                 }} className={'btn-gp'}>
-                <a target="_blank" href={"http://127.0.0.1:5003"}>Open DashInsights</a>
+                <a target="_blank" href={"http://127.0.0.1:5001"}>Open DashInsights</a>
                 </div>
                 <div style={{
                     display: train ? "block": "none"
