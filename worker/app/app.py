@@ -232,11 +232,9 @@ def training_worker():
     # 	save_dir.mkdir()
     # learn.export(save_path)
     print('Saved the model; completed step 5. Congratulations!')
-    # print('(Not actually saving right now; uncomment the relevant lines if needed.)')
     print('Load the model again with the following code:', end='\n\n')
     print(f'\tlearn = load_learner(path={save_dir!r}, file={save_name!r})', end='\n\n')
     print('-' * 50)
-    # print('Now we need to add production-serving.')
     print('COMPLETE')
     global all_processes
     print(all_processes)

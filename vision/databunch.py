@@ -18,8 +18,6 @@ class DashVisionDatabunch:
 		tra = DashVisionDatabunch.create_transform(response['vision']['transform'])
 		src = src.transform(tra, tfm_y=False,size=response['vision']['transform']['size'])
 		#src = src.transform(tra)
-		#print(tra[0])
-		#print(tra[1])
 		# manually putting extra args like collate_fn, if we pass stuff from dictionary, it will be taken as a string
 		return DashDatabunch.create_databunch(response, src)
 
