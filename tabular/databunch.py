@@ -20,7 +20,6 @@ class DashTabularDatabunch:
 		df = pd.read_csv(path / f'{response_tab["input"]["csv_name"]}')
 
 		procs = list()
-		# print(f"{response_tab['transform']['FillMissing']['fill_strategy']}")
 		if response_tab["transform"]['FillMissing']:
 			if hasattr(FillStrategy, f"{response_tab['transform']['FillMissing']['fill_strategy']}"):
 				fill_strategy = getattr(FillStrategy, f"{response_tab['transform']['FillMissing']['fill_strategy']}")

@@ -133,18 +133,15 @@ def train():
     print('STEP 2 (optional): Optimizing the hyper-parameters.')
     # try:
     #     import ax
-    #     print(ax.__version__)
     #     from verum.DashVerum import DashVerum
     #     step_2 = True
     #     with open('./data/verum.json') as f:
     #         response = json.load(f)
     #     verum = DashVerum(response, data, learn)
     #     learn, lr, num_epochs, moms = verum.veritize()
-    #     print('Hyper-parameters optimized; completed step 2.')
-        
+
     # except ImportError:
-    #     print('Skipping step 2 as the module `ax` is not installed.')
- 
+
 
     
     if res["status"] == "SUCCESS":
@@ -232,11 +229,9 @@ def training_worker():
     # 	save_dir.mkdir()
     # learn.export(save_path)
     print('Saved the model; completed step 5. Congratulations!')
-    # print('(Not actually saving right now; uncomment the relevant lines if needed.)')
     print('Load the model again with the following code:', end='\n\n')
     print(f'\tlearn = load_learner(path={save_dir!r}, file={save_name!r})', end='\n\n')
     print('-' * 50)
-    # print('Now we need to add production-serving.')
     print('COMPLETE')
     global all_processes
     print(all_processes)
@@ -244,7 +239,6 @@ def training_worker():
 
 # @socketio.on('connect')
 # def talk_to_me():
-#     print('after connect',  {'data':'Lets dance'})
 
     #socketio.run(app, port=5001, debug=True)
     

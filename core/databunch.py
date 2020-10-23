@@ -76,7 +76,6 @@ class DashDatabunch:
 			return getattr(src, f"split_{response_split['validation']['method']}")(**args)
 
 	# except Exception as e:
-	# 	print(e)
 
 	@staticmethod
 	def label_databunch(response, src):
@@ -122,7 +121,6 @@ class DashDatabunch:
 	# except Exception as e:
 	# 	exc_type, exc_obj, exc_tb = sys.exc_info()
 	# 	fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-	# 	print(exc_type, fname, exc_tb.tb_lineno)
 
 	@staticmethod
 	def create_databunch(response, src, **kwargs):

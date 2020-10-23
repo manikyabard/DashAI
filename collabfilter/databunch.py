@@ -22,7 +22,6 @@ class DashCollabDatabunch:
 		response_col = response['collab']
 		df = pd.read_csv(path / f'{response_col["input"]["csv_name"]}')
 		procs = list()
-		# print(f"{response_col['transform']['FillMissing']['fill_strategy']}")
 		if response_col["transform"]['FillMissing']:
 			if hasattr(FillStrategy, f"{response_col['transform']['FillMissing']['fill_strategy']}"):
 				fill_strategy = getattr(FillStrategy, f"{response_col['transform']['FillMissing']['fill_strategy']}")

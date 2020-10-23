@@ -20,12 +20,11 @@ class DashTextDatabunch:
 			# prevent errors.
 			state = np.random.get_state()
 			np.random.set_state(state)
-			# print(os.getcwd())
 			src_lm = DashTextDatabunch.get_itemlist(response_lm["text"]["input"], processor= DashInsights.get_processors_for_lm())
 			src_lm = DashDatabunch.split_databunch(response_lm, src_lm)
 			src_lm = DashDatabunch.label_databunch(response_lm, src_lm)
 			src_lm = DashDatabunch.create_databunch(response_lm, src_lm)
-			# print("printing lm data", src_lm)
+
 			src = DashTextDatabunch.get_itemlist(response["text"]["input"], processor=DashInsights.get_processors_for_clas(src_lm.vocab))
 			# src.vocab = src_lm.vocab
 			src = DashDatabunch.split_databunch(response, src)

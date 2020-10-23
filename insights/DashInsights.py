@@ -158,7 +158,6 @@ class DashInsights:
 				yield Batch(inputs=tuple(inputs), labels=labels)
 				# if DashInsights.limit:
 				# 	self.model[0].bptt = DashInsights.limit
-				# 	print('-'*10,'\n',DashInsights.limit,'\n', '-'*10)
 		else:
 			dataloader.batch_size = self.bs
 			while True:

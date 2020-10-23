@@ -10,7 +10,6 @@ learn = DashTextLearner.create_text_learner(response)
 print('created learner')
 
 
-# print(learn.loss_func)
 # learn.fit_one_cycle(1)
 
 with open('./data/train.json') as f:
