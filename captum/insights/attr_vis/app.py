@@ -233,8 +233,6 @@ class AttributionVisualizer(object):
                     args[k] = param_config.post_process[k](v)
 
         # TODO support multiple baselines
-        # print('captum.insights.attr_vis.app._calculate_attribution(): data', data)
-        # print('captum.insights.attr_vis.app._calculate_attribution(): baselines', baselines)
         baseline = baselines[0] if baselines and len(baselines) > 0 else None #commented for tabular testing
         # baseline = [(torch.tensor([[0, 0, 0, 0, 0, 0, 0, 0, 0]]),), (torch.tensor([[0, 0, 0, 0, 0, 0]]),)] # won't work because baseline needs to be a tensor or number; can't be a list
         
