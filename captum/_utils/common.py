@@ -377,7 +377,6 @@ def _run_forward(
         if additional_forward_args is not None
         else inputs
     )
-    # print('output common', type(output[0]), type(output[1]), type(output[2]))
 
     try:
         print('captum._utlis.common: You should not be here!')
