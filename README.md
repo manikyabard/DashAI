@@ -5,9 +5,9 @@
 </p>
 
 [![Open Source? Yes!](https://img.shields.io/badge/Version-0.1-green)](https://img.shields.io/badge/Version-0.1-green)
-[![Open Source? Yes!](https://badgen.net/badge/Open%20Source%20%3F/Yes%21/blue?icon=github)](https://github.com/Naereen/badges/)
+[![Open Source? Yes!](https://badgen.net/badge/Open%20Source%20%3F/Yes%21/blue?icon=github)](https://github.com/manikyabard/DashAI/)
 [![Maintenance](https://img.shields.io/badge/OS-Linux%2C%20Mac-red)](https://img.shields.io/badge/OS-Linux%2C%20Mac-red)
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/manikyabard/DashAI/graphs/commit-activity)
 [![made-with-python](https://img.shields.io/badge/made%20with-Python%2C%20JS-brightgreen)](https://img.shields.io/badge/made%20with-Python%2C%20JS-brightgreen)
 [![Documentation Status](https://img.shields.io/badge/Python-v3.6-blue)](https://img.shields.io/badge/Python-v3.6-blue)
 [![Documentation Status](https://readthedocs.org/projects/ansicolortags/badge/?version=latest)](http://ansicolortags.readthedocs.io/?badge=latest)
