@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="80"
+   height="80"
+   viewBox="0 0 80 80"
+   version="1.1"
+   id="svg23"
+   sodipodi:docname="done.svg"
+   inkscape:version="0.92.4 (fd57863, 2020-04-02)">
+  <metadata
+     id="metadata27">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="678"
+     id="namedview25"
+     showgrid="false"
+     inkscape:zoom="6.2125"
+     inkscape:cx="40"
+     inkscape:cy="40"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg23" />
+  <defs
+     id="defs4">
+    <style
+       id="style2">
+            .prefix__cls-1{fill:#fff}.prefix__cls-3{fill:#32ba7c}
+        </style>
+  </defs>
+  <circle
+     id="prefix__Ellipse_14"
+     cx="39.950706"
+     cy="40.049297"
+     r="39.904705"
+     class="prefix__cls-3"
+     data-name="Ellipse 14"
+     style="fill:#32ba7c;stroke-width:1.26866865" />
+  <path
+     id="prefix__Path_35"
+     d="M 29.754411,58.051706 50.273858,78.571153 A 39.878063,39.878063 0 0 0 79.855406,40.048028 V 38.915107 L 63.743314,24.062802 Z"
+     data-name="Path 35"
+     style="fill:#0aa06e;stroke-width:1.26866865"
+     inkscape:connector-curvature="0" />
+  <g
+     id="prefix__Group_38"
+     data-name="Group 38"
+     transform="matrix(1.2686687,0,0,1.2686687,13.452022,19.845748)">
+    <path
+       id="prefix__Path_36"
+       d="m 106.88,213.343 a 3.715,3.715 0 0 1 0,5.16 L 104,221.38 a 3.715,3.715 0 0 1 -5.16,0 l -12.6,-12.7 a 3.715,3.715 0 0 1 0,-5.16 l 2.878,-2.878 a 3.715,3.715 0 0 1 5.16,0 z"
+       class="prefix__cls-1"
+       data-name="Path 36"
+       transform="translate(-85.2,-190.372)"
+       inkscape:connector-curvature="0"
+       style="fill:#ffffff" />
+    <path
+       id="prefix__Path_37"
+       d="m 187.271,126.242 a 3.715,3.715 0 0 1 5.16,0 l 2.878,2.878 a 3.715,3.715 0 0 1 0,5.16 l -21.829,21.73 a 3.715,3.715 0 0 1 -5.16,0 l -2.878,-2.878 a 3.715,3.715 0 0 1 0,-5.16 z"
+       class="prefix__cls-1"
+       data-name="Path 37"
+       transform="translate(-154.577,-125.2)"
+       inkscape:connector-curvature="0"
+       style="fill:#ffffff" />
+  </g>
+</svg>

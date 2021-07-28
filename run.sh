@@ -1,0 +1,1 @@
+mkdir ~/.dashai && python -u worker/app/app.py > ~/.dashai/result.txt

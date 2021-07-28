@@ -1,0 +1,16 @@
+cff-version: 1.1.0
+message: If you use this software, please cite it as below.
+authors:
+  - family-names: Bardhan
+    given-names: Manikya
+  - family-names: "Rishon Manoj"
+    given-names: Joe
+  - family-names: Muralidaran
+    given-names: Kaushik
+  - family-names: Jha
+    given-names: Amit
+title: DashAI
+version: 1.0.0
+license: "Apache-2.0"
+repository-code: "https://github.com/manikyabard/DashAI"
+date-released: 2020-12-18
