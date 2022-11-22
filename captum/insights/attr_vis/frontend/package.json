@@ -20,7 +20,7 @@
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-plotly.js": "^2.4.0",
-    "react-scripts": "3.4.1",
+    "react-scripts": "5.0.1",
     "react-tag-autocomplete": "^5.11.1",
     "typescript": "^3.9.5",
     "webpack-cli": "^3.3.9"
