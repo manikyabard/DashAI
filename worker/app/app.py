@@ -85,6 +85,26 @@ def gethome():
         "payload": home
     })
 
+def load_existing_model_weights(learner, save_config):
+    load_existing = save_config.get('load_existing', False)
+    load_dir = save_config.get('load_dir')
+    load_name = save_config.get('load_name')
+
+    if not load_existing:
+        return learner
+
+    if not load_dir or not load_name:
+        raise ValueError('Both load_dir and load_name are required when load_existing is true.')
+
+    load_dir = Path(load_dir)
+    load_file = Path(load_name)
+    if load_file.suffix == '.pth':
+        load_file = load_file.with_suffix('')
+
+    learner.model_dir = load_dir
+    print(f'Loading existing model weights from {load_dir / (str(load_file) + ".pth")}')
+    return learner.load(load_file)
+
 @app.route("/generate", methods=['POST'])
 def generate():
     res = {
@@ -104,6 +124,7 @@ def generate():
     save_name = Path(response['save']['save_name'])
     learner_class = learner_class_map[application]
     learn = getattr(learner_class, f'create_{application}_learner')(response)
+    learn = load_existing_model_weights(learn, response.get('save', {}))
     print('-'*10, 'Created learner', '-'*10)
 
     return jsonify(res)
