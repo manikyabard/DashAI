@@ -25,6 +25,8 @@ git clone https://github.com/manikyabard/DashAI.git
 cd DashAI/
 ```
 ### 3. Install the Dependencies
+DashAI uses npm for the frontend app dependencies. Keep `app/package-lock.json` as the single lockfile and do not regenerate `app/yarn.lock`.
+
 ```shell
 chmod +x install.sh && ./install.sh
 ```
