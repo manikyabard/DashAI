@@ -10,7 +10,7 @@ from insights.DashInsights import DashInsights
 class DashTextDatabunch:
 
 	@staticmethod
-	def create_text_databunch(response):
+	def create_text_databunch(response, backwards=False):
 		if response['text']['model']['type'] == 'classifier':
 			response_lm = copy.deepcopy(response)
 			response_lm['core']['data']['label']['method'] = 'for_lm'
@@ -23,14 +23,14 @@ class DashTextDatabunch:
 			src_lm = DashTextDatabunch.get_itemlist(response_lm["text"]["input"], processor= DashInsights.get_processors_for_lm())
 			src_lm = DashDatabunch.split_databunch(response_lm, src_lm)
 			src_lm = DashDatabunch.label_databunch(response_lm, src_lm)
-			src_lm = DashDatabunch.create_databunch(response_lm, src_lm)
+			src_lm = DashDatabunch.create_databunch(response_lm, src_lm, backwards=backwards)
 			src = DashTextDatabunch.get_itemlist(response["text"]["input"], processor=DashInsights.get_processors_for_clas(src_lm.vocab))
 			# src.vocab = src_lm.vocab
 			src = DashDatabunch.split_databunch(response, src)
 			src = DashDatabunch.label_databunch(response, src)
 			np.random.seed(seed=None)
 
-			return (DashDatabunch.create_databunch(response, src),
+			return (DashDatabunch.create_databunch(response, src, backwards=backwards),
 					src_lm)
 
 		src = DashTextDatabunch.get_itemlist(response["text"]["input"])
@@ -39,7 +39,7 @@ class DashTextDatabunch:
 
 		# Add transforms and test
 
-		return DashDatabunch.create_databunch(response, src)
+		return DashDatabunch.create_databunch(response, src, backwards=backwards)
 
 	@staticmethod
 	def get_itemlist(response, **kwargs):
