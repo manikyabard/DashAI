@@ -790,6 +790,9 @@
 	},
 	"save": {
 		"save_dir": "./models/",
-		"save_name": "export.pkl"
+		"save_name": "export.pkl",
+		"load_existing": false,
+		"load_dir": "./models/",
+		"load_name": null
 	}
 }

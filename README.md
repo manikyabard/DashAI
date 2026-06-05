@@ -61,6 +61,8 @@ You then provide DashAI the dataset you intend to use, and let DashAI know how t
 ### Step 3: Selecting the model.
 You then have to choose what architecture they want your model to have. DashAI provides architectures that have achieved state-of-the-art results in the task defined, but you may use any model built using PyTorch layers.
 
+To resume from an existing fastai `.pth` weights file before training, set `save.load_existing` to `true`, set `save.load_dir` to the directory that contains the file, and set `save.load_name` to the file name or file stem. DashAI will create the learner for the selected task and then load those weights before the training step begins.
+
 ### Step 4: (Optional) Auto ML
 At this point, you may choose one of three options:
 - to use DashAI default hyper-parameters;
